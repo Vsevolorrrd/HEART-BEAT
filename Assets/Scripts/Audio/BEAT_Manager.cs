@@ -4,7 +4,6 @@ using System;
 public class BEAT_Manager : MonoBehaviour
 {
     [SerializeField] Music song;
-    private float songBPM;
     [SerializeField] float secPerBeat;
     [SerializeField] float songPosition;
     [SerializeField] float songPositionInBeats;
@@ -13,6 +12,7 @@ public class BEAT_Manager : MonoBehaviour
     [SerializeField] AudioSource musicSource_2;
     [SerializeField] AudioSource musicSource_3;
 
+    private float songBPM;
     private float nextBeat;
     public event Action BEAT;
     public event Action<double> OnMusicStart; // Event to share the start time
@@ -30,7 +30,7 @@ public class BEAT_Manager : MonoBehaviour
                 // Try to find an existing beat manager in the scene
                 _instance = FindAnyObjectByType<BEAT_Manager>();
 
-                // If no AudioManager exists, create a new one
+                // If no beat manager exists, create a new one
                 if (_instance == null)
                 {
                     GameObject singletonObject = new GameObject("BEAT_Manager");

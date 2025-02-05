@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class RhythmInput : MonoBehaviour
 {
+    [SerializeField] private BeatUI beatUI;
     [SerializeField] private KeyCode actionKey = KeyCode.Space;
     [SerializeField] private float perfectThreshold = 0.1f;  // 100 ms for Perfect
     [SerializeField] private float goodThreshold = 0.25f;    // 250 ms for Good
@@ -23,17 +24,17 @@ public class RhythmInput : MonoBehaviour
         if (timeDifference <= perfectThreshold)
         {
             Debug.Log("Perfect Hit!");
-            // Add visual/audio feedback for a perfect hit
+            beatUI.ShowHitFeedback("Perfect");
         }
         else if (timeDifference <= goodThreshold)
         {
             Debug.Log("Good Hit!");
-            // Add feedback for a good hit
+            beatUI.ShowHitFeedback("Good");
         }
         else
         {
             Debug.Log("Miss!");
-            // Add miss feedback
+            beatUI.ShowHitFeedback("Miss");
         }
     }
 }
