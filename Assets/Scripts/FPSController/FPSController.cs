@@ -50,6 +50,10 @@ public class FPSController : MonoBehaviour
     public float sprintFOVStepTime = 10f;
     private float baseFOV;
 
+    [Header("FootSteps")]
+    public bool footSteps = true;
+    [SerializeField] AudioSource footStepsSource;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -71,6 +75,12 @@ public class FPSController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
         speedModifier = 1f;
+
+        if (footSteps)
+        {
+            footStepsSource.volume = 0;
+            footStepsSource.loop = true;
+        }
     }
 
     private void Update()
@@ -143,6 +153,22 @@ public class FPSController : MonoBehaviour
 
         #endregion
 
+        #region FootSteps
+
+        if (footSteps)
+        {
+            if (isWalking)
+            {
+                footStepsSource.volume = 1;
+            }
+            else
+            {
+                footStepsSource.volume = 0;
+            }
+        }
+
+        #endregion
+
         CheckGround();
     }
 
@@ -210,4 +236,23 @@ public class FPSController : MonoBehaviour
         }
 
     }
+
+    #region Foot Steps sync
+
+    private void OnEnable()
+    {
+        BEAT_Manager.Instance.OnMusicStart += StartFootsteps;
+    }
+
+    private void OnDisable()
+    {
+        BEAT_Manager.Instance.OnMusicStart -= StartFootsteps;
+    }
+
+    private void StartFootsteps(double startTime)
+    {
+        footStepsSource.PlayScheduled(startTime); // Sync with other tracks
+    }
+
+    #endregion
 }
