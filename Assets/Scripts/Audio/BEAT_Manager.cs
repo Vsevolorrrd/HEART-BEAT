@@ -14,7 +14,7 @@ public class BEAT_Manager : MonoBehaviour
 
     private float songBPM;
     private float nextBeat;
-    public event Action BEAT;
+    public static event Action BEAT;
     public event Action<double> OnMusicStart; // Event to share the start time
 
     private static BEAT_Manager _instance;
@@ -32,6 +32,7 @@ public class BEAT_Manager : MonoBehaviour
     {
         if (_instance != null && _instance != this)
         {
+            Debug.LogWarning("BEAT_Manager already exists, destroying duplicate.");
             Destroy(gameObject);
             return;
         }
