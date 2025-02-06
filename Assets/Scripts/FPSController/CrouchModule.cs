@@ -12,12 +12,9 @@ public class CrouchModule : MonoBehaviour
     private Vector3 originalScale;
     public bool CheckCrouch() { return isCrouched; }
 
-    public void SetController(FPSController _fpsController)
-    {
-        fpsController = _fpsController;
-    }
     void Start()
     {
+        fpsController = GetComponent<FPSController>();
         originalScale = transform.localScale;
     }
 

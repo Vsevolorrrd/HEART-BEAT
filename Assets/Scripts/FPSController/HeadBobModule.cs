@@ -11,12 +11,9 @@ public class HeadBobModule : MonoBehaviour
     private float timer = 0;
     private Vector3 jointOriginalPos;
 
-    public void SetController(FPSController _fpsController)
-    {
-        fpsController = _fpsController;
-    }
     void Start()
     {
+        fpsController = GetComponent<FPSController>();
         jointOriginalPos = joint.localPosition;
     }
     public void HeadBob(float modifier = 0)

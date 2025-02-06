@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class RhythmInput : MonoBehaviour
+public abstract class RhythmInput : MonoBehaviour
 {
-    [SerializeField] private BeatUI beatUI;
-    [SerializeField] private KeyCode actionKey = KeyCode.Space;
-    [SerializeField] private float perfectThreshold = 0.1f;  // 100 ms for Perfect
-    [SerializeField] private float goodThreshold = 0.25f;    // 250 ms for Good
+    public BeatUI beatUI;
+    public float perfectThreshold = 0.1f;  // 100 ms for Perfect
+    public float goodThreshold = 0.15f;    // 150 ms for Good
+    public KeyCode actionKey = KeyCode.Space;
 
-    private void Update()
+    public virtual void Update()
     {
         if (Input.GetKeyDown(actionKey))
         {
@@ -15,7 +15,7 @@ public class RhythmInput : MonoBehaviour
         }
     }
 
-    private void EvaluateTiming()
+    public virtual void EvaluateTiming()
     {
         float songPosition = BEAT_Manager.Instance.GetSongPositionInBeats();
         float nearestBeat = Mathf.Round(songPosition); // Nearest beat in beats
@@ -23,18 +23,32 @@ public class RhythmInput : MonoBehaviour
 
         if (timeDifference <= perfectThreshold)
         {
-            Debug.Log("Perfect Hit!");
+            HitEffect.Instance.playHitEffect("Perfect");
             beatUI.ShowHitFeedback("Perfect");
+            OnPerfectHit();
         }
         else if (timeDifference <= goodThreshold)
         {
-            Debug.Log("Good Hit!");
+            HitEffect.Instance.playHitEffect("Good");
             beatUI.ShowHitFeedback("Good");
+            OnGoodHit();
         }
         else
         {
-            Debug.Log("Miss!");
             beatUI.ShowHitFeedback("Miss");
+            OnMiss();
         }
+    }
+    public virtual void OnPerfectHit()
+    {
+        Debug.Log("Perfect Hit!");
+    }
+    public virtual void OnGoodHit()
+    {
+        Debug.Log("Good Hit!");
+    }
+    public virtual void OnMiss()
+    {
+        Debug.Log("Miss!");
     }
 }

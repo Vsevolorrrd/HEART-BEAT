@@ -33,13 +33,10 @@ public class SprintModule : MonoBehaviour
         [HideInInspector] public float sprintBarHeight;
     }
 
-
-    public void SetController(FPSController _fpsController)
-    {
-        fpsController = _fpsController;
-    }
     void Start()
     {
+
+        fpsController = GetComponent<FPSController>();
         if (!unlimitedSprint)
         {
             sprintRemaining = sprintDuration;

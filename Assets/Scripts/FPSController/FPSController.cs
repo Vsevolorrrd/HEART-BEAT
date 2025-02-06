@@ -7,7 +7,6 @@ public class FPSController : MonoBehaviour
 
     //Modules
     private HeadBobModule headBob;
-    private CrouchModule crouchModule;
     private SprintModule sprintModule;
 
     #region Camera Movement Variables
@@ -59,13 +58,6 @@ public class FPSController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         baseFOV = playerCamera.fieldOfView;
-
-        if (TryGetComponent(out headBob))
-        headBob.SetController(this);
-        if (TryGetComponent(out crouchModule))
-        crouchModule.SetController(this);
-        if (TryGetComponent(out sprintModule))
-        sprintModule.SetController(this);
     }
 
     void Start()
@@ -180,11 +172,11 @@ public class FPSController : MonoBehaviour
             Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
             // Checks if player is walking and isGrounded
-            if (targetVelocity.x != 0 || targetVelocity.z != 0 && isGrounded)
+            if (targetVelocity.x != 0 || targetVelocity.z != 0)
             {
                 isMoving = true;
 
-                if (isGrounded)
+                if (isGrounded) // for head bob
                 isWalking = true;
                 else
                 isWalking = false;
@@ -192,6 +184,7 @@ public class FPSController : MonoBehaviour
             }
             else
             {
+                isWalking = false;
                 isMoving = false;
             }
             // All movement calculations
@@ -241,16 +234,19 @@ public class FPSController : MonoBehaviour
 
     private void OnEnable()
     {
+        if (BEAT_Manager.Instance != null)
         BEAT_Manager.Instance.OnMusicStart += StartFootsteps;
     }
 
     private void OnDisable()
     {
+        if (BEAT_Manager.Instance != null)
         BEAT_Manager.Instance.OnMusicStart -= StartFootsteps;
     }
 
     private void StartFootsteps(double startTime)
     {
+        if (footSteps)
         footStepsSource.PlayScheduled(startTime); // Sync with other tracks
     }
 

@@ -24,38 +24,20 @@ public class BEAT_Manager : MonoBehaviour
     {
         get
         {
-            // Check if the instance is already created
-            if (_instance == null)
-            {
-                // Try to find an existing beat manager in the scene
-                _instance = FindAnyObjectByType<BEAT_Manager>();
-
-                // If no beat manager exists, create a new one
-                if (_instance == null)
-                {
-                    GameObject singletonObject = new GameObject("BEAT_Manager");
-                    _instance = singletonObject.AddComponent<BEAT_Manager>();
-                }
-
-                // Make the beat manager persist across scenes (optional)
-                DontDestroyOnLoad(_instance.gameObject);
-            }
-
             return _instance;
         }
     }
 
     void Awake()
     {
-        // If the instance is already set, destroy this duplicate object
         if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
+            return;
         }
-        else
-        {
-            _instance = this;  // Assign this object as the instance
-        }
+
+        _instance = this;
+        DontDestroyOnLoad(gameObject);
     }
     #endregion
 

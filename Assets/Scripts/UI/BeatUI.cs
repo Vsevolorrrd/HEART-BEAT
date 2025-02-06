@@ -2,7 +2,6 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(RhythmInput))]
 public class BeatUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI hitFeedbackText;
@@ -11,7 +10,7 @@ public class BeatUI : MonoBehaviour
     [SerializeField] Color missColor = Color.white;
 
     [SerializeField] private float displayDuration = 0.3f;
-    [SerializeField] private float fadeDuration = 0.5f;
+    [SerializeField] private float fadeDuration = 0.2f;
     [SerializeField] private float punchScale = 1.3f;
     [SerializeField] private float punchDuration = 0.15f;
 
@@ -68,6 +67,7 @@ public class BeatUI : MonoBehaviour
     public void ShowHitFeedback(string result)
     {
         StopAllCoroutines(); // Stop any ongoing animation
+
         switch (result)
         {
             case "Perfect":
