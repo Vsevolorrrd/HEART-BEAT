@@ -15,6 +15,7 @@ public class BEAT_Manager : MonoBehaviour
     [SerializeField] AudioSource musicLevel_2;
     [SerializeField] AudioSource musicLevel_3;
     [SerializeField] float transitionSpeed = 1f;
+    [HideInInspector] public AudioClip footStepsClip;
 
     private float songBPM;
     private float nextBeat;
@@ -55,6 +56,7 @@ public class BEAT_Manager : MonoBehaviour
         mainMusicLevel.clip = song.Leadingtrack;
         musicLevel_2.clip = song.track_2;
         musicLevel_3.clip = song.track_3;
+        footStepsClip = song.footSteps;
 
         secPerBeat = 60f / songBPM;
         dspSongTime = (float)AudioSettings.dspTime;
@@ -87,12 +89,9 @@ public class BEAT_Manager : MonoBehaviour
     }
     public void LevelUPMusic()
     {
-        if (musicLevel_2.volume == 1)
+        if (musicLevel_2.volume == 1f)
         {
-            if (musicLevel_3.volume == 1)
-            return;
-
-            IncreaseVolumeGradually(musicLevel_3);
+            if (musicLevel_3.volume < 1f) IncreaseVolumeGradually(musicLevel_3);
         }
         else
         {
@@ -101,33 +100,37 @@ public class BEAT_Manager : MonoBehaviour
     }
     public IEnumerator IncreaseVolumeGradually(AudioSource audioSource)
     {
-        float startVolume = audioSource.volume;
+        float targetVolume = 1f;
 
-        while (audioSource.volume < 1)
+        while (audioSource.volume < targetVolume)
         {
-            audioSource.volume -= startVolume * Time.deltaTime / transitionSpeed;
+            audioSource.volume += Time.deltaTime / transitionSpeed;
             yield return null;
         }
+
+        audioSource.volume = targetVolume;
     }
     public void DecreaseMusicLevel()
     {
-        if (musicLevel_3.volume == 1)
+        if (musicLevel_3.volume > 0f)
         {
-            if (musicLevel_2.volume == 1)
-            DecreaseVolumeGradually(musicLevel_2);
-            else
             DecreaseVolumeGradually(musicLevel_3);
-
+        }
+        else if (musicLevel_2.volume > 0f)
+        {
+            DecreaseVolumeGradually(musicLevel_2);
         }
     }
     public IEnumerator DecreaseVolumeGradually(AudioSource audioSource)
     {
-        float startVolume = audioSource.volume;
+        float targetVolume = 0f;
 
-        while (audioSource.volume > 0)
+        while (audioSource.volume > targetVolume)
         {
-            audioSource.volume -= startVolume * Time.deltaTime / transitionSpeed;
+            audioSource.volume -= Time.deltaTime / transitionSpeed;
             yield return null;
         }
+
+        audioSource.volume = targetVolume;
     }
 }

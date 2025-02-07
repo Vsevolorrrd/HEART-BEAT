@@ -52,7 +52,7 @@ public class AudioManager : MonoBehaviour
     public void PlaySound(AudioClip audioClip, Transform spawn = null, float volume = 1, bool loop = false)
     {
         if (spawn == null)
-            spawn = transform; // Default to this object's transform
+        spawn = transform; // Default to this object's transform
         AudioSource audioSource = Instantiate(soundFXPrefab, spawn.position, Quaternion.identity);
 
         audioSource.clip = audioClip;
@@ -68,7 +68,7 @@ public class AudioManager : MonoBehaviour
         int R = Random.Range(0, audioClip.Length);
 
         if (spawn == null)
-            spawn = transform; // Default to this object's transform
+        spawn = transform; // Default to this object's transform
         AudioSource audioSource = Instantiate(soundFXPrefab, spawn.position, Quaternion.identity);
 
         audioSource.clip = audioClip[R];
@@ -88,7 +88,7 @@ public class AudioManager : MonoBehaviour
     public void PlayMusic(AudioClip audioClip, Transform spawn = null, float volume = 1, bool loop = true)
     {
         if (spawn == null)
-            spawn = transform; // Default to this object's transform
+        spawn = transform; // Default to this object's transform
         AudioSource audioSource = Instantiate(soundFXPrefab, spawn.position, Quaternion.identity);
 
         audioSource.clip = audioClip;

@@ -5,17 +5,20 @@ public class SprintModule : MonoBehaviour
 {
     private FPSController fpsController;
 
+    [Header("Sprint Settings")]
     public bool unlimitedSprint = false;
     public KeyCode sprintKey = KeyCode.LeftShift;
     public float sprintSpeed = 1.7f;
     public float sprintDuration = 5f;
-    public float sprintCooldown = .5f;
-    private float sprintCooldownReset;
-    private float sprintRemaining;
-    private bool isSprintCooldown = false;
-    private bool isSprinting = false;
-    public bool CheckSprinting() { return isSprinting; }
+    public float sprintCooldown = 0.5f;
 
+    private float sprintRemaining;
+    private float sprintCooldownTimer;
+    private bool isSprintCooldown;
+
+    public bool IsSprinting { get; private set; }
+
+    [Header("Sprint Bar")]
     public SprintBar sprintBar;
 
     [System.Serializable]
@@ -26,125 +29,111 @@ public class SprintModule : MonoBehaviour
         public CanvasGroup sprintBarCG;
         public Image sprintBarBG;
         public Image sprintBarObj;
-        public float sprintBarWidthPercent = .3f;
-        public float sprintBarHeightPercent = .015f;
+        public float sprintBarWidthPercent = 0.3f;
+        public float sprintBarHeightPercent = 0.015f;
 
         [HideInInspector] public float sprintBarWidth;
         [HideInInspector] public float sprintBarHeight;
     }
 
-    void Start()
+    private void Start()
     {
-
         fpsController = GetComponent<FPSController>();
+
         if (!unlimitedSprint)
         {
             sprintRemaining = sprintDuration;
-            sprintCooldownReset = sprintCooldown;
+            sprintCooldownTimer = sprintCooldown;
         }
 
-        #region Sprint Bar
-
-        if (sprintBar.useSprintBar)
-        {
-            sprintBar.sprintBarBG.gameObject.SetActive(true);
-            sprintBar.sprintBarObj.gameObject.SetActive(true);
-
-            float screenWidth = Screen.width;
-            float screenHeight = Screen.height;
-
-            sprintBar.sprintBarWidth = screenWidth * sprintBar.sprintBarWidthPercent;
-            sprintBar.sprintBarHeight = screenHeight * sprintBar.sprintBarHeightPercent;
-
-            sprintBar.sprintBarBG.rectTransform.sizeDelta = new Vector3(sprintBar.sprintBarWidth, sprintBar.sprintBarHeight, 0f);
-            sprintBar.sprintBarObj.rectTransform.sizeDelta = new Vector3(sprintBar.sprintBarWidth - 2, sprintBar.sprintBarHeight - 2, 0f);
-
-            if (sprintBar.hideBarWhenFull)
-            {
-                sprintBar.sprintBarCG.alpha = 0;
-            }
-        }
-        else
-        {
-            if (sprintBar.sprintBarBG)
-            {
-                sprintBar.sprintBarBG.gameObject.SetActive(false);
-                sprintBar.sprintBarObj.gameObject.SetActive(false);
-            }
-        }
-
-        #endregion
+        InitializeSprintBar();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        // All movement calculations while sprint is active
-        if (Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown)
+        HandleSprinting();
+        HandleSprintCooldown();
+        UpdateSprintBar();
+    }
+
+    private void HandleSprinting()
+    {
+        bool isTryingToSprint = Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown;
+
+        if (isTryingToSprint && fpsController.isMoving)
         {
-            if (fpsController.isMoving)
-            {
-                fpsController.speedModifier = sprintSpeed;
+            fpsController.speedModifier = sprintSpeed;
+            IsSprinting = true;
 
-                isSprinting = true;
+            if (sprintBar.useSprintBar && sprintBar.hideBarWhenFull && !unlimitedSprint)
+                sprintBar.sprintBarCG.alpha = Mathf.Lerp(sprintBar.sprintBarCG.alpha, 1, 5 * Time.deltaTime);
 
-                if (sprintBar.useSprintBar)
-                {
-                    if (sprintBar.hideBarWhenFull && !unlimitedSprint)
-                        sprintBar.sprintBarCG.alpha += 5 * Time.deltaTime;
-
-                }
-            }
-
-        }
-        else
-        {
-            fpsController.speedModifier = 1f;
-            isSprinting = false;
-
-            if (sprintBar.useSprintBar)
-            {
-                if (sprintBar.hideBarWhenFull && sprintRemaining == sprintDuration)
-                    sprintBar.sprintBarCG.alpha -= 3 * Time.deltaTime;
-            }
-        }
-
-        if (isSprinting)
-        {
-
-            // Drain sprint remaining while sprinting
             if (!unlimitedSprint)
             {
-                sprintRemaining -= 1 * Time.deltaTime;
+                sprintRemaining -= Time.deltaTime;
                 if (sprintRemaining <= 0)
                 {
-                    isSprinting = false;
+                    sprintRemaining = 0;
                     isSprintCooldown = true;
                 }
             }
         }
         else
         {
-            // Regain sprint while not sprinting
-            sprintRemaining = Mathf.Clamp(sprintRemaining += 1 * Time.deltaTime, 0, sprintDuration);
-        }
+            fpsController.speedModifier = 1f;
+            IsSprinting = false;
 
-        // Handles sprint cooldown 
-        // When sprint remaining == 0 stops sprint ability until hitting cooldown
+            if (!unlimitedSprint)
+                sprintRemaining = Mathf.Clamp(sprintRemaining + Time.deltaTime, 0, sprintDuration);
+
+            if (sprintBar.useSprintBar && sprintBar.hideBarWhenFull && sprintRemaining == sprintDuration)
+                sprintBar.sprintBarCG.alpha = Mathf.Lerp(sprintBar.sprintBarCG.alpha, 0, 3 * Time.deltaTime);
+        }
+    }
+
+    private void HandleSprintCooldown()
+    {
         if (isSprintCooldown)
         {
-            sprintCooldown -= 1 * Time.deltaTime;
-            if (sprintCooldown <= 0)
+            sprintCooldownTimer -= Time.deltaTime;
+            if (sprintCooldownTimer <= 0)
             {
                 isSprintCooldown = false;
+                sprintCooldownTimer = sprintCooldown;
             }
         }
-        else
+    }
+
+    private void InitializeSprintBar()
+    {
+        if (!sprintBar.useSprintBar)
         {
-            sprintCooldown = sprintCooldownReset;
+            if (sprintBar.sprintBarBG)
+            {
+                sprintBar.sprintBarBG.gameObject.SetActive(false);
+                sprintBar.sprintBarObj.gameObject.SetActive(false);
+            }
+            return;
         }
 
-        // Handles sprintBar 
+        sprintBar.sprintBarBG.gameObject.SetActive(true);
+        sprintBar.sprintBarObj.gameObject.SetActive(true);
+
+        float screenWidth = Screen.width;
+        float screenHeight = Screen.height;
+
+        sprintBar.sprintBarWidth = screenWidth * sprintBar.sprintBarWidthPercent;
+        sprintBar.sprintBarHeight = screenHeight * sprintBar.sprintBarHeightPercent;
+
+        sprintBar.sprintBarBG.rectTransform.sizeDelta = new Vector2(sprintBar.sprintBarWidth, sprintBar.sprintBarHeight);
+        sprintBar.sprintBarObj.rectTransform.sizeDelta = new Vector2(sprintBar.sprintBarWidth - 2, sprintBar.sprintBarHeight - 2);
+
+        if (sprintBar.hideBarWhenFull)
+            sprintBar.sprintBarCG.alpha = 0;
+    }
+
+    private void UpdateSprintBar()
+    {
         if (sprintBar.useSprintBar && !unlimitedSprint)
         {
             float sprintRemainingPercent = sprintRemaining / sprintDuration;

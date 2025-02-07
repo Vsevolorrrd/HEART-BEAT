@@ -2,7 +2,6 @@ using UnityEngine;
 
 public abstract class RhythmInput : MonoBehaviour
 {
-    public BeatUI beatUI;
     public float perfectThreshold = 0.1f;  // 100 ms for Perfect
     public float goodThreshold = 0.15f;    // 150 ms for Good
     public KeyCode actionKey = KeyCode.Space;
@@ -24,18 +23,18 @@ public abstract class RhythmInput : MonoBehaviour
         if (timeDifference <= perfectThreshold)
         {
             HitEffect.Instance.playHitEffect("Perfect");
-            beatUI.ShowHitFeedback("Perfect");
+            BeatUI.Instance.ShowHitFeedback("Perfect");
             OnPerfectHit();
         }
         else if (timeDifference <= goodThreshold)
         {
             HitEffect.Instance.playHitEffect("Good");
-            beatUI.ShowHitFeedback("Good");
+            BeatUI.Instance.ShowHitFeedback("Good");
             OnGoodHit();
         }
         else
         {
-            beatUI.ShowHitFeedback("Miss");
+            BeatUI.Instance.ShowHitFeedback("Miss");
             OnMiss();
         }
     }

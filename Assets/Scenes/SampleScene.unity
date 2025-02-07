@@ -1451,7 +1451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e0411b3c1f91f4409e5d121107097ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beatUI: {fileID: 171926862}
   perfectThreshold: 0.1
   goodThreshold: 0.15
   actionKey: 323
@@ -2119,15 +2118,15 @@ MonoBehaviour:
   speedModifier: 1
   isMoving: 0
   isWalking: 0
-  enableJump: 1
   jumpKey: 32
   jumpPower: 5
-  coyoteTime: 0.5
-  FOV: 1
+  enableDoubleJump: 1
+  maxJumps: 2
+  coyoteTime: 0.3
+  enableFOV: 1
   fovMultiplier: 1.5
   sprintFOVStepTime: 10
-  footSteps: 0
-  footStepsSource: {fileID: 0}
+  enableFootSteps: 0
 --- !u!4 &1461408357
 Transform:
   m_ObjectHideFlags: 0
@@ -2205,7 +2204,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8af1fc08fe38c645af7504311a64a1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beatUI: {fileID: 171926862}
   perfectThreshold: 0.1
   goodThreshold: 0.2
   actionKey: 324
