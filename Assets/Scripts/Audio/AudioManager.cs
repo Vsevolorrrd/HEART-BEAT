@@ -115,4 +115,22 @@ public class AudioManager : MonoBehaviour
         }
         Destroy(audioSource.gameObject);
     }
+    public void StopAllLoopSources(float fadeDuration = 1f)
+    {
+        FadeOutAllLoopSources(fadeDuration);
+    }
+    public IEnumerator FadeOutAllLoopSources(float duration)
+    {
+        foreach (AudioSource audioSource in loopSources)
+        {
+            float startVolume = audioSource.volume;
+
+            while (audioSource.volume > 0)
+            {
+                audioSource.volume -= startVolume * Time.deltaTime / duration;
+                yield return null;
+            }
+            Destroy(audioSource.gameObject);
+        }
+    }
 }

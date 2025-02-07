@@ -15,17 +15,23 @@ public class MainMenu : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 if (isPaused)
-                    ResumeGame();
+                ResumeGame();
                 else
-                    PauseGame();
+                PauseGame();
             }
         }
     }
     public void StartGame()
     {
-        //SceneLoader.Instance.LoadScene();
         Time.timeScale = 1f;
         isPaused = false;
+        //SceneLoader.Instance.LoadScene();
+    }
+    public void OpenMainMenu()
+    {
+        Time.timeScale = 1f;
+        isPaused = false;
+        SceneLoader.Instance.LoadScene("MainMenu");
     }
     public void Restart()
     {

@@ -3,9 +3,8 @@ using UnityEngine;
 public class DashModule : RhythmInput
 {
     private Rigidbody rb;
-    private FPSController fpsController;
 
-    public float dashForce = 50f;
+    public float dashForce = 70f;
     public float dashUpwardForce = 2f;
     public float dashCooldown = 0.5f;
     private float dashCooldownTimer;
@@ -13,7 +12,6 @@ public class DashModule : RhythmInput
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        fpsController = GetComponent<FPSController>();
     }
     public override void Update()
     {

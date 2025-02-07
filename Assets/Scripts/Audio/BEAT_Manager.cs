@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using System;
 
@@ -8,9 +9,12 @@ public class BEAT_Manager : MonoBehaviour
     [SerializeField] float songPosition;
     [SerializeField] float songPositionInBeats;
     [SerializeField] float dspSongTime;
-    [SerializeField] AudioSource PrimaryMusicSource;
-    [SerializeField] AudioSource musicSource_2;
-    [SerializeField] AudioSource musicSource_3;
+
+    [Header("SongLevels")]
+    [SerializeField] AudioSource mainMusicLevel;
+    [SerializeField] AudioSource musicLevel_2;
+    [SerializeField] AudioSource musicLevel_3;
+    [SerializeField] float transitionSpeed = 1f;
 
     private float songBPM;
     private float nextBeat;
@@ -48,27 +52,27 @@ public class BEAT_Manager : MonoBehaviour
     void Start()
     {
         songBPM = song.songBPM;
-        PrimaryMusicSource.clip = song.Leadingtrack;
-        musicSource_2.clip = song.track_2;
-        musicSource_3.clip = song.track_3;
+        mainMusicLevel.clip = song.Leadingtrack;
+        musicLevel_2.clip = song.track_2;
+        musicLevel_3.clip = song.track_3;
 
         secPerBeat = 60f / songBPM;
-        dspSongTime = (float)AudioSettings.dspTime; // A precision timer that represents the current time since the audio system started
+        dspSongTime = (float)AudioSettings.dspTime;
+        // AudioSettings.dspTime - a precision timer that represents the current time since the audio system started
 
         double startTime = AudioSettings.dspTime + 0.1;
-        OnMusicStart?.Invoke(startTime); // Notify subscribers (like footsteps script)
+        OnMusicStart?.Invoke(startTime); // Notify subscribers (if the sound should in sync with the music)
 
-        PrimaryMusicSource.PlayScheduled(startTime);
-        musicSource_2.PlayScheduled(startTime);
-        musicSource_3.PlayScheduled(startTime);
-        musicSource_2.volume = 0;
-        musicSource_3.volume = 0;
-        musicSource_2.loop = true;
-        musicSource_3.loop = true;
+        mainMusicLevel.PlayScheduled(startTime);
+        musicLevel_2.PlayScheduled(startTime);
+        musicLevel_3.PlayScheduled(startTime);
+        musicLevel_2.volume = 0;
+        musicLevel_3.volume = 0;
+        musicLevel_2.loop = true;
+        musicLevel_3.loop = true;
 
         nextBeat = secPerBeat;
     }
-
     void Update()
     {
         songPosition = (float)(AudioSettings.dspTime - dspSongTime);
@@ -79,6 +83,51 @@ public class BEAT_Manager : MonoBehaviour
         {
             BEAT?.Invoke();
             nextBeat = Mathf.Floor(songPosition / secPerBeat + 1) * secPerBeat;
+        }
+    }
+    public void LevelUPMusic()
+    {
+        if (musicLevel_2.volume == 1)
+        {
+            if (musicLevel_3.volume == 1)
+            return;
+
+            IncreaseVolumeGradually(musicLevel_3);
+        }
+        else
+        {
+            IncreaseVolumeGradually(musicLevel_2);
+        }
+    }
+    public IEnumerator IncreaseVolumeGradually(AudioSource audioSource)
+    {
+        float startVolume = audioSource.volume;
+
+        while (audioSource.volume < 1)
+        {
+            audioSource.volume -= startVolume * Time.deltaTime / transitionSpeed;
+            yield return null;
+        }
+    }
+    public void DecreaseMusicLevel()
+    {
+        if (musicLevel_3.volume == 1)
+        {
+            if (musicLevel_2.volume == 1)
+            DecreaseVolumeGradually(musicLevel_2);
+            else
+            DecreaseVolumeGradually(musicLevel_3);
+
+        }
+    }
+    public IEnumerator DecreaseVolumeGradually(AudioSource audioSource)
+    {
+        float startVolume = audioSource.volume;
+
+        while (audioSource.volume > 0)
+        {
+            audioSource.volume -= startVolume * Time.deltaTime / transitionSpeed;
+            yield return null;
         }
     }
 }

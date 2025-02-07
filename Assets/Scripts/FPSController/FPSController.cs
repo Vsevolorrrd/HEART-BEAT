@@ -43,6 +43,10 @@ public class FPSController : MonoBehaviour
     // Internal Variables
     private bool isGrounded = false;
 
+    [Header("Coyote Time")]
+    public float coyoteTime = 0.2f; // Time window where jump is still allowed
+    private float coyoteTimer = 0f;
+
     [Header("FOV")]
     public bool FOV = true;
     public float fovMultiplier = 1.5f; // How much the FOV scales with speed
@@ -119,8 +123,14 @@ public class FPSController : MonoBehaviour
 
         #region Jump
 
-        // Gets input and calls jump method
-        if (enableJump && Input.GetKeyDown(jumpKey) && isGrounded)
+        // Countdown coyote time when not grounded
+        if (!isGrounded)
+        {
+            coyoteTimer -= Time.deltaTime;
+        }
+
+        // Allow jumping if within coyote time
+        if (enableJump && Input.GetKeyDown(jumpKey) && coyoteTimer > 0f)
         {
             Jump();
         }
@@ -206,12 +216,13 @@ public class FPSController : MonoBehaviour
     {
         Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f), transform.position.z);
         Vector3 direction = transform.TransformDirection(Vector3.down);
-        float distance = .75f;
+        float distance = 0.75f;
 
         if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
         {
             Debug.DrawRay(origin, direction * distance, Color.red);
             isGrounded = true;
+            coyoteTimer = coyoteTime; // Reset coyote timer when grounded
         }
         else
         {
@@ -222,10 +233,11 @@ public class FPSController : MonoBehaviour
     private void Jump()
     {
         // Adds force to the player rigidbody to jump
-        if (isGrounded)
+        if (coyoteTimer > 0f)
         {
-            rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             isGrounded = false;
+            coyoteTimer = 0f; // Prevent multiple jumps during coyote time
         }
 
     }
