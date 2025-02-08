@@ -9,6 +9,6 @@ public class Snap : RhythmInput
         base.EvaluateTiming();
         if (snapAnim)
         snapAnim.SetTrigger("Snap");
-        AudioManager.Instance.PlaySound(snapClip, null, 0.5f);
+        AudioManager.Instance.PlaySound(snapClip, null, 0.3f);
     }
 }

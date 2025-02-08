@@ -3,7 +3,9 @@ using UnityEngine;
 public abstract class RhythmInput : MonoBehaviour
 {
     public float perfectThreshold = 0.1f;  // 100 ms for Perfect
+    public float streakGainPerfect = 2f;
     public float goodThreshold = 0.15f;    // 150 ms for Good
+    public float streakGainGood = 1f;
     public KeyCode actionKey = KeyCode.Space;
 
     public virtual void Update()
@@ -24,12 +26,14 @@ public abstract class RhythmInput : MonoBehaviour
         {
             HitEffect.Instance.playHitEffect("Perfect");
             BeatUI.Instance.ShowHitFeedback("Perfect");
+            RhythmStreakManager.Instance.RegisterHit(streakGainPerfect);
             OnPerfectHit();
         }
         else if (timeDifference <= goodThreshold)
         {
             HitEffect.Instance.playHitEffect("Good");
             BeatUI.Instance.ShowHitFeedback("Good");
+            RhythmStreakManager.Instance.RegisterHit(streakGainGood);
             OnGoodHit();
         }
         else

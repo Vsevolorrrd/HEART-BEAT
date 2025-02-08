@@ -87,50 +87,22 @@ public class BEAT_Manager : MonoBehaviour
             nextBeat = Mathf.Floor(songPosition / secPerBeat + 1) * secPerBeat;
         }
     }
-    public void LevelUPMusic()
+    public void SetMusicLevel(int level)
     {
-        if (musicLevel_2.volume == 1f)
-        {
-            if (musicLevel_3.volume < 1f) IncreaseVolumeGradually(musicLevel_3);
-        }
-        else
-        {
-            IncreaseVolumeGradually(musicLevel_2);
-        }
+        StartCoroutine(TransitionMusicLevel(level));
     }
-    public IEnumerator IncreaseVolumeGradually(AudioSource audioSource)
-    {
-        float targetVolume = 1f;
 
-        while (audioSource.volume < targetVolume)
+    private IEnumerator TransitionMusicLevel(int targetLevel)
+    {
+        float targetVolume2 = (targetLevel >= 2) ? 1f : 0f;
+        float targetVolume3 = (targetLevel >= 3) ? 1f : 0f;
+
+        while (!Mathf.Approximately(musicLevel_2.volume, targetVolume2) ||
+               !Mathf.Approximately(musicLevel_3.volume, targetVolume3))
         {
-            audioSource.volume += Time.deltaTime / transitionSpeed;
+            musicLevel_2.volume = Mathf.MoveTowards(musicLevel_2.volume, targetVolume2, Time.deltaTime / transitionSpeed);
+            musicLevel_3.volume = Mathf.MoveTowards(musicLevel_3.volume, targetVolume3, Time.deltaTime / transitionSpeed);
             yield return null;
         }
-
-        audioSource.volume = targetVolume;
-    }
-    public void DecreaseMusicLevel()
-    {
-        if (musicLevel_3.volume > 0f)
-        {
-            DecreaseVolumeGradually(musicLevel_3);
-        }
-        else if (musicLevel_2.volume > 0f)
-        {
-            DecreaseVolumeGradually(musicLevel_2);
-        }
-    }
-    public IEnumerator DecreaseVolumeGradually(AudioSource audioSource)
-    {
-        float targetVolume = 0f;
-
-        while (audioSource.volume > targetVolume)
-        {
-            audioSource.volume -= Time.deltaTime / transitionSpeed;
-            yield return null;
-        }
-
-        audioSource.volume = targetVolume;
     }
 }
