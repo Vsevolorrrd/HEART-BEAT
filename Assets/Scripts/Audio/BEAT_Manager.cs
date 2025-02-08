@@ -19,7 +19,9 @@ public class BEAT_Manager : MonoBehaviour
 
     private float songBPM;
     private float nextBeat;
+    private int musicLevel;
     public static event Action BEAT;
+    public static event Action<int> MusicLevelIncreased;
     public event Action<double> OnMusicStart; // Event to share the start time
 
     private static BEAT_Manager _instance;
@@ -49,6 +51,7 @@ public class BEAT_Manager : MonoBehaviour
 
     public float GetSongPositionInBeats() => songPositionInBeats;
     public float GetSecPerBeat() => secPerBeat;
+    public int GetMusicLevel() => musicLevel;
 
     void Start()
     {
@@ -89,6 +92,8 @@ public class BEAT_Manager : MonoBehaviour
     }
     public void SetMusicLevel(int level)
     {
+        musicLevel = level;
+        MusicLevelIncreased?.Invoke(level);
         StartCoroutine(TransitionMusicLevel(level));
     }
 

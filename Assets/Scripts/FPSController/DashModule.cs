@@ -8,10 +8,12 @@ public class DashModule : RhythmInput
     public float dashUpwardForce = 2f;
     public float dashCooldown = 0.5f;
     private float dashCooldownTimer;
+    private float startDashForce;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        startDashForce = dashForce;
     }
     public override void Update()
     {
@@ -67,5 +69,39 @@ public class DashModule : RhythmInput
 
         return direction.normalized;
     }
+    #region events
+
+    private void OnEnable()
+    {
+        if (BEAT_Manager.Instance != null)
+        {
+            BEAT_Manager.MusicLevelIncreased += changePlayerStats;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (BEAT_Manager.Instance != null)
+        {
+            BEAT_Manager.MusicLevelIncreased += changePlayerStats;
+        }
+    }
+    private void changePlayerStats(int level)
+    {
+        switch (level)
+        {
+            case 3:
+                dashForce = startDashForce * 1.50f;
+                break;
+            case 2:
+                dashForce = startDashForce * 1.25f;
+                break;
+            case 1:
+                dashForce = startDashForce;
+                break;
+        }
+    }
+
+    #endregion
 
 }

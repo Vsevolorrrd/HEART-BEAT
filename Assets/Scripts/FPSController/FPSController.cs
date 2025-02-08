@@ -14,7 +14,7 @@ public class FPSController : MonoBehaviour
     public bool invertCamera = false;
     public bool cameraCanMove = true;
     public float mouseSensitivity = 2f;
-    public float maxLookAngle = 50f;
+    public float maxLookAngle = 70f;
 
     [Header("Cursor")]
     public bool lockCursor = true;
@@ -28,6 +28,7 @@ public class FPSController : MonoBehaviour
     [HideInInspector] public float speedModifier = 1;
     [HideInInspector] public bool isMoving = false;
     [HideInInspector] public bool isWalking = false;
+    private float startWalkSpeed;
 
     [Header("Jumping")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -59,6 +60,8 @@ public class FPSController : MonoBehaviour
 
     void Start()
     {
+        startWalkSpeed = walkSpeed;
+
         if (lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -182,12 +185,13 @@ public class FPSController : MonoBehaviour
         coyoteTimer = 0f; // Prevent multiple jumps during coyote time
     }
 
-    #region Foot Steps sync
+    #region events
 
     private void OnEnable()
     {
         if (BEAT_Manager.Instance != null)
         {
+            BEAT_Manager.MusicLevelIncreased += changePlayerStats;
             BEAT_Manager.Instance.OnMusicStart += StartFootsteps;
         }
     }
@@ -196,7 +200,23 @@ public class FPSController : MonoBehaviour
     {
         if (BEAT_Manager.Instance != null)
         {
+            BEAT_Manager.MusicLevelIncreased += changePlayerStats;
             BEAT_Manager.Instance.OnMusicStart -= StartFootsteps;
+        }
+    }
+    private void changePlayerStats(int level)
+    {
+        switch (level)
+        {
+            case 3:
+                walkSpeed = startWalkSpeed * 2f;
+                break;
+            case 2:
+                walkSpeed = startWalkSpeed * 1.50f;
+                break;
+            case 1:
+                walkSpeed = startWalkSpeed;
+                break;
         }
     }
 
