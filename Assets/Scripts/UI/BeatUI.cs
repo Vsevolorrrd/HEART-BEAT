@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class BeatUI : MonoBehaviour
 {
@@ -9,10 +10,20 @@ public class BeatUI : MonoBehaviour
     [SerializeField] Color goodColor = Color.yellow;
     [SerializeField] Color missColor = Color.white;
 
-    [SerializeField] private float displayDuration = 0.3f;
-    [SerializeField] private float fadeDuration = 0.2f;
-    [SerializeField] private float punchScale = 1.3f;
-    [SerializeField] private float punchDuration = 0.15f;
+    [SerializeField] float displayDuration = 0.3f;
+    [SerializeField] float fadeDuration = 0.2f;
+    [SerializeField] float punchScale = 1.3f;
+    [SerializeField] float punchDuration = 0.15f;
+
+    [Header("BeatBar")]
+    [SerializeField] RectTransform beatDotLeft;
+    [SerializeField] RectTransform beatDotRight;
+    [SerializeField] RectTransform beatBarLeft;
+    [SerializeField] RectTransform beatBarRight;
+
+    private float secPerBeat;
+    private float timer;
+    private float startLeft_X, endLeft_X, startRight_X, endRight_X;
 
     private Vector3 originalScale;
     private static BeatUI _instance;
@@ -59,10 +70,39 @@ public class BeatUI : MonoBehaviour
 
     private void Start()
     {
-        hitFeedbackText.text = ""; // Start with no text
+        hitFeedbackText.text = "";
         hitFeedbackText.gameObject.SetActive(false);
         originalScale = hitFeedbackText.transform.localScale;
+
+        secPerBeat = BEAT_Manager.Instance.GetSecPerBeat(); // Get beat duration
+        BEAT_Manager.BEAT += OnBeat;
+
+        // Get left bar start and end
+        startLeft_X = beatBarLeft.rect.xMin;
+        endLeft_X = 80f;
+
+        // Get right bar start and end
+        startRight_X = beatBarRight.rect.xMax;
+        endRight_X = -80f;
     }
+    void Update()
+    {
+        timer += Time.deltaTime;
+        float progress = timer / secPerBeat; // Normalize time
+
+        // Move the dots toward the center
+        float newLeftX = Mathf.Lerp(startLeft_X, endLeft_X, progress);
+        float newRightX = Mathf.Lerp(startRight_X, endRight_X, progress);
+
+        beatDotLeft.anchoredPosition = new Vector2(newLeftX, beatDotLeft.anchoredPosition.y);
+        beatDotRight.anchoredPosition = new Vector2(newRightX, beatDotRight.anchoredPosition.y);
+    }
+
+    private void OnBeat()
+    {
+        timer = 0; // Reset dot movement on beat
+    }
+
 
     public void ShowHitFeedback(string result)
     {
@@ -124,5 +164,14 @@ public class BeatUI : MonoBehaviour
 
         hitFeedbackText.gameObject.SetActive(false);
         hitFeedbackText.text = ""; // Clear text after fading
+    }
+    private void OnEnable()
+    {
+        BEAT_Manager.BEAT += OnBeat;
+    }
+
+    private void OnDisable()
+    {
+        BEAT_Manager.BEAT -= OnBeat;
     }
 }

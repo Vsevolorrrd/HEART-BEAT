@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using System;
 
-public class BEAT_Manager : MonoBehaviour
+public class BEAT_Manager : MonoBehaviour // add a beat bar <---
 {
     [SerializeField] Music song;
     [SerializeField] float secPerBeat;

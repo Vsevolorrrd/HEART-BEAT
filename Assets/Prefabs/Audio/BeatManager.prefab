@@ -434,11 +434,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a17013e39e9d3342897e484a6585ace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  song: {fileID: 11400000, guid: a174c566e32e7dd4e990a849cd763c70, type: 2}
+  song: {fileID: 0}
   secPerBeat: 0
   songPosition: 0
   songPositionInBeats: 0
   dspSongTime: 0
-  PrimaryMusicSource: {fileID: 4869833464545738488}
-  musicSource_2: {fileID: 1958734775582048962}
-  musicSource_3: {fileID: 7271392683327656357}
+  mainMusicLevel: {fileID: 4869833464545738488}
+  musicLevel_2: {fileID: 1958734775582048962}
+  musicLevel_3: {fileID: 7271392683327656357}
+  transitionSpeed: 1
+  footStepsClip: {fileID: 0}

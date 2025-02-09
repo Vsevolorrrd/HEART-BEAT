@@ -49,7 +49,7 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
-    public void PlaySound(AudioClip audioClip, Transform spawn = null, float volume = 1, bool loop = false)
+    public void PlaySound(AudioClip audioClip, float volume = 1, Transform spawn = null, bool loop = false, float pitch = 1f)
     {
         if (spawn == null)
         spawn = transform; // Default to this object's transform
@@ -58,22 +58,7 @@ public class AudioManager : MonoBehaviour
         audioSource.clip = audioClip;
         audioSource.volume = volume;
         audioSource.loop = loop;
-        audioSource.Play();
-
-        float clipLength = audioSource.clip.length;
-        Destroy(audioSource.gameObject, clipLength);
-    }
-    public void PlayRandomSound(AudioClip[] audioClip, Transform spawn = null, float volume = 1, bool loop = false)
-    {
-        int R = Random.Range(0, audioClip.Length);
-
-        if (spawn == null)
-        spawn = transform; // Default to this object's transform
-        AudioSource audioSource = Instantiate(soundFXPrefab, spawn.position, Quaternion.identity);
-
-        audioSource.clip = audioClip[R];
-        audioSource.volume = volume;
-        audioSource.loop = loop;
+        audioSource.pitch = pitch;
         audioSource.Play();
 
         if (loop)
@@ -85,16 +70,25 @@ public class AudioManager : MonoBehaviour
         float clipLength = audioSource.clip.length;
         Destroy(audioSource.gameObject, clipLength);
     }
-    public void PlayMusic(AudioClip audioClip, Transform spawn = null, float volume = 1, bool loop = true)
+    public void PlayRandomSound(AudioClip[] audioClip, float volume = 1, Transform spawn = null, bool loop = false, float pitch = 1f)
     {
+        int R = Random.Range(0, audioClip.Length);
+
         if (spawn == null)
         spawn = transform; // Default to this object's transform
         AudioSource audioSource = Instantiate(soundFXPrefab, spawn.position, Quaternion.identity);
 
-        audioSource.clip = audioClip;
+        audioSource.clip = audioClip[R];
         audioSource.volume = volume;
         audioSource.loop = loop;
+        audioSource.pitch = pitch;
         audioSource.Play();
+
+        if (loop)
+        {
+            loopSources.Add(audioSource);
+            return;
+        }
 
         float clipLength = audioSource.clip.length;
         Destroy(audioSource.gameObject, clipLength);

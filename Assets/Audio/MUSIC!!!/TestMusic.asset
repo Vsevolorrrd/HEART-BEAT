@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TestMusic
   m_EditorClassIdentifier: 
   songBPM: 120
-  Leadingtrack: {fileID: 8300000, guid: 43eaf69538ff92e42807e119e3e4738a, type: 3}
-  track_2: {fileID: 0}
-  track_3: {fileID: 0}
+  Leadingtrack: {fileID: 8300000, guid: 3d1c7b3878685da4cb01a35dba3c95e5, type: 3}
+  track_2: {fileID: 8300000, guid: 3ca377de416efd347b8be9dd4a71e8fb, type: 3}
+  track_3: {fileID: 8300000, guid: 8883a83948a14984c8041c77a13603d0, type: 3}
   footSteps: {fileID: 0}

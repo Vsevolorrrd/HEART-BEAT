@@ -20,6 +20,10 @@ public class RhythmStreakManager : MonoBehaviour
     [SerializeField] float streakDecayRate = 2f; // Streak lost per second
     [SerializeField] float streak = 0f;
 
+    private bool level1 = true;
+    private bool level2 = false;
+    private bool level3 = false;
+
 
     private void Awake()
     {
@@ -68,41 +72,58 @@ public class RhythmStreakManager : MonoBehaviour
     {
         if (streak >= 200)
         {
-            BEAT_Manager.Instance.SetMusicLevel(3);
-
-            if (streakBar)
-            sliderFillImage.color = level3_Color;
-
-            if (musicLevelText)
+            if (!level3)
             {
-                musicLevelText.color = level3_Color;
-                MusicLevelUI(3);
+                level3 = true;
+                level2 = false;
+                level1 = false;
+
+                BEAT_Manager.Instance.SetMusicLevel(3);
+
+                if (streakBar)
+                    sliderFillImage.color = level3_Color;
+
+                if (musicLevelText)
+                {
+                    musicLevelText.color = level3_Color;
+                    MusicLevelUI(3);
+                }
             }
         }
         else if (streak >= 100)
         {
-            BEAT_Manager.Instance.SetMusicLevel(2);
-
-            if (streakBar)
-            sliderFillImage.color = level2_Color;
-
-            if (musicLevelText)
+            if (!level2)
             {
-                musicLevelText.color = level2_Color;
-                MusicLevelUI(2);
+                BEAT_Manager.Instance.SetMusicLevel(2);
+
+                if (streakBar)
+                    sliderFillImage.color = level2_Color;
+
+                if (musicLevelText)
+                {
+                    musicLevelText.color = level2_Color;
+                    MusicLevelUI(2);
+                }
             }
         }
         else
         {
-            BEAT_Manager.Instance.SetMusicLevel(1);
-
-            if (streakBar)
-            sliderFillImage.color = level1_Color;
-
-            if (musicLevelText)
+            if (!level1)
             {
-                musicLevelText.color = level1_Color;
-                MusicLevelUI(1);
+                level3 = false;
+                level2 = false;
+                level1 = true;
+
+                BEAT_Manager.Instance.SetMusicLevel(1);
+
+                if (streakBar)
+                    sliderFillImage.color = level1_Color;
+
+                if (musicLevelText)
+                {
+                    musicLevelText.color = level1_Color;
+                    MusicLevelUI(1);
+                }
             }
         }
     }

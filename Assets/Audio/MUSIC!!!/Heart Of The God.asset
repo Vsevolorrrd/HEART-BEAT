@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c81eeb90a4a51c4183497b6310b00f2, type: 3}
+  m_Name: Heart Of The God
+  m_EditorClassIdentifier: 
+  songBPM: 120
+  Leadingtrack: {fileID: 8300000, guid: ecfe5365fc057954da1801865f8d88f3, type: 3}
+  track_2: {fileID: 8300000, guid: 9dfcf7afbbe38274d82ebd7483f6db0f, type: 3}
+  track_3: {fileID: 8300000, guid: b79880eb1ad73c24586e524e53c1c0a0, type: 3}
+  footSteps: {fileID: 8300000, guid: 78e5e50e0919bbf48954036eafaa96eb, type: 3}

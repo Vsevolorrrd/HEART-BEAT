@@ -14,7 +14,7 @@ public class FPSController : MonoBehaviour
     public bool invertCamera = false;
     public bool cameraCanMove = true;
     public float mouseSensitivity = 2f;
-    public float maxLookAngle = 70f;
+    public float maxLookAngle = 85f;
 
     [Header("Cursor")]
     public bool lockCursor = true;
@@ -33,10 +33,10 @@ public class FPSController : MonoBehaviour
     [Header("Jumping")]
     public KeyCode jumpKey = KeyCode.Space;
     public float jumpPower = 5f;
-    public bool enableDoubleJump = true;
-    public int maxJumps = 2; // Total jumps allowed
+    public int maxJumps = 1; // Total jumps allowed
     private int jumpCount = 0;
     private bool isGrounded = false;
+    private bool isjumping = false;
 
     [Header("Coyote Time")]
     public float coyoteTime = 0.2f; // Extra time for jumping after leaving the ground
@@ -50,7 +50,7 @@ public class FPSController : MonoBehaviour
 
     [Header("Footsteps")]
     public bool enableFootSteps = true;
-    private AudioSource footStepsSource;
+    [SerializeField] AudioSource footStepsSource;
 
     private void Awake()
     {
@@ -154,6 +154,8 @@ public class FPSController : MonoBehaviour
 
     private void CheckGround()
     {
+        if (isjumping) return; // to prevent reseting the jump count
+
         Vector3 origin = transform.position + Vector3.down * (transform.localScale.y * 0.5f);
         Vector3 direction = transform.TransformDirection(Vector3.down);
         float distance = 0.75f;
@@ -161,7 +163,7 @@ public class FPSController : MonoBehaviour
         // Sets isGrounded based on a raycast
         if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
         {
-            Debug.DrawRay(origin, direction * distance, Color.green);
+            Debug.DrawRay(origin, direction * distance, Color.red);
             isGrounded = true;
             coyoteTimer = coyoteTime; // Reset coyote timer when grounded
             jumpCount = maxJumps; // Reset jump count when grounded
@@ -173,6 +175,8 @@ public class FPSController : MonoBehaviour
     }
     private void Jump()
     {
+        isjumping = true;
+        Invoke("ResetJump", 0.2f);
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z); // Reset vertical velocity
         rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
 
@@ -184,6 +188,7 @@ public class FPSController : MonoBehaviour
         isGrounded = false;
         coyoteTimer = 0f; // Prevent multiple jumps during coyote time
     }
+    private void ResetJump() { isjumping = false; } // to prevent reseting the jump count
 
     #region events
 
@@ -206,6 +211,7 @@ public class FPSController : MonoBehaviour
     }
     private void changePlayerStats(int level)
     {
+        maxJumps = level;
         switch (level)
         {
             case 3:

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class DashModule : RhythmInput
 {
@@ -9,11 +10,21 @@ public class DashModule : RhythmInput
     public float dashCooldown = 0.5f;
     private float dashCooldownTimer;
     private float startDashForce;
+    [SerializeField] AudioClip dashModuleClip;
+    [SerializeField] ParticleSystem dashEfect;
+
+    [Header("FOV Settings")]
+    [SerializeField] Camera playerCam;
+    [SerializeField] private float fovIncrease = 15f;
+    [SerializeField] private float fovTransitionTime = 0.2f;
+
+    private float defaultFOV;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         startDashForce = dashForce;
+        defaultFOV = playerCam.fieldOfView;
     }
     public override void Update()
     {
@@ -39,6 +50,11 @@ public class DashModule : RhythmInput
     {
         if (dashCooldownTimer > 0) return;
         else dashCooldownTimer = dashCooldown;
+
+        AudioManager.Instance.PlaySound(dashModuleClip, 0.5f);
+        if (dashEfect)
+        dashEfect.Play();
+        StartCoroutine(ChangeFOV(defaultFOV + fovIncrease, fovTransitionTime));
 
         Vector3 direction = GetDirection(transform);
 
@@ -69,6 +85,20 @@ public class DashModule : RhythmInput
 
         return direction.normalized;
     }
+    private IEnumerator ChangeFOV(float targetFOV, float transitionTime)
+    {
+        
+        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, targetFOV, 10f * Time.deltaTime);
+        
+        yield return new WaitForSeconds(transitionTime / 2);
+
+        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultFOV, 10f * Time.deltaTime);
+        
+        yield return new WaitForSeconds(transitionTime / 2);
+
+        playerCam.fieldOfView = defaultFOV;
+    }
+
     #region events
 
     private void OnEnable()

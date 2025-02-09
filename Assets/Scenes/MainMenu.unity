@@ -268,6 +268,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8778e03702460c246a585eaf2113f7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleMultiplier: 1.2
+  scaleBackSpeed: 0.1
 --- !u!1 &394917409
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,6 +556,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6188605931677875805, guid: 9922ce1f92935ea4ebf6f6a60b819858, type: 3}
+      propertyPath: song
+      value: 
+      objectReference: {fileID: 11400000, guid: bc1cc3f1a0896e343b0bba52371a0bb7, type: 2}
     - target: {fileID: 8932117778658568136, guid: 9922ce1f92935ea4ebf6f6a60b819858, type: 3}
       propertyPath: m_Name
       value: BeatManager
