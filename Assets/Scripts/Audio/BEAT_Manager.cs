@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using System;
 
-public class BEAT_Manager : MonoBehaviour // add a beat bar <---
+public class BEAT_Manager : MonoBehaviour
 {
     [SerializeField] Music song;
     [SerializeField] float secPerBeat;
@@ -77,6 +77,7 @@ public class BEAT_Manager : MonoBehaviour // add a beat bar <---
         musicLevel_3.loop = true;
 
         nextBeat = secPerBeat;
+        MainMenu.OnPause += HandlePause;
     }
     void Update()
     {
@@ -110,4 +111,28 @@ public class BEAT_Manager : MonoBehaviour // add a beat bar <---
             yield return null;
         }
     }
+
+    #region events
+
+    private void OnDestroy()
+    {
+        MainMenu.OnPause -= HandlePause;
+    }
+
+    private void HandlePause(bool pause)
+    {
+        if (pause)
+        {
+            mainMusicLevel.volume = 0.3f;
+            musicLevel_2.volume = 0.3f;
+            musicLevel_3.volume = 0.3f;
+        }
+        else
+        {
+            mainMusicLevel.volume = 1f;
+            musicLevel_2.volume = 1f;
+            musicLevel_3.volume = 1f;
+        }
+    }
+    #endregion
 }

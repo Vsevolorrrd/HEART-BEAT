@@ -20,14 +20,24 @@ public class DashModule : RhythmInput
 
     private float defaultFOV;
 
-    void Start()
+    public override void Start()
     {
+        base.Start();
+
+        if (BEAT_Manager.Instance != null)
+        {
+            BEAT_Manager.MusicLevelIncreased += changePlayerStats;
+        }
+
         rb = GetComponent<Rigidbody>();
         startDashForce = dashForce;
         defaultFOV = playerCam.fieldOfView;
     }
     public override void Update()
     {
+        if (!playerInput) 
+        return;
+
         if (Input.GetKeyDown(actionKey))
         {
             EvaluateTiming();
@@ -101,16 +111,10 @@ public class DashModule : RhythmInput
 
     #region events
 
-    private void OnEnable()
+    public override void OnDestroy()
     {
-        if (BEAT_Manager.Instance != null)
-        {
-            BEAT_Manager.MusicLevelIncreased += changePlayerStats;
-        }
-    }
+        base.OnDestroy();
 
-    private void OnDisable()
-    {
         if (BEAT_Manager.Instance != null)
         {
             BEAT_Manager.MusicLevelIncreased += changePlayerStats;

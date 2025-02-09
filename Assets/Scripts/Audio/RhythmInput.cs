@@ -7,9 +7,13 @@ public abstract class RhythmInput : MonoBehaviour
     public float goodThreshold = 0.15f;    // 150 ms for Good
     public float streakGainGood = 1f;
     public KeyCode actionKey = KeyCode.Space;
+    public bool playerInput = true;
 
     public virtual void Update()
     {
+        if (!playerInput)
+        return;
+
         if (Input.GetKeyDown(actionKey))
         {
             EvaluateTiming();
@@ -54,4 +58,22 @@ public abstract class RhythmInput : MonoBehaviour
     {
         Debug.Log("Miss!");
     }
+
+    #region events
+
+    public virtual void Start()
+    {
+        MainMenu.OnPause += HandlePause;
+    }
+
+    public virtual void OnDestroy()
+    {
+        MainMenu.OnPause -= HandlePause;
+    }
+
+    private void HandlePause(bool isPaused)
+    {
+        playerInput = !isPaused;
+    }
+    #endregion
 }

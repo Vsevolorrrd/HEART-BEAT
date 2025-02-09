@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,66 +9,54 @@ public class MainMenu : MonoBehaviour
     public bool canOpenPauseMenu = false;
     public bool lockCursor = false;
 
+    public static Action<bool> OnPause;
+
     void Update()
     {
-        if (canOpenPauseMenu)
+        if (canOpenPauseMenu && Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                if (isPaused)
-                ResumeGame();
-                else
-                PauseGame();
-            }
+            TogglePause();
         }
     }
+
     public void StartGame()
     {
-        Time.timeScale = 1f;
-        isPaused = false;
+        SetPauseState(false);
         //SceneLoader.Instance.LoadScene();
     }
+
     public void OpenMainMenu()
     {
-        Time.timeScale = 1f;
-        isPaused = false;
+        SetPauseState(false);
         SceneLoader.Instance.LoadScene("MainMenu");
     }
+
     public void Restart()
     {
         SceneLoader.Instance.LoadScene(SceneManager.GetActiveScene().name);
-        Time.timeScale = 1f;
-        isPaused = false;
-    }
-    public void PauseGame()
-    {
-        // freeze time
-        pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f;
-        isPaused = true;
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        SetPauseState(false);
     }
 
-    public void ResumeGame()
+    public void TogglePause()
     {
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        isPaused = false;
+        SetPauseState(!isPaused);
+    }
 
-        if (lockCursor)
-            Cursor.lockState = CursorLockMode.Locked;
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = false;
-        }
+    private void SetPauseState(bool state)
+    {
+        isPaused = state;
+        pauseMenuUI.SetActive(isPaused);
+
+        Time.timeScale = isPaused ? 0f : 1f;
+        Cursor.lockState = isPaused ? CursorLockMode.None : (lockCursor ? CursorLockMode.Locked : CursorLockMode.None);
+        Cursor.visible = isPaused || !lockCursor;
+
+        OnPause?.Invoke(isPaused);
     }
 
     public void QuitGame()
     {
-        Time.timeScale = 1f; // Make sure time is normal
+        SetPauseState(false);
         Debug.Log("Quitting Game...");
         Application.Quit();
     }

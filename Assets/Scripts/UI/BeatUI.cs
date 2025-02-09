@@ -20,6 +20,7 @@ public class BeatUI : MonoBehaviour
     [SerializeField] RectTransform beatDotRight;
     [SerializeField] RectTransform beatBarLeft;
     [SerializeField] RectTransform beatBarRight;
+    private bool beatBar = true;
 
     private float secPerBeat;
     private float timer;
@@ -84,9 +85,14 @@ public class BeatUI : MonoBehaviour
         // Get right bar start and end
         startRight_X = beatBarRight.rect.xMax;
         endRight_X = -80f;
+
+        // Hide bars if disabled
+        SetBarsActive(beatBar);
     }
     void Update()
     {
+        if (!beatBar) return;
+
         timer += Time.deltaTime;
         float progress = timer / secPerBeat; // Normalize time
 
@@ -100,6 +106,7 @@ public class BeatUI : MonoBehaviour
 
     private void OnBeat()
     {
+        if (!beatBar) return;
         timer = 0; // Reset dot movement on beat
     }
 
@@ -164,6 +171,27 @@ public class BeatUI : MonoBehaviour
 
         hitFeedbackText.gameObject.SetActive(false);
         hitFeedbackText.text = ""; // Clear text after fading
+    }
+    public void ToggleBeatBar()
+    {
+        if (beatBar)
+        {
+            beatBar = false;
+            SetBarsActive(false);
+        }
+        else
+        {
+            beatBar = true;
+            SetBarsActive(true);
+        }
+    }
+
+    private void SetBarsActive(bool state)
+    {
+        beatBarLeft.gameObject.SetActive(state);
+        beatBarRight.gameObject.SetActive(state);
+        beatDotLeft.gameObject.SetActive(state);
+        beatDotRight.gameObject.SetActive(state);
     }
     private void OnEnable()
     {

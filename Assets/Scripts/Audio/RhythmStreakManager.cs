@@ -94,6 +94,10 @@ public class RhythmStreakManager : MonoBehaviour
         {
             if (!level2)
             {
+                level3 = false;
+                level2 = true;
+                level1 = false;
+
                 BEAT_Manager.Instance.SetMusicLevel(2);
 
                 if (streakBar)

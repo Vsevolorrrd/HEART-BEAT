@@ -22,13 +22,18 @@ public class EchoJump : RhythmInput
     private EchoPoint echoPoint = null;
     private bool isTeleporting = false;
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
+
         rb = GetComponent<Rigidbody>();
         defaultFOV = playerCam.fieldOfView;
     }
     public override  void Update()
     {
+        if (!playerInput)
+        return;
+
         if (Input.GetKeyDown(actionKey) && !isTeleporting)
         {
             RaycastHit hit;

@@ -72,9 +72,19 @@ public class FPSController : MonoBehaviour
             footStepsSource.volume = 0;
             footStepsSource.loop = true;
         }
+
+        MainMenu.OnPause += HandlePause;
+        if (BEAT_Manager.Instance != null)
+        {
+            BEAT_Manager.MusicLevelIncreased += changePlayerStats;
+            BEAT_Manager.Instance.OnMusicStart += StartFootsteps;
+        }
     }
     private void Update()
     {
+        if (!playerCanMove) // Stop movement & camera when paused
+        return;
+
         CameraMovement();
         FOVAdjustment();
         Jumping();
@@ -86,6 +96,9 @@ public class FPSController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!playerCanMove) // Stop movement & camera when paused
+        return;
+
         Movement();
     }
     private void CameraMovement()
@@ -192,23 +205,6 @@ public class FPSController : MonoBehaviour
 
     #region events
 
-    private void OnEnable()
-    {
-        if (BEAT_Manager.Instance != null)
-        {
-            BEAT_Manager.MusicLevelIncreased += changePlayerStats;
-            BEAT_Manager.Instance.OnMusicStart += StartFootsteps;
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (BEAT_Manager.Instance != null)
-        {
-            BEAT_Manager.MusicLevelIncreased += changePlayerStats;
-            BEAT_Manager.Instance.OnMusicStart -= StartFootsteps;
-        }
-    }
     private void changePlayerStats(int level)
     {
         maxJumps = level;
@@ -231,6 +227,20 @@ public class FPSController : MonoBehaviour
         if (!enableFootSteps) return;
         footStepsSource.clip = BEAT_Manager.Instance.footStepsClip;
         footStepsSource.PlayScheduled(startTime);
+    }
+
+    private void HandlePause(bool isPaused)
+    {
+        playerCanMove = !isPaused;
+    }
+    private void OnDestroy()
+    {
+        MainMenu.OnPause -= HandlePause;
+        if (BEAT_Manager.Instance != null)
+        {
+            BEAT_Manager.MusicLevelIncreased += changePlayerStats;
+            BEAT_Manager.Instance.OnMusicStart -= StartFootsteps;
+        }
     }
 
     #endregion
