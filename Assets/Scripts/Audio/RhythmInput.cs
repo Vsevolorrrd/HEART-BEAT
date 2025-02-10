@@ -7,7 +7,7 @@ public abstract class RhythmInput : MonoBehaviour
     public float goodThreshold = 0.15f;    // 150 ms for Good
     public float streakGainGood = 1f;
     public KeyCode actionKey = KeyCode.Space;
-    public bool playerInput = true;
+    [HideInInspector] public bool playerInput = true;
 
     public virtual void Update()
     {

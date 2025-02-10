@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] AudioSource soundFXPrefab;
     private List<AudioSource> loopSources;
+    private List<AudioSource> audioPool = new List<AudioSource>();
 
     private static AudioManager _instance;
 
@@ -46,9 +47,50 @@ public class AudioManager : MonoBehaviour
         {
             _instance = this;  // Assign this object as the instance
         }
+        InitializeAudioPool();
     }
     #endregion
 
+    public void PlayPooledSound(AudioClip clip, float volume = 1f, float pitch = 1f) // for sounds that should be played instantly (basically player actions)
+    {
+        AudioSource audioSource = GetPooledAudioSource();
+        audioSource.clip = clip;
+        audioSource.volume = volume;
+        audioSource.pitch = pitch;
+        audioSource.Play();
+
+        StartCoroutine(DeactivateAfterPlay(audioSource));
+    }
+    private void InitializeAudioPool()
+    {
+        for (int i = 0; i < 15; i++)  // Pool size of 15
+        {
+            AudioSource audioSource = Instantiate(soundFXPrefab, transform);
+            audioSource.gameObject.SetActive(false);
+            audioPool.Add(audioSource);
+        }
+    }
+    private AudioSource GetPooledAudioSource()
+    {
+        foreach (AudioSource source in audioPool)
+        {
+            if (!source.gameObject.activeInHierarchy)
+            {
+                source.gameObject.SetActive(true);
+                return source;
+            }
+        }
+
+        // Expand pool if needed
+        AudioSource newSource = Instantiate(soundFXPrefab, transform);
+        audioPool.Add(newSource);
+        return newSource;
+    }
+    private IEnumerator DeactivateAfterPlay(AudioSource source)
+    {
+        yield return new WaitForSeconds(source.clip.length);
+        source.gameObject.SetActive(false);
+    }
     public void PlaySound(AudioClip audioClip, float volume = 1, Transform spawn = null, bool loop = false, float pitch = 1f)
     {
         if (spawn == null)

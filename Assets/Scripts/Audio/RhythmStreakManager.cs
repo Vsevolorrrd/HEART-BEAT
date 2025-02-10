@@ -19,10 +19,8 @@ public class RhythmStreakManager : MonoBehaviour
     [SerializeField] float streakGain = 5f; // Streak gained per successful hit (whiout modifier)
     [SerializeField] float streakDecayRate = 2f; // Streak lost per second
     [SerializeField] float streak = 0f;
+    private int currentMusicLevel = 1; // Start at level 1
 
-    private bool level1 = true;
-    private bool level2 = false;
-    private bool level3 = false;
 
 
     private void Awake()
@@ -70,69 +68,41 @@ public class RhythmStreakManager : MonoBehaviour
 
     private void UpdateMusicLevel()
     {
+        int newMusicLevel = 1;
+
         if (streak >= 200)
         {
-            if (!level3)
-            {
-                level3 = true;
-                level2 = false;
-                level1 = false;
-
-                BEAT_Manager.Instance.SetMusicLevel(3);
-
-                if (streakBar)
-                    sliderFillImage.color = level3_Color;
-
-                if (musicLevelText)
-                {
-                    musicLevelText.color = level3_Color;
-                    MusicLevelUI(3);
-                }
-            }
+            newMusicLevel = 3;
         }
         else if (streak >= 100)
         {
-            if (!level2)
-            {
-                level3 = false;
-                level2 = true;
-                level1 = false;
-
-                BEAT_Manager.Instance.SetMusicLevel(2);
-
-                if (streakBar)
-                    sliderFillImage.color = level2_Color;
-
-                if (musicLevelText)
-                {
-                    musicLevelText.color = level2_Color;
-                    MusicLevelUI(2);
-                }
-            }
+            newMusicLevel = 2;
         }
-        else
+        if (newMusicLevel > currentMusicLevel)
         {
-            if (!level1)
+            streak += 10f;  // to prevent instant loss of the level
+        }
+
+        if (newMusicLevel != currentMusicLevel) // to only update when level changes
+        {
+            currentMusicLevel = newMusicLevel;
+            BEAT_Manager.Instance.SetMusicLevel(newMusicLevel);
+
+            if (streakBar)
             {
-                level3 = false;
-                level2 = false;
-                level1 = true;
+                if (newMusicLevel == 3)
+                sliderFillImage.color = level3_Color;
+                else if (newMusicLevel == 2)
+                sliderFillImage.color = level2_Color;
+                else
+                sliderFillImage.color = level1_Color;
+            }
 
-                BEAT_Manager.Instance.SetMusicLevel(1);
-
-                if (streakBar)
-                    sliderFillImage.color = level1_Color;
-
-                if (musicLevelText)
-                {
-                    musicLevelText.color = level1_Color;
-                    MusicLevelUI(1);
-                }
+            if (musicLevelText)
+            {
+                musicLevelText.color = sliderFillImage.color;
+                musicLevelText.text = newMusicLevel.ToString();
             }
         }
-    }
-    private void MusicLevelUI(int level)
-    {
-        musicLevelText.text = level.ToString();
     }
 }

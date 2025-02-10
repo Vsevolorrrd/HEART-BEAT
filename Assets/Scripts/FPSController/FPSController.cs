@@ -48,10 +48,6 @@ public class FPSController : MonoBehaviour
     public float sprintFOVStepTime = 10f;
     private float baseFOV;
 
-    [Header("Footsteps")]
-    public bool enableFootSteps = true;
-    [SerializeField] AudioSource footStepsSource;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -67,18 +63,10 @@ public class FPSController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        if (enableFootSteps)
-        {
-            footStepsSource.volume = 0;
-            footStepsSource.loop = true;
-        }
-
         MainMenu.OnPause += HandlePause;
-        if (BEAT_Manager.Instance != null)
-        {
-            BEAT_Manager.MusicLevelIncreased += changePlayerStats;
-            BEAT_Manager.Instance.OnMusicStart += StartFootsteps;
-        }
+
+        BEAT_Manager.MusicLevelIncreased += changePlayerStats;
+
     }
     private void Update()
     {
@@ -89,7 +77,6 @@ public class FPSController : MonoBehaviour
         FOVAdjustment();
         Jumping();
         HeadBob();
-        Footsteps();
 
         CheckGround();
     }
@@ -136,11 +123,6 @@ public class FPSController : MonoBehaviour
             float speed = sprintModule != null && sprintModule.IsSprinting ? sprintModule.sprintSpeed : walkSpeed;
             headBob.HeadBob(speed);
         }
-    }
-    private void Footsteps()
-    {
-        if (!enableFootSteps) return;
-        footStepsSource.volume = isWalking ? 1 : 0;
     }
     private void Movement()
     {
@@ -222,13 +204,6 @@ public class FPSController : MonoBehaviour
         }
     }
 
-    private void StartFootsteps(double startTime)
-    {
-        if (!enableFootSteps) return;
-        footStepsSource.clip = BEAT_Manager.Instance.footStepsClip;
-        footStepsSource.PlayScheduled(startTime);
-    }
-
     private void HandlePause(bool isPaused)
     {
         playerCanMove = !isPaused;
@@ -236,11 +211,8 @@ public class FPSController : MonoBehaviour
     private void OnDestroy()
     {
         MainMenu.OnPause -= HandlePause;
-        if (BEAT_Manager.Instance != null)
-        {
-            BEAT_Manager.MusicLevelIncreased += changePlayerStats;
-            BEAT_Manager.Instance.OnMusicStart -= StartFootsteps;
-        }
+
+        BEAT_Manager.MusicLevelIncreased += changePlayerStats;
     }
 
     #endregion

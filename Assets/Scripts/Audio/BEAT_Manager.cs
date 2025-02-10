@@ -22,7 +22,7 @@ public class BEAT_Manager : MonoBehaviour
     private int musicLevel;
     public static event Action BEAT;
     public static event Action<int> MusicLevelIncreased;
-    public event Action<double> OnMusicStart; // Event to share the start time
+    public static event Action<double> OnMusicStart;
 
     private static BEAT_Manager _instance;
 
@@ -79,7 +79,7 @@ public class BEAT_Manager : MonoBehaviour
         nextBeat = secPerBeat;
         MainMenu.OnPause += HandlePause;
     }
-    void Update()
+    void FixedUpdate()
     {
         songPosition = (float)(AudioSettings.dspTime - dspSongTime);
         songPositionInBeats = songPosition / secPerBeat;

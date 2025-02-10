@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class BeatUI : MonoBehaviour
 {
@@ -16,15 +16,18 @@ public class BeatUI : MonoBehaviour
     [SerializeField] float punchDuration = 0.15f;
 
     [Header("BeatBar")]
-    [SerializeField] RectTransform beatDotLeft;
-    [SerializeField] RectTransform beatDotRight;
+    [SerializeField] RectTransform beatDotPrefab;
     [SerializeField] RectTransform beatBarLeft;
     [SerializeField] RectTransform beatBarRight;
-    private bool beatBar = true;
+    [SerializeField] Transform beatBarContainer; // Parent for beat dots
 
-    private float secPerBeat;
-    private float timer;
-    private float startLeft_X, endLeft_X, startRight_X, endRight_X;
+
+    [SerializeField] float dotSpeed = 200f;
+    [SerializeField] float startOffset = 400f;
+    [SerializeField] float stopDistance = 80f;
+
+    private List<(RectTransform dot, CanvasGroup cg)> activeDots = new List<(RectTransform, CanvasGroup)>();
+    private bool beatBar = true;
 
     private Vector3 originalScale;
     private static BeatUI _instance;
@@ -75,41 +78,57 @@ public class BeatUI : MonoBehaviour
         hitFeedbackText.gameObject.SetActive(false);
         originalScale = hitFeedbackText.transform.localScale;
 
-        secPerBeat = BEAT_Manager.Instance.GetSecPerBeat(); // Get beat duration
         BEAT_Manager.BEAT += OnBeat;
-
-        // Get left bar start and end
-        startLeft_X = beatBarLeft.rect.xMin;
-        endLeft_X = 80f;
-
-        // Get right bar start and end
-        startRight_X = beatBarRight.rect.xMax;
-        endRight_X = -80f;
 
         // Hide bars if disabled
         SetBarsActive(beatBar);
     }
     void Update()
     {
-        if (!beatBar) return;
+        for (int i = activeDots.Count - 1; i >= 0; i--)
+        {
+            var (dot, cg) = activeDots[i];
 
-        timer += Time.deltaTime;
-        float progress = timer / secPerBeat; // Normalize time
+            // Move left dots to the right, right dots to the left
+            if (dot.anchoredPosition.x < 0)
+            dot.anchoredPosition += Vector2.right * (dotSpeed * Time.deltaTime);
+            else
+            dot.anchoredPosition += Vector2.left * (dotSpeed * Time.deltaTime);
 
-        // Move the dots toward the center
-        float newLeftX = Mathf.Lerp(startLeft_X, endLeft_X, progress);
-        float newRightX = Mathf.Lerp(startRight_X, endRight_X, progress);
+            if (beatBar)
+            {
+                // Calculate fade-in effect
+                float distanceToStop = Mathf.Abs(dot.anchoredPosition.x) - stopDistance;
+                float fadeProgress = 1f - Mathf.Clamp01(distanceToStop / startOffset);
+                cg.alpha = fadeProgress; // Adjust alpha based on distance
+            }
 
-        beatDotLeft.anchoredPosition = new Vector2(newLeftX, beatDotLeft.anchoredPosition.y);
-        beatDotRight.anchoredPosition = new Vector2(newRightX, beatDotRight.anchoredPosition.y);
+            // Remove dots when they reach stop distance
+            if (Mathf.Abs(dot.anchoredPosition.x) <= stopDistance)
+            {
+                Destroy(dot.gameObject);
+                activeDots.RemoveAt(i);
+            }
+        }
     }
 
     private void OnBeat()
     {
-        if (!beatBar) return;
-        timer = 0; // Reset dot movement on beat
-    }
 
+        SpawnBeatDot(-startOffset); // Left dot
+        SpawnBeatDot(startOffset);  // Right dot
+    }
+    private void SpawnBeatDot(float startX)
+    {
+        RectTransform newDot = Instantiate(beatDotPrefab, beatBarContainer);
+        newDot.anchoredPosition = new Vector2(startX, 0);
+
+        // Add a CanvasGroup for alpha control
+        CanvasGroup cg = newDot.gameObject.AddComponent<CanvasGroup>();
+        cg.alpha = 0f; // Start fully transparent
+
+        activeDots.Add((newDot, cg));
+    }
 
     public void ShowHitFeedback(string result)
     {
@@ -174,24 +193,14 @@ public class BeatUI : MonoBehaviour
     }
     public void ToggleBeatBar()
     {
-        if (beatBar)
-        {
-            beatBar = false;
-            SetBarsActive(false);
-        }
-        else
-        {
-            beatBar = true;
-            SetBarsActive(true);
-        }
+        beatBar = !beatBar;
+        SetBarsActive(beatBar);
     }
 
     private void SetBarsActive(bool state)
     {
         beatBarLeft.gameObject.SetActive(state);
         beatBarRight.gameObject.SetActive(state);
-        beatDotLeft.gameObject.SetActive(state);
-        beatDotRight.gameObject.SetActive(state);
     }
     private void OnEnable()
     {
