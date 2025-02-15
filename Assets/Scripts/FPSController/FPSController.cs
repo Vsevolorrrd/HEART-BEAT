@@ -1,16 +1,17 @@
+using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CharacterController))]
 public class FPSController : MonoBehaviour
 {
-    private Rigidbody rb;
+    private CharacterController controller;
 
     // Modules
     private HeadBobModule headBob;
-    private SprintModule sprintModule;
 
     [Header("Camera Settings")]
-    public Camera playerCamera;
+    public CinemachineCamera playerCam;
     public bool invertCamera = false;
     public bool cameraCanMove = true;
     public float mouseSensitivity = 2f;
@@ -24,34 +25,34 @@ public class FPSController : MonoBehaviour
     [Header("Movement")]
     public bool playerCanMove = true;
     public float walkSpeed = 5f;
-    public float maxVelocityChange = 10f;
+    public float acceleration = 10f;
     [HideInInspector] public float speedModifier = 1;
     [HideInInspector] public bool isMoving = false;
     [HideInInspector] public bool isWalking = false;
     private float startWalkSpeed;
+    private Vector3 moveDirection = Vector3.zero;
 
     [Header("Jumping")]
     public KeyCode jumpKey = KeyCode.Space;
     public float jumpPower = 5f;
-    public int maxJumps = 1; // Total jumps allowed
+    public int maxJumps = 1;
     private int jumpCount = 0;
     private bool isGrounded = false;
-    private bool isjumping = false;
+    private bool isJumping = false;
 
-    [Header("Coyote Time")]
-    public float coyoteTime = 0.2f; // Extra time for jumping after leaving the ground
+    [Header("Gravity & Coyote Time")]
+    public float gravity = 20f;
+    public float coyoteTime = 0.2f;
     private float coyoteTimer = 0f;
+    private float verticalVelocity = 0f;
 
-    [Header("Field of View (FOV)")]
-    public bool enableFOV = true;
-    public float fovMultiplier = 1.5f; // How much the FOV scales with speed
-    public float sprintFOVStepTime = 10f;
-    private float baseFOV;
+    private float defaultFOV;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        baseFOV = playerCamera.fieldOfView;
+        controller = GetComponent<CharacterController>();
+        headBob = GetComponent<HeadBobModule>();
+        defaultFOV = playerCam.Lens.FieldOfView;
     }
 
     void Start()
@@ -74,7 +75,6 @@ public class FPSController : MonoBehaviour
         return;
 
         CameraMovement();
-        FOVAdjustment();
         Jumping();
         HeadBob();
 
@@ -97,15 +97,39 @@ public class FPSController : MonoBehaviour
         pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
 
         transform.localEulerAngles = new Vector3(0, yaw, 0);
-        playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
+        playerCam.transform.localEulerAngles = new Vector3(pitch, 0, 0);
     }
-    private void FOVAdjustment()
+    public void AdjustFOV(float fovIncrease, float duration, float returnToDefaultDuration)
     {
-        if (!enableFOV) return;
+        StopAllCoroutines();
+        StartCoroutine(AdjustFOVCoroutine(fovIncrease, duration, returnToDefaultDuration));
+    }
 
-        float currentSpeed = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z).magnitude;
-        float targetFOV = baseFOV + (currentSpeed * fovMultiplier);
-        playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, sprintFOVStepTime * Time.deltaTime);
+    private IEnumerator AdjustFOVCoroutine(float fovIncrease, float duration, float returnToDefaultDuration)
+    {
+        float targetFOV = defaultFOV + fovIncrease;
+        float elapsedTime = 0f;
+
+        // Increase FOV
+        while (elapsedTime < duration)
+        {
+            playerCam.Lens.FieldOfView = Mathf.Lerp(defaultFOV, targetFOV, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        playerCam.Lens.FieldOfView = targetFOV;
+
+        // Reset time
+        elapsedTime = 0f;
+
+        // Decrease FOV back
+        while (elapsedTime < returnToDefaultDuration)
+        {
+            playerCam.Lens.FieldOfView = Mathf.Lerp(targetFOV, defaultFOV, elapsedTime / returnToDefaultDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        playerCam.Lens.FieldOfView = defaultFOV;
     }
     private void Jumping()
     {
@@ -120,70 +144,74 @@ public class FPSController : MonoBehaviour
     {
         if (headBob && isWalking)
         {
-            float speed = sprintModule != null && sprintModule.IsSprinting ? sprintModule.sprintSpeed : walkSpeed;
-            headBob.HeadBob(speed);
+            headBob.HeadBob(walkSpeed);
         }
     }
     private void Movement()
     {
         if (!playerCanMove) return;
 
-        // Calculate how player should be moving
-        Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        bool isCurrentlyMoving = targetVelocity.x != 0 || targetVelocity.z != 0; // Checks if player is walking and isGrounded
+        // Input-based movement direction
+        Vector3 inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        bool isCurrentlyMoving = inputDirection.x != 0 || inputDirection.z != 0;
 
         isMoving = isCurrentlyMoving;
         isWalking = isGrounded && isCurrentlyMoving;
 
-        targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed * speedModifier;
+        // Convert local input
+        Vector3 move = transform.TransformDirection(inputDirection) * walkSpeed * speedModifier;
+        // Apply movement acceleration
+        moveDirection = Vector3.Lerp(moveDirection, move, acceleration * Time.deltaTime);
 
-        // Apply a force
-        Vector3 velocity = rb.linearVelocity;
-        Vector3 velocityChange = targetVelocity - velocity;
-        velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
-        velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
-        velocityChange.y = 0;
+        // Apply gravity
+        if (isGrounded)
+        {
+            verticalVelocity = -gravity * Time.deltaTime;
+        }
+        else
+        {
+            verticalVelocity -= gravity/1.4f * Time.deltaTime;
+        }
 
-        rb.AddForce(velocityChange, ForceMode.VelocityChange);
+        moveDirection.y = verticalVelocity;
+
+        // Move the character
+        controller.Move(moveDirection * Time.deltaTime);
     }
 
     private void CheckGround()
     {
-        if (isjumping) return; // to prevent reseting the jump count
+        if (isJumping) return;
 
-        Vector3 origin = transform.position + Vector3.down * (transform.localScale.y * 0.5f);
-        Vector3 direction = transform.TransformDirection(Vector3.down);
-        float distance = 0.75f;
+        isGrounded = controller.isGrounded;
 
-        // Sets isGrounded based on a raycast
-        if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
+        if (isGrounded)
         {
-            Debug.DrawRay(origin, direction * distance, Color.red);
-            isGrounded = true;
-            coyoteTimer = coyoteTime; // Reset coyote timer when grounded
-            jumpCount = maxJumps; // Reset jump count when grounded
-        }
-        else
-        {
-            isGrounded = false;
+            coyoteTimer = coyoteTime;
+            jumpCount = maxJumps;
         }
     }
     private void Jump()
     {
-        isjumping = true;
+        isJumping = true;
         Invoke("ResetJump", 0.2f);
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z); // Reset vertical velocity
-        rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
 
-        if (isGrounded || coyoteTimer > 0f) // If using coyote time or normal jump, reset jump count to allow double jump
+        verticalVelocity = jumpPower; // Apply jump force
+
+        if (isGrounded || coyoteTimer > 0f)
         jumpCount = maxJumps - 1;
-        else // If already in air, just reduce remaining jumps
+        else
         jumpCount--;
 
         isGrounded = false;
-        coyoteTimer = 0f; // Prevent multiple jumps during coyote time
+        coyoteTimer = 0f;
     }
-    private void ResetJump() { isjumping = false; } // to prevent reseting the jump count
+    private void ResetJump() { isJumping = false; } // to prevent reseting the jump count
+
+    public void ResetVilocity(float velocity)
+    {
+        verticalVelocity = velocity;
+    }
 
     #region events
 

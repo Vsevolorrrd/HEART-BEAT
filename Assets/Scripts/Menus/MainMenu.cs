@@ -22,12 +22,13 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         SetPauseState(false);
-        //SceneLoader.Instance.LoadScene();
+        SceneLoader.Instance.LoadScene("Tutorial");
     }
 
     public void OpenMainMenu()
     {
-        SetPauseState(false);
+        Time.timeScale =  1f;
+        isPaused = false;
         SceneLoader.Instance.LoadScene("MainMenu");
     }
 
@@ -45,6 +46,7 @@ public class MainMenu : MonoBehaviour
     private void SetPauseState(bool state)
     {
         isPaused = state;
+        if(pauseMenuUI)
         pauseMenuUI.SetActive(isPaused);
 
         Time.timeScale = isPaused ? 0f : 1f;

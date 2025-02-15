@@ -28,4 +28,6 @@ public class ScaleToBeat : RespondToBeat
     {
         transform.localScale = originalScale;
     }
+        //stencil shader
+
 }

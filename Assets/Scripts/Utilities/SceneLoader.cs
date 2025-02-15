@@ -63,9 +63,10 @@ public class SceneLoader : MonoBehaviour
         anim.SetTrigger("Start");
 
         yield return new WaitForSeconds(1);
-
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SceneManager.LoadScene(name);
+
         if (anim)
         anim.SetTrigger("End");
     }

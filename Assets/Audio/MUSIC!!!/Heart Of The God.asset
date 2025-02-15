@@ -17,3 +17,4 @@ MonoBehaviour:
   track_2: {fileID: 8300000, guid: 9dfcf7afbbe38274d82ebd7483f6db0f, type: 3}
   track_3: {fileID: 8300000, guid: b79880eb1ad73c24586e524e53c1c0a0, type: 3}
   footSteps: {fileID: 8300000, guid: 78e5e50e0919bbf48954036eafaa96eb, type: 3}
+  transition: {fileID: 0}

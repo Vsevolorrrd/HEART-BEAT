@@ -15,11 +15,15 @@ public class BEAT_Manager : MonoBehaviour
     [SerializeField] AudioSource musicLevel_2;
     [SerializeField] AudioSource musicLevel_3;
     [SerializeField] float transitionSpeed = 1f;
-    [HideInInspector] public AudioClip footStepsClip;
+    private AudioClip transition;
+
+    // Pause Settings
+    private float pauseTimeOffset = 0f;
 
     private float songBPM;
     private float nextBeat;
     private int musicLevel;
+
     public static event Action BEAT;
     public static event Action<int> MusicLevelIncreased;
     public static event Action<double> OnMusicStart;
@@ -53,13 +57,14 @@ public class BEAT_Manager : MonoBehaviour
     public float GetSecPerBeat() => secPerBeat;
     public int GetMusicLevel() => musicLevel;
 
+
     void Start()
     {
         songBPM = song.songBPM;
         mainMusicLevel.clip = song.Leadingtrack;
         musicLevel_2.clip = song.track_2;
         musicLevel_3.clip = song.track_3;
-        footStepsClip = song.footSteps;
+        transition = song.transition;
 
         secPerBeat = 60f / songBPM;
         dspSongTime = (float)AudioSettings.dspTime;
@@ -96,6 +101,8 @@ public class BEAT_Manager : MonoBehaviour
         musicLevel = level;
         MusicLevelIncreased?.Invoke(level);
         StartCoroutine(TransitionMusicLevel(level));
+        if (transition)
+        AudioManager.Instance.PlayPooledSound(transition);
     }
 
     private IEnumerator TransitionMusicLevel(int targetLevel)
@@ -123,15 +130,19 @@ public class BEAT_Manager : MonoBehaviour
     {
         if (pause)
         {
-            mainMusicLevel.volume = 0.3f;
-            musicLevel_2.volume = 0.3f;
-            musicLevel_3.volume = 0.3f;
+            pauseTimeOffset = (float)(AudioSettings.dspTime - dspSongTime); // Save current song time
+
+            mainMusicLevel.Pause();
+            musicLevel_2.Pause();
+            musicLevel_3.Pause();
         }
         else
         {
-            mainMusicLevel.volume = 1f;
-            musicLevel_2.volume = 1f;
-            musicLevel_3.volume = 1f;
+            dspSongTime = (float)AudioSettings.dspTime - pauseTimeOffset; // Adjust song start time
+
+            mainMusicLevel.UnPause();
+            musicLevel_2.UnPause();
+            musicLevel_3.UnPause();
         }
     }
     #endregion

@@ -3,22 +3,24 @@ using System.Collections;
 
 public class DashModule : RhythmInput
 {
-    private Rigidbody rb;
+    private FPSController controller;
+    private CharacterController charController;
 
-    public float dashForce = 70f;
-    public float dashUpwardForce = 2f;
-    public float dashCooldown = 0.5f;
+    public float dashSpeed = 20f;
+    public float dashDuration = 0.2f;
+    private float dashCooldown = 0.5f;
     private float dashCooldownTimer;
-    private float startDashForce;
+    private float startDashSpeed;
+    private bool isDashing = false;
+
     [SerializeField] AudioClip dashModuleClip;
-    [SerializeField] ParticleSystem dashEfect;
+    [SerializeField] ParticleSystem dashEffect;
 
     [Header("FOV Settings")]
     [SerializeField] Camera playerCam;
     [SerializeField] private float fovIncrease = 15f;
     [SerializeField] private float fovTransitionTime = 0.2f;
 
-    private float defaultFOV;
 
     public override void Start()
     {
@@ -29,14 +31,15 @@ public class DashModule : RhythmInput
             BEAT_Manager.MusicLevelIncreased += changePlayerStats;
         }
 
-        rb = GetComponent<Rigidbody>();
-        startDashForce = dashForce;
-        defaultFOV = playerCam.fieldOfView;
+        controller = GetComponent<FPSController>();
+        charController = GetComponent<CharacterController>();
+
+        startDashSpeed = dashSpeed;
     }
+
     public override void Update()
     {
-        if (!playerInput) 
-        return;
+        if (!playerInput || isDashing) return;
 
         if (Input.GetKeyDown(actionKey))
         {
@@ -44,69 +47,66 @@ public class DashModule : RhythmInput
         }
 
         if (dashCooldownTimer > 0)
-        dashCooldownTimer -= Time.deltaTime;
+        {
+            dashCooldownTimer -= Time.deltaTime;
+        }
     }
+
     public override void OnPerfectHit()
     {
         base.OnPerfectHit();
-        Dash(1.50f);
+        StartDash(1.5f);
     }
+
     public override void OnGoodHit()
     {
         base.OnGoodHit();
-        Dash(1);
+        StartDash(1);
     }
-    private void Dash(float modifier)
-    {
-        if (dashCooldownTimer > 0) return;
-        else dashCooldownTimer = dashCooldown;
 
+    private void StartDash(float modifier)
+    {
+        if (dashCooldownTimer > 0 || isDashing) return;
+
+        dashCooldownTimer = dashCooldown;
+        StartCoroutine(Dash(modifier));
+    }
+
+    private IEnumerator Dash(float modifier)
+    {
+        isDashing = true;
         AudioManager.Instance.PlaySound(dashModuleClip, 0.5f);
-        if (dashEfect)
-        dashEfect.Play();
-        StartCoroutine(ChangeFOV(defaultFOV + fovIncrease, fovTransitionTime));
+        if (dashEffect) dashEffect.Play();
 
-        Vector3 direction = GetDirection(transform);
+        Vector3 direction = GetDashDirection();
+        Vector3 dashVelocity = direction * dashSpeed * modifier;
 
-        Vector3 forceToApply = direction * dashForce * modifier + transform.up * dashUpwardForce;
+        float elapsedTime = 0f;
+        controller.AdjustFOV(fovIncrease, fovTransitionTime, fovTransitionTime);
 
-        delayedForceToApply = forceToApply;
-        Invoke(nameof(DelayedDashForce), 0.025f);
+        while (elapsedTime < dashDuration)
+        {
+            charController.Move(dashVelocity * Time.deltaTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        isDashing = false;
     }
 
-    private Vector3 delayedForceToApply;
-    private void DelayedDashForce()
-    {
-        rb.linearVelocity = Vector3.zero;
-        rb.AddForce(delayedForceToApply, ForceMode.Impulse);
-    }
-
-    private Vector3 GetDirection(Transform forwardT)
+    private Vector3 GetDashDirection()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
 
-        Vector3 direction = new Vector3();
+        Vector3 direction = transform.forward * verticalInput + transform.right * horizontalInput;
 
-        direction = forwardT.forward * verticalInput + forwardT.right * horizontalInput;
-
-        if (verticalInput == 0 && horizontalInput == 0)
-            direction = forwardT.forward;
+        if (direction.magnitude == 0)
+        {
+            direction = transform.forward;
+        }
 
         return direction.normalized;
-    }
-    private IEnumerator ChangeFOV(float targetFOV, float transitionTime)
-    {
-        
-        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, targetFOV, 10f * Time.deltaTime);
-        
-        yield return new WaitForSeconds(transitionTime / 2);
-
-        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultFOV, 10f * Time.deltaTime);
-        
-        yield return new WaitForSeconds(transitionTime / 2);
-
-        playerCam.fieldOfView = defaultFOV;
     }
 
     #region events
@@ -114,28 +114,27 @@ public class DashModule : RhythmInput
     public override void OnDestroy()
     {
         base.OnDestroy();
-
         if (BEAT_Manager.Instance != null)
         {
-            BEAT_Manager.MusicLevelIncreased += changePlayerStats;
+            BEAT_Manager.MusicLevelIncreased -= changePlayerStats;
         }
     }
+
     private void changePlayerStats(int level)
     {
         switch (level)
         {
             case 3:
-                dashForce = startDashForce * 1.50f;
+                dashSpeed = startDashSpeed * 1.50f;
                 break;
             case 2:
-                dashForce = startDashForce * 1.25f;
+                dashSpeed = startDashSpeed * 1.25f;
                 break;
             case 1:
-                dashForce = startDashForce;
+                dashSpeed = startDashSpeed;
                 break;
         }
     }
 
     #endregion
-
 }

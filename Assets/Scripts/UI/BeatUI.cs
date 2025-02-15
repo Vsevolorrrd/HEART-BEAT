@@ -26,7 +26,8 @@ public class BeatUI : MonoBehaviour
     [SerializeField] float startOffset = 400f;
     [SerializeField] float stopDistance = 80f;
 
-    private List<(RectTransform dot, CanvasGroup cg)> activeDots = new List<(RectTransform, CanvasGroup)>();
+    private List<(RectTransform dot, CanvasGroup cg)> activeDots = 
+    new List<(RectTransform, CanvasGroup)>();
     private bool beatBar = true;
 
     private Vector3 originalScale;
@@ -91,7 +92,7 @@ public class BeatUI : MonoBehaviour
 
             // Move left dots to the right, right dots to the left
             if (dot.anchoredPosition.x < 0)
-            dot.anchoredPosition += Vector2.right * (dotSpeed * Time.deltaTime);
+            dot.anchoredPosition += Vector2.right * (dotSpeed * Time.deltaTime); // make the movenment more reliable <---
             else
             dot.anchoredPosition += Vector2.left * (dotSpeed * Time.deltaTime);
 
@@ -109,6 +110,7 @@ public class BeatUI : MonoBehaviour
                 Destroy(dot.gameObject);
                 activeDots.RemoveAt(i);
             }
+
         }
     }
 
