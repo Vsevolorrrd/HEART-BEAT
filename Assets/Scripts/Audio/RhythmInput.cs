@@ -2,6 +2,7 @@ using UnityEngine;
 
 public abstract class RhythmInput : MonoBehaviour
 {
+    [Header("RhythmInput")]
     public float perfectThreshold = 0.1f;  // 100 ms for Perfect
     public float streakGainPerfect = 2f;
     public float goodThreshold = 0.15f;    // 150 ms for Good

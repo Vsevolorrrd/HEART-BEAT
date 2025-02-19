@@ -47,8 +47,7 @@ public class Press : RespondToBeat
             if (player)
             {
                 player.transform.position = new Vector3(0, 2, 0);
-                player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-                player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                player.ResetVilocity(0);
             }
         }
     }

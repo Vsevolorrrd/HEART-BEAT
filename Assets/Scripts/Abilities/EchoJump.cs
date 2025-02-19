@@ -8,6 +8,7 @@ public class EchoJump : RhythmInput
 
     [SerializeField] Camera playerCam;
     [SerializeField] float maxTeleportDistance = 30f;
+    [SerializeField] float minTeleportDistance = 3f;
     [SerializeField] float teleportDuration = 0.2f;
     [SerializeField] AnimationCurve teleportCurve;
     [SerializeField] AudioClip echoJumpClip;
@@ -33,19 +34,47 @@ public class EchoJump : RhythmInput
 
         if (Input.GetKeyDown(actionKey))
         {
-            RaycastHit hit;
-            if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, maxTeleportDistance))
+            FindEchoPoint();
+        }
+    }
+    private void FindEchoPoint()
+    {
+        RaycastHit[] hits = Physics.RaycastAll(playerCam.transform.position, playerCam.transform.forward, maxTeleportDistance);
+        float closestDistance = float.MaxValue;
+        EchoPoint bestEchoPoint = null;
+
+        // Loop through all raycast hits
+        for (int i = 0; i < hits.Length; i++)
+        {
+            EchoPoint ep = hits[i].collider.GetComponent<EchoPoint>();
+
+            if (ep != null) // Check if it has EchoPoint component
             {
-                echoPoint = hit.collider.GetComponent<EchoPoint>();
-                if (echoPoint != null)
+                float distance = Vector3.Distance(transform.position, ep.transform.position);
+
+                // Ensure it's not too close and not the previous teleport location
+                if (distance >= minTeleportDistance)
                 {
-                    EvaluateTiming();
+                    // Track the closest valid EchoPoint
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        bestEchoPoint = ep;
+                    }
                 }
             }
-            else
-            {
-                Debug.Log("No echo point or echo point is out of range");
-            }
+        }
+
+        if (bestEchoPoint != null)
+        {
+            echoPoint = bestEchoPoint;
+            Debug.Log($"Selected EchoPoint at {closestDistance} meters.");
+            EvaluateTiming();
+        }
+        else
+        {
+            Debug.Log("No valid EchoPoint found.");
+            echoPoint = null;
         }
     }
 
@@ -62,6 +91,11 @@ public class EchoJump : RhythmInput
         base.OnGoodHit();
         AudioManager.Instance.PlaySound(echoJumpClip, 0.7f);
         StartCoroutine(SmoothTeleport(echoPoint.transform.position));
+        echoPoint = null;
+    }
+    public override void OnMiss()
+    {
+        base.OnMiss();
         echoPoint = null;
     }
 

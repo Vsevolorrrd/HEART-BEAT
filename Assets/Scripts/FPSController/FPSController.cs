@@ -7,9 +7,6 @@ public class FPSController : MonoBehaviour
 {
     private CharacterController controller;
 
-    // Modules
-    private HeadBobModule headBob;
-
     [Header("Camera Settings")]
     public CinemachineCamera playerCam;
     public bool invertCamera = false;
@@ -24,13 +21,11 @@ public class FPSController : MonoBehaviour
 
     [Header("Movement")]
     public bool playerCanMove = true;
-    public float walkSpeed = 5f;
+    public float speed = 5f;
     public float acceleration = 10f;
-    [HideInInspector] public float speedModifier = 1;
-    [HideInInspector] public bool isMoving = false;
-    [HideInInspector] public bool isWalking = false;
-    private float startWalkSpeed;
+    private float startSpeed;
     private Vector3 moveDirection = Vector3.zero;
+    [HideInInspector] public bool isMoving = false;
 
     [Header("Jumping")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -51,13 +46,12 @@ public class FPSController : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
-        headBob = GetComponent<HeadBobModule>();
         defaultFOV = playerCam.Lens.FieldOfView;
     }
 
     void Start()
     {
-        startWalkSpeed = walkSpeed;
+        startSpeed = speed;
 
         if (lockCursor)
         {
@@ -76,7 +70,6 @@ public class FPSController : MonoBehaviour
 
         CameraMovement();
         Jumping();
-        HeadBob();
 
         CheckGround();
     }
@@ -140,26 +133,16 @@ public class FPSController : MonoBehaviour
             Jump();
         }
     }
-    private void HeadBob()
-    {
-        if (headBob && isWalking)
-        {
-            headBob.HeadBob(walkSpeed);
-        }
-    }
     private void Movement()
     {
         if (!playerCanMove) return;
 
         // Input-based movement direction
         Vector3 inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        bool isCurrentlyMoving = inputDirection.x != 0 || inputDirection.z != 0;
-
-        isMoving = isCurrentlyMoving;
-        isWalking = isGrounded && isCurrentlyMoving;
+        isMoving = inputDirection.x != 0 || inputDirection.z != 0;
 
         // Convert local input
-        Vector3 move = transform.TransformDirection(inputDirection) * walkSpeed * speedModifier;
+        Vector3 move = transform.TransformDirection(inputDirection) * speed;
         // Apply movement acceleration
         moveDirection = Vector3.Lerp(moveDirection, move, acceleration * Time.deltaTime);
 
@@ -170,7 +153,7 @@ public class FPSController : MonoBehaviour
         }
         else
         {
-            verticalVelocity -= gravity/1.4f * Time.deltaTime;
+            verticalVelocity -= gravity/1.2f * Time.deltaTime;
         }
 
         moveDirection.y = verticalVelocity;
@@ -212,6 +195,10 @@ public class FPSController : MonoBehaviour
     {
         verticalVelocity = velocity;
     }
+    public void ChangeSpeed(float modifier)
+    {
+        speed += modifier;
+    }
 
     #region events
 
@@ -221,13 +208,13 @@ public class FPSController : MonoBehaviour
         switch (level)
         {
             case 3:
-                walkSpeed = startWalkSpeed * 2f;
+                speed = startSpeed * 2f;
                 break;
             case 2:
-                walkSpeed = startWalkSpeed * 1.50f;
+                speed = startSpeed * 1.50f;
                 break;
             case 1:
-                walkSpeed = startWalkSpeed;
+                speed = startSpeed;
                 break;
         }
     }

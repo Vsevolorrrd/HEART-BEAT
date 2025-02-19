@@ -16,9 +16,13 @@ public class HeadBobModule : MonoBehaviour
         fpsController = GetComponent<FPSController>();
         jointOriginalPos = joint.localPosition;
     }
+    void Update()
+    {
+        HeadBob(0);
+    }
     public void HeadBob(float modifier = 0)
     {
-        if (fpsController.isWalking)
+        if (fpsController.isMoving)
         {
             // Calculates HeadBob
             timer += Time.deltaTime * (bobSpeed + modifier);

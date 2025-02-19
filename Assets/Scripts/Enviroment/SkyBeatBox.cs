@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SkyBeatBox : MonoBehaviour
 {
-    public Material skyboxMaterial;
+    public Skybox skyboxMaterial;
     private float beatPulse = 0f;
     private float decaySpeed = 3f;
 
@@ -16,13 +16,12 @@ public class SkyBeatBox : MonoBehaviour
         if (skyboxMaterial)
         {
             beatPulse = Mathf.Lerp(beatPulse, 0f, Time.deltaTime * decaySpeed);
-            skyboxMaterial.SetFloat("_BeatPulse", beatPulse);  // Update the shader's pulse property
         }
     }
 
     void OnBeat()
     {
-        beatPulse = 5f;
+        beatPulse = 1.5f;
     }
 
     private void OnDestroy()

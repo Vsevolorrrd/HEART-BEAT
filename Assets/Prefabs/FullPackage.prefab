@@ -242,10 +242,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Managers
       objectReference: {fileID: 0}
-    - target: {fileID: 8170468892209967754, guid: 218ee07e6b0e7fb4aa7770815eed8c5b, type: 3}
-      propertyPath: snapAnim
-      value: 
-      objectReference: {fileID: 6601484239760146805}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -388,11 +384,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1510253514820545810, guid: 9a382b2d9abf1864e9c7a085d9daa0a4, type: 3}
   m_PrefabInstance: {fileID: 5928550003629632572}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &6601484239760146805 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 710264865729703241, guid: 9a382b2d9abf1864e9c7a085d9daa0a4, type: 3}
+--- !u!114 &7669713631016312205 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4050490027087425969, guid: 9a382b2d9abf1864e9c7a085d9daa0a4, type: 3}
   m_PrefabInstance: {fileID: 5928550003629632572}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6cc0f245d5d9674a84104b5315ad2ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &9202237712396108113 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3310878691905432941, guid: 9a382b2d9abf1864e9c7a085d9daa0a4, type: 3}
@@ -499,6 +501,14 @@ PrefabInstance:
     - target: {fileID: 4577373715980992791, guid: c5427f9461745b64cbab921ee4c709df, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7542378284915643354, guid: c5427f9461745b64cbab921ee4c709df, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7669713631016312205}
+    - target: {fileID: 7542378284915643354, guid: c5427f9461745b64cbab921ee4c709df, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleBeatBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

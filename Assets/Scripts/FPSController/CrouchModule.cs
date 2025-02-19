@@ -42,7 +42,7 @@ public class CrouchModule : MonoBehaviour
         if (isCrouched)
         {
             transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
-            fpsController.walkSpeed /= speedReduction;        // Brings walkSpeed back up to original speed
+            fpsController.speed /= speedReduction;        // Brings walkSpeed back up to original speed
 
             isCrouched = false;
         }
@@ -50,7 +50,7 @@ public class CrouchModule : MonoBehaviour
         else
         {
             transform.localScale = new Vector3(originalScale.x, crouchHeight, originalScale.z);
-            fpsController.walkSpeed *= speedReduction;        // Reduces walkSpeed
+            fpsController.speed *= speedReduction;        // Reduces walkSpeed
 
             isCrouched = true;
         }
