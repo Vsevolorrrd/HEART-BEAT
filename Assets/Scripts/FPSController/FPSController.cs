@@ -24,6 +24,7 @@ public class FPSController : MonoBehaviour
     public float speed = 5f;
     public float acceleration = 10f;
     private float startSpeed;
+    private float startAcceleration;
     private Vector3 moveDirection = Vector3.zero;
     [HideInInspector] public bool isMoving = false;
 
@@ -52,6 +53,7 @@ public class FPSController : MonoBehaviour
     void Start()
     {
         startSpeed = speed;
+        startAcceleration = acceleration;
 
         if (lockCursor)
         {
@@ -209,12 +211,15 @@ public class FPSController : MonoBehaviour
         {
             case 3:
                 speed = startSpeed * 2f;
+                acceleration = startAcceleration * 2f;
                 break;
             case 2:
                 speed = startSpeed * 1.50f;
+                acceleration = startAcceleration * 1.50f;
                 break;
             case 1:
                 speed = startSpeed;
+                acceleration = startAcceleration;
                 break;
         }
     }

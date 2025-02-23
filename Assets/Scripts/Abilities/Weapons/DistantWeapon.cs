@@ -5,6 +5,7 @@ public class DistantWeapon : MonoBehaviour
     private Animator anim;
 
     [SerializeField] AudioClip audioclip;
+    [SerializeField] AudioClip perfectShot;
 
     [Header("RhythmInput")]
     public float perfectThreshold = 0.1f;  // 100 ms for Perfect
@@ -62,7 +63,7 @@ public class DistantWeapon : MonoBehaviour
     private void EvaluateTiming(Damageable target)
     {
         float songPosition = BEAT_Manager.Instance.GetSongPositionInBeats();
-        float nearestBeat = Mathf.Round(songPosition); // Nearest beat in beats
+        float nearestBeat = Mathf.Round(songPosition); // Nearest beat
         float timeDifference = Mathf.Abs(songPosition - nearestBeat) * BEAT_Manager.Instance.GetSecPerBeat();
 
         if (timeDifference <= perfectThreshold)
@@ -87,6 +88,7 @@ public class DistantWeapon : MonoBehaviour
     }
     private void OnPerfectHit(Damageable target)
     {
+        AudioManager.Instance.PlayPooledSound(perfectShot);
         Debug.Log("Damaging");
         target.Damage(damage * 1.2f);
     }
@@ -138,14 +140,14 @@ public class DistantWeapon : MonoBehaviour
 
         if (camerShake)
         CameraShake.Instance.ShakeCamera(shakeAmplitude, shakeFrequency, shakeDuration);
-
-        /*
         if (anim != null)
         anim.SetTrigger("Shot");
-        if (GunSmoke != null)
-        GunSmoke.Play();
         if (MuzleFlash != null)
         MuzleFlash.Play();
+
+        /*
+        if (GunSmoke != null)
+        GunSmoke.Play();
         if (muzzleFlashLight != null)
         StartCoroutine(Flash());       
         if (shellEjectionPoint != null && shellPrefab != null)

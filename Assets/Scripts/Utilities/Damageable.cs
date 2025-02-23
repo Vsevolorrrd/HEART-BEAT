@@ -1,7 +1,6 @@
 using UnityEngine;
-using System.Collections;
 
-[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Collider))]
 public class Damageable : MonoBehaviour
 {
     [SerializeField] float currentHealth;

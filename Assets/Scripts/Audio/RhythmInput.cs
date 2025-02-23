@@ -24,7 +24,7 @@ public abstract class RhythmInput : MonoBehaviour
     public virtual void EvaluateTiming()
     {
         float songPosition = BEAT_Manager.Instance.GetSongPositionInBeats();
-        float nearestBeat = Mathf.Round(songPosition); // Nearest beat in beats
+        float nearestBeat = Mathf.Round(songPosition); // Nearest beat
         float timeDifference = Mathf.Abs(songPosition - nearestBeat) * BEAT_Manager.Instance.GetSecPerBeat();
 
         if (timeDifference <= perfectThreshold)
