@@ -5,8 +5,6 @@ public class MeleeWeapon : RhythmInput
     [Header("MeleeWeapon")]
     [SerializeField] float damage = 10f;
     [SerializeField] float heavyDamage = 15f;
-    [SerializeField] float speed = 5f;
-    [SerializeField] float cooldown = 0.2f;
     [SerializeField] float heavyReadyTime = 1f;
     [SerializeField] float comboTime = 1f;
 

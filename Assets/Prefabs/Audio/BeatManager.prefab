@@ -442,5 +442,4 @@ MonoBehaviour:
   mainMusicLevel: {fileID: 4869833464545738488}
   musicLevel_2: {fileID: 1958734775582048962}
   musicLevel_3: {fileID: 7271392683327656357}
-  transitionSpeed: 1
-  footStepsClip: {fileID: 0}
+  transitionSpeed: 0.5

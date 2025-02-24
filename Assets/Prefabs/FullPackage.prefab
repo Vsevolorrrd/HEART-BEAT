@@ -186,6 +186,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4295777191573606621}
     m_Modifications:
+    - target: {fileID: 2269361823924786652, guid: 218ee07e6b0e7fb4aa7770815eed8c5b, type: 3}
+      propertyPath: transitionSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5899778869362195049, guid: 218ee07e6b0e7fb4aa7770815eed8c5b, type: 3}
       propertyPath: streakBar
       value: 

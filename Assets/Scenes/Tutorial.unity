@@ -7978,9 +7978,17 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 74752756108266742, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1274476493862686593, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525621235511218217, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
+      propertyPath: Loop
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2364023258230326997, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: near clip plane
@@ -7992,6 +8000,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2916055929975649017, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2916055929975649017, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
+      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3061962507848293071, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
@@ -8028,11 +8040,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4110241889561102983, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: speed
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4110241889561102983, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: jumpPower
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4110241889561102983, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
+      propertyPath: acceleration
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4295777191573606621, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8085,6 +8101,18 @@ PrefabInstance:
     - target: {fileID: 5365586743058227876, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: m_Name
       value: FullPackage
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591171884910341139, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620452834879827126, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
+      propertyPath: transitionSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704506219241341774, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
+      propertyPath: Loop
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8910905662201830590, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: m_Interpolate

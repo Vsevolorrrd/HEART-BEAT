@@ -19,6 +19,7 @@ public class BEAT_Manager : MonoBehaviour
 
     // Pause Settings
     private float pauseTimeOffset = 0f;
+    private bool isPaused = false;
 
     private float songBPM;
     private float nextBeat;
@@ -31,13 +32,7 @@ public class BEAT_Manager : MonoBehaviour
     private static BEAT_Manager _instance;
 
     #region Singleton
-    public static BEAT_Manager Instance
-    {
-        get
-        {
-            return _instance;
-        }
-    }
+    public static BEAT_Manager Instance => _instance;
 
     void Awake()
     {
@@ -47,9 +42,7 @@ public class BEAT_Manager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         _instance = this;
-        DontDestroyOnLoad(gameObject);
     }
     #endregion
 
@@ -70,22 +63,32 @@ public class BEAT_Manager : MonoBehaviour
         dspSongTime = (float)AudioSettings.dspTime;
         // AudioSettings.dspTime - a precision timer that represents the current time since the audio system started
 
-        double startTime = AudioSettings.dspTime + 0.1;
-        OnMusicStart?.Invoke(startTime); // Notify subscribers (if the sound should in sync with the music)
-
-        mainMusicLevel.PlayScheduled(startTime);
-        musicLevel_2.PlayScheduled(startTime);
-        musicLevel_3.PlayScheduled(startTime);
-        musicLevel_2.volume = 0;
-        musicLevel_3.volume = 0;
-        musicLevel_2.loop = true;
-        musicLevel_3.loop = true;
+        StartCoroutine(StartAudioAfterFrame());
 
         nextBeat = secPerBeat;
         MainMenu.OnPause += HandlePause;
     }
-    void FixedUpdate()
+    private IEnumerator StartAudioAfterFrame()
     {
+        yield return new WaitForSecondsRealtime(0.1f); // Wait for audio engine to stabilize
+
+        double startTime = AudioSettings.dspTime + 0.2; // Schedule slightly ahead
+        dspSongTime = (float)startTime;
+
+        Debug.Log($"[BEAT_Manager] Starting music at DSP time: {dspSongTime}");
+
+        mainMusicLevel.PlayScheduled(startTime);
+        musicLevel_2.PlayScheduled(startTime);
+        musicLevel_3.PlayScheduled(startTime);
+        OnMusicStart?.Invoke(startTime); // Notify subscribers (if the sound should in sync with the music)
+
+        musicLevel_2.volume = 0;
+        musicLevel_3.volume = 0;
+    }
+    void Update()
+    {
+        if (isPaused) return;
+
         songPosition = (float)(AudioSettings.dspTime - dspSongTime);
         songPositionInBeats = songPosition / secPerBeat;
 
@@ -110,13 +113,29 @@ public class BEAT_Manager : MonoBehaviour
         float targetVolume2 = (targetLevel >= 2) ? 1f : 0f;
         float targetVolume3 = (targetLevel >= 3) ? 1f : 0f;
 
-        while (!Mathf.Approximately(musicLevel_2.volume, targetVolume2) ||
-               !Mathf.Approximately(musicLevel_3.volume, targetVolume3))
+        float elapsedTime = 0f;
+        float maxTransitionTime = transitionSpeed * 2f; // Failsafe timeout
+
+        while (elapsedTime < maxTransitionTime)
         {
-            musicLevel_2.volume = Mathf.MoveTowards(musicLevel_2.volume, targetVolume2, Time.deltaTime / transitionSpeed);
-            musicLevel_3.volume = Mathf.MoveTowards(musicLevel_3.volume, targetVolume3, Time.deltaTime / transitionSpeed);
-            yield return null;
+            elapsedTime += Time.deltaTime;
+
+            musicLevel_2.volume = Mathf.Lerp(musicLevel_2.volume, targetVolume2, Time.deltaTime / transitionSpeed);
+            musicLevel_3.volume = Mathf.Lerp(musicLevel_3.volume, targetVolume3, Time.deltaTime / transitionSpeed);
+
+            // If both volumes are close to target, exit early
+            if (Mathf.Abs(musicLevel_2.volume - targetVolume2) < 0.01f &&
+                Mathf.Abs(musicLevel_3.volume - targetVolume3) < 0.01f)
+            {
+                break;
+            }
+
+            yield return new WaitForSecondsRealtime(0.02f);
         }
+
+        // Ensure exact final values
+        musicLevel_2.volume = targetVolume2;
+        musicLevel_3.volume = targetVolume3;
     }
 
     #region events
@@ -128,6 +147,8 @@ public class BEAT_Manager : MonoBehaviour
 
     private void HandlePause(bool pause)
     {
+        isPaused = pause;
+
         if (pause)
         {
             pauseTimeOffset = (float)(AudioSettings.dspTime - dspSongTime); // Save current song time

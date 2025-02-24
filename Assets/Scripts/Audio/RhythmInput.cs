@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public abstract class RhythmInput : MonoBehaviour
 {
@@ -10,15 +11,56 @@ public abstract class RhythmInput : MonoBehaviour
     public KeyCode actionKey = KeyCode.Space;
     [HideInInspector] public bool playerInput = true;
 
+    // Anti Spam
+    protected int maxPresses = 3;
+    protected float pressWindow = 0.4f; // Time window for counting presses
+    protected float inputCooldown = 1.5f; // Cooldown after max presses
+    protected int pressCount = 0;
+    protected float firstPressTime = -999f;
+    protected bool isBlocked = false;
+
     public virtual void Update()
     {
-        if (!playerInput)
+        if (!playerInput || isBlocked)
         return;
 
         if (Input.GetKeyDown(actionKey))
         {
-            EvaluateTiming();
+            HandleKeyPress();
         }
+    }
+    public virtual void HandleKeyPress()
+    {
+        float currentTime = Time.time;
+
+        // Reset count if outside press window
+        if (currentTime - firstPressTime > pressWindow)
+        {
+            firstPressTime = currentTime;
+            pressCount = 0;
+        }
+
+        pressCount++;
+
+        if (pressCount >= maxPresses)
+        {
+            StartCoroutine(BlockInput());
+            return;
+        }
+
+        EvaluateTiming();
+    }
+
+    protected IEnumerator BlockInput()
+    {
+        isBlocked = true;
+        Debug.Log($"Input blocked for {inputCooldown} seconds after {maxPresses} presses!");
+
+        yield return new WaitForSeconds(inputCooldown);
+
+        isBlocked = false;
+        pressCount = 0; // Reset press count
+        Debug.Log("Input unblocked.");
     }
 
     public virtual void EvaluateTiming()
@@ -72,7 +114,7 @@ public abstract class RhythmInput : MonoBehaviour
         MainMenu.OnPause -= HandlePause;
     }
 
-    private void HandlePause(bool isPaused)
+    protected void HandlePause(bool isPaused)
     {
         playerInput = !isPaused;
     }
