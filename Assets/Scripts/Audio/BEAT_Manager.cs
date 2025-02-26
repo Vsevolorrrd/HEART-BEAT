@@ -70,16 +70,15 @@ public class BEAT_Manager : MonoBehaviour
     }
     private IEnumerator StartAudioAfterFrame()
     {
-        yield return new WaitForSecondsRealtime(0.1f); // Wait for audio engine to stabilize
+        yield return new WaitForSeconds(0.1f); // To avoid errors when loading the scene
 
-        double startTime = AudioSettings.dspTime + 0.1; // Schedule slightly ahead
-        dspSongTime = (float)startTime;
-
-        Debug.Log($"[BEAT_Manager] Starting music at DSP time: {dspSongTime}");
+        double startTime = AudioSettings.dspTime + 0.3; // Schedule slightly ahead
 
         mainMusicLevel.PlayScheduled(startTime);
         musicLevel_2.PlayScheduled(startTime);
         musicLevel_3.PlayScheduled(startTime);
+
+        dspSongTime = (float)startTime;
         OnMusicStart?.Invoke(startTime); // Notify subscribers (if the sound should in sync with the music)
 
         musicLevel_2.volume = 0;
@@ -96,7 +95,8 @@ public class BEAT_Manager : MonoBehaviour
         if (songPosition >= nextBeat)
         {
             BEAT?.Invoke();
-            nextBeat = Mathf.Floor(songPosition / secPerBeat + 1) * secPerBeat;
+            nextBeat = Mathf.Ceil(songPosition / secPerBeat) * secPerBeat;
+            // Mathf.Ceil - rounds a number up
         }
     }
     public void SetMusicLevel(int level)
@@ -120,8 +120,8 @@ public class BEAT_Manager : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
 
-            musicLevel_2.volume = Mathf.Lerp(musicLevel_2.volume, targetVolume2, Time.deltaTime / transitionSpeed);
-            musicLevel_3.volume = Mathf.Lerp(musicLevel_3.volume, targetVolume3, Time.deltaTime / transitionSpeed);
+            musicLevel_2.volume = Mathf.Lerp(musicLevel_2.volume, targetVolume2, elapsedTime / transitionSpeed);
+            musicLevel_3.volume = Mathf.Lerp(musicLevel_3.volume, targetVolume3, elapsedTime / transitionSpeed);
 
             // If both volumes are close to target, exit early
             if (Mathf.Abs(musicLevel_2.volume - targetVolume2) < 0.01f &&

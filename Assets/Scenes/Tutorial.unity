@@ -910,10 +910,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb62de34ac5ff9a4ea6aaaebbaf8f8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
   maxHealth: 500
   isVulnerable: 1
+  blink: 1
+  meshRenderer: {fileID: 226689671}
+  spriteRenderer: {fileID: 0}
+  damageEffect: {fileID: 0}
   Remains: {fileID: 0}
+  currentHealth: 0
 --- !u!1 &257261718
 GameObject:
   m_ObjectHideFlags: 0

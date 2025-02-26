@@ -1,15 +1,22 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 public class Damageable : MonoBehaviour
 {
-    [SerializeField] float currentHealth;
     [SerializeField] float maxHealth = 100f;
     [SerializeField] bool isVulnerable = true;
     private bool isDead = false;
 
     [Header("Visual Effects")]
-    public GameObject Remains;
+    [SerializeField] bool blink = true;
+    [SerializeField] MeshRenderer meshRenderer;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] ParticleSystem damageEffect;
+    [SerializeField] GameObject Remains;
+
+    [Header("Debug")]
+    [SerializeField] protected float currentHealth;
 
     protected void Start()
     {
@@ -21,20 +28,6 @@ public class Damageable : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public virtual void Damage(float damage)
-    {
-        if (isDead || !isVulnerable || damage <= 0)
-        return;
-
-        Debug.Log("damage");
-        currentHealth -= damage;
-
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-    }
-
     public void Heal(float amount)
     {
         if (isDead || amount <= 0)
@@ -44,8 +37,27 @@ public class Damageable : MonoBehaviour
         currentHealth = maxHealth;
         else
         currentHealth += amount;
+    }
+    public virtual void Damage(float damage)
+    {
+        if (isDead || !isVulnerable || damage <= 0)
+            return;
 
-        //play SFX
+        currentHealth -= damage;
+
+        if (currentHealth <= 0)
+        {
+            Die();
+            return;
+        }
+
+        if (blink)
+        {
+            if (meshRenderer != null)
+            StartCoroutine(Blink3D());
+            if (spriteRenderer != null)
+            StartCoroutine(Blink2D());
+        }
     }
 
     public virtual void Die()
@@ -56,18 +68,55 @@ public class Damageable : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    /*
-    protected IEnumerator Flicker()
-    {
-        float timer = 0f;
+    #region Blink
 
-        while (timer < flickerDuration)
+    // 3D Blink Effect
+    private IEnumerator Blink3D()
+    {
+        if (meshRenderer == null || !meshRenderer.material.HasProperty("_Color"))
+            yield break;
+
+        Material mat = meshRenderer.material;
+        Color originalColor = mat.color;
+        Color blinkColor = Color.white * 2f;
+
+        float blinkDuration = 0.25f;
+        float lerpTime = 0f;
+        mat.color = blinkColor;
+
+        while (lerpTime < blinkDuration)
         {
+            lerpTime += Time.deltaTime;
+            mat.color = Color.Lerp(blinkColor, originalColor, lerpTime / blinkDuration);
             yield return null;
-            timer += Time.deltaTime;
         }
 
-        m_SpriteRenderer.color = m_OriginalColor;
+        mat.color = originalColor;
     }
-    */
+
+    // 2D Blink Effect
+    private IEnumerator Blink2D()
+    {
+        if (spriteRenderer == null)
+            yield break;
+
+        Color originalColor = spriteRenderer.color;
+        Color blinkColor = Color.white * 2f;
+
+        float blinkDuration = 0.25f;
+        float lerpTime = 0f;
+        spriteRenderer.color = blinkColor;
+
+        while (lerpTime < blinkDuration)
+        {
+            lerpTime += Time.deltaTime;
+            spriteRenderer.color = Color.Lerp(blinkColor, originalColor, lerpTime / blinkDuration);
+            yield return null;
+        }
+
+        spriteRenderer.color = originalColor;
+    }
+
+    #endregion
+
 }
