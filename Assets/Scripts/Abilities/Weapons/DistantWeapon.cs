@@ -76,7 +76,7 @@ public class DistantWeapon : RhythmInput
     }
     private void Shoot()
     {
-        AudioManager.Instance.PlayPooledSound(audioclip);
+        AudioManager.Instance.PlayPooledSound(audioclip, 0.6f);
 
         for (int i = 0; i < bulletsPerShot; i++)
         {
@@ -147,7 +147,7 @@ public class DistantWeapon : RhythmInput
     }
     private void OnPerfectHit(Damageable target)
     {
-        AudioManager.Instance.PlayPooledSound(perfectShot);
+        AudioManager.Instance.PlayPooledSound(perfectShot, 0.4f);
         Debug.Log("Damaging");
         target.Damage(damage * 1.2f);
     }

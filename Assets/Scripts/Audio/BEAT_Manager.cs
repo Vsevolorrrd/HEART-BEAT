@@ -72,7 +72,7 @@ public class BEAT_Manager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(0.1f); // Wait for audio engine to stabilize
 
-        double startTime = AudioSettings.dspTime + 0.2; // Schedule slightly ahead
+        double startTime = AudioSettings.dspTime + 0.1; // Schedule slightly ahead
         dspSongTime = (float)startTime;
 
         Debug.Log($"[BEAT_Manager] Starting music at DSP time: {dspSongTime}");
