@@ -5,8 +5,8 @@ using UnityEngine;
 public class Damageable : MonoBehaviour
 {
     [SerializeField] float maxHealth = 100f;
-    [SerializeField] bool isVulnerable = true;
-    private bool isDead = false;
+    [SerializeField] protected bool isVulnerable = true;
+    public bool isDead = false;
 
     [Header("Visual Effects")]
     [SerializeField] bool blink = true;
@@ -53,9 +53,9 @@ public class Damageable : MonoBehaviour
 
         if (blink)
         {
-            if (meshRenderer != null)
+            if (meshRenderer)
             StartCoroutine(Blink3D());
-            if (spriteRenderer != null)
+            if (spriteRenderer)
             StartCoroutine(Blink2D());
         }
     }
@@ -63,7 +63,7 @@ public class Damageable : MonoBehaviour
     public virtual void Die()
     {
         isDead = true;
-        if (Remains != null)
+        if (Remains)
         Instantiate(Remains, gameObject.transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }

@@ -95,8 +95,9 @@ public class DistantWeapon : RhythmInput
                 Debug.Log(hit.transform.name);
 
                 Damageable target = hit.transform.GetComponent<Damageable>();
-                if (target != null)
+                if (target)
                 {
+                    if (target.isDead == false)
                     EvaluateTimingTarget(target);
                 }
 
@@ -148,7 +149,6 @@ public class DistantWeapon : RhythmInput
     private void OnPerfectHit(Damageable target)
     {
         AudioManager.Instance.PlayPooledSound(perfectShot, 0.4f);
-        Debug.Log("Damaging");
         target.Damage(damage * 1.2f);
     }
     private void OnGoodHit(Damageable target)
