@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class ScaleToBeat : RespondToBeat
 {
     [Header("Scaling Settings")]
+    public bool scaleSmooth = true;
     public float scaleMultiplier = 1.2f;
     public float scaleBackSpeed = 0.1f;
 
@@ -20,14 +22,33 @@ public class ScaleToBeat : RespondToBeat
         // Scale the object up
         transform.localScale = targetScale;
 
-        // Reset scale after 0.1s
-        Invoke(nameof(ResetScale), scaleBackSpeed);
+        if (scaleSmooth )
+        {
+            StartCoroutine(ScaleObject(originalScale, scaleBackSpeed));
+        }
+        else
+        {
+            Invoke(nameof(ResetScale), scaleBackSpeed);
+        }
     }
 
     private void ResetScale()
     {
         transform.localScale = originalScale;
     }
-        //stencil shader
+    public IEnumerator ScaleObject(Vector3 target, float duration)
+    {
+        Vector3 startScale = transform.localScale;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            transform.localScale = Vector3.Lerp(startScale, target, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.localScale = target;
+    }
 
 }

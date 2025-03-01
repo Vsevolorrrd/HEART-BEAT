@@ -26,8 +26,6 @@ public class SceneLoader : MonoBehaviour
                     GameObject singletonObject = new GameObject("SceneLoader");
                     _instance = singletonObject.AddComponent<SceneLoader>();
                 }
-
-                DontDestroyOnLoad(_instance.gameObject);
             }
 
             return _instance;
@@ -45,6 +43,7 @@ public class SceneLoader : MonoBehaviour
         {
             _instance = this;  // Assign this object as the instance
         }
+        DontDestroyOnLoad(gameObject);
     }
     #endregion
 
@@ -52,6 +51,9 @@ public class SceneLoader : MonoBehaviour
     {
         if (obj)
         obj.SetActive(true);
+
+        if (SceneManager.GetActiveScene().name != "MainMenu")
+        BEAT_Manager.Instance.StartTheMusic();
     }
     public void LoadScene(string name)
     {
@@ -69,5 +71,8 @@ public class SceneLoader : MonoBehaviour
 
         if (anim)
         anim.SetTrigger("End");
+
+        yield return new WaitForSeconds(1);
+        BEAT_Manager.Instance.StartTheMusic();
     }
 }

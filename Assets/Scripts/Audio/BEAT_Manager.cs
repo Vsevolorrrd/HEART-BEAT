@@ -24,6 +24,7 @@ public class BEAT_Manager : MonoBehaviour
     private float songBPM;
     private float nextBeat;
     private int musicLevel;
+    private bool musicStarted = false;
 
     public static event Action BEAT;
     public static event Action<int> MusicLevelIncreased;
@@ -43,6 +44,7 @@ public class BEAT_Manager : MonoBehaviour
             return;
         }
         _instance = this;
+        DontDestroyOnLoad(gameObject);
     }
     #endregion
 
@@ -51,8 +53,14 @@ public class BEAT_Manager : MonoBehaviour
     public int GetMusicLevel() => musicLevel;
 
 
-    void Start()
+    public void StartTheMusic()
     {
+        if (musicStarted || song == null)
+        {
+            Debug.LogWarning("Music already started or song is missing.");
+            return;
+        }
+
         songBPM = song.songBPM;
         mainMusicLevel.clip = song.Leadingtrack;
         musicLevel_2.clip = song.track_2;
@@ -61,18 +69,16 @@ public class BEAT_Manager : MonoBehaviour
 
         secPerBeat = 60f / songBPM;
         dspSongTime = (float)AudioSettings.dspTime;
-        // AudioSettings.dspTime - a precision timer that represents the current time since the audio system started
 
-        StartCoroutine(StartAudioAfterFrame());
-
+        StartAudio();
         nextBeat = secPerBeat;
+        musicStarted = true;
+
         MainMenu.OnPause += HandlePause;
     }
-    private IEnumerator StartAudioAfterFrame()
+    private void StartAudio()
     {
-        yield return new WaitForSeconds(0.1f); // To avoid errors when loading the scene
-
-        double startTime = AudioSettings.dspTime + 0.3; // Schedule slightly ahead
+        double startTime = AudioSettings.dspTime + 0.2; // Schedule slightly ahead
 
         mainMusicLevel.PlayScheduled(startTime);
         musicLevel_2.PlayScheduled(startTime);
