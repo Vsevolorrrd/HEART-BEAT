@@ -46,14 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88fdb2a00a449064f9853fad6f388cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioclip: {fileID: 8300000, guid: e47a1fb1fdc5cef4585a343ff2216d00, type: 3}
-  perfectShot: {fileID: 8300000, guid: a6ab0871d6721634ea43972d83787dd6, type: 3}
   perfectThreshold: 0.1
   streakGainPerfect: 2
   goodThreshold: 0.15
   streakGainGood: 1
   actionKey: 323
   playerInput: 1
+  audioclip: {fileID: 8300000, guid: e47a1fb1fdc5cef4585a343ff2216d00, type: 3}
+  perfectShot: {fileID: 8300000, guid: a6ab0871d6721634ea43972d83787dd6, type: 3}
   cam: {fileID: 6651157350833734218}
   damage: 10
   range: 100
@@ -409,8 +409,6 @@ MonoBehaviour:
   playerInput: 1
   damage: 10
   heavyDamage: 15
-  speed: 5
-  cooldown: 0.2
   heavyReadyTime: 1
   comboTime: 1
 --- !u!1 &6064625661927546140
@@ -5803,7 +5801,8 @@ GameObject:
   - component: {fileID: 5872740296004797795}
   - component: {fileID: 291199694043827141}
   - component: {fileID: 5766634958720728171}
-  - component: {fileID: 1183997357057276286}
+  - component: {fileID: 1972500542171081646}
+  - component: {fileID: 6054267977652849976}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5847,6 +5846,7 @@ MonoBehaviour:
   lockCursor: 1
   playerCanMove: 1
   speed: 8
+  maxVelocity: 20
   acceleration: 12
   isMoving: 0
   jumpKey: 32
@@ -5939,8 +5939,35 @@ MonoBehaviour:
   fallThresholdY: -100
   respawnPosition: {x: 0, y: 2, z: 0}
   gravity: -9.81
---- !u!143 &1183997357057276286
-CharacterController:
+--- !u!54 &1972500542171081646
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8977769797477751119}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &6054267977652849976
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5954,15 +5981,13 @@ CharacterController:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
+  serializedVersion: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_Height: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9011824316335484308
 GameObject:

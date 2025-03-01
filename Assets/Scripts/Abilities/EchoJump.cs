@@ -4,7 +4,6 @@ using System.Collections;
 public class EchoJump : RhythmInput
 {
     private FPSController controller;
-    private CharacterController charController;
 
     [SerializeField] Camera playerCam;
     [SerializeField] float maxTeleportDistance = 30f;
@@ -25,7 +24,6 @@ public class EchoJump : RhythmInput
         base.Start();
 
         controller = GetComponent<FPSController>();
-        charController = GetComponent<CharacterController>();
     }
 
     public override void Update()
@@ -114,9 +112,7 @@ public class EchoJump : RhythmInput
             float easedT = teleportCurve.Evaluate(t);
             Vector3 newPos = Vector3.Lerp(startPosition, targetPosition, easedT);
             
-            charController.enabled = false;
             transform.position = newPos;
-            charController.enabled = true;
 
             elapsedTime += Time.deltaTime;
             yield return null;

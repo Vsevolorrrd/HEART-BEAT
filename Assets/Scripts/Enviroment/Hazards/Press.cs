@@ -39,6 +39,7 @@ public class Press : RespondToBeat
 
         transform.localScale = target;
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (dangerous)

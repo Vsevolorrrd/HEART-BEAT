@@ -2,10 +2,10 @@ using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Rigidbody))]
 public class FPSController : MonoBehaviour
 {
-    private CharacterController controller;
+    private Rigidbody rb;
 
     [Header("Camera Settings")]
     public CinemachineCamera playerCam;
@@ -22,10 +22,10 @@ public class FPSController : MonoBehaviour
     [Header("Movement")]
     public bool playerCanMove = true;
     public float speed = 5f;
+    public float maxVelocity = 20f;
     public float acceleration = 10f;
     private float startSpeed;
     private float startAcceleration;
-    private Vector3 moveDirection = Vector3.zero;
     [HideInInspector] public bool isMoving = false;
 
     [Header("Jumping")]
@@ -37,16 +37,14 @@ public class FPSController : MonoBehaviour
     private bool isJumping = false;
 
     [Header("Gravity & Coyote Time")]
-    public float gravity = 20f;
     public float coyoteTime = 0.2f;
     private float coyoteTimer = 0f;
-    private float verticalVelocity = 0f;
 
     private float defaultFOV;
 
     private void Awake()
     {
-        controller = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
         defaultFOV = playerCam.Lens.FieldOfView;
     }
 
@@ -137,43 +135,54 @@ public class FPSController : MonoBehaviour
     }
     private void Movement()
     {
-        if (!playerCanMove) return;
-
-        // Input-based movement direction
-        Vector3 inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        isMoving = inputDirection.x != 0 || inputDirection.z != 0;
-
-        // Convert local input
-        Vector3 move = transform.TransformDirection(inputDirection) * speed;
-        // Apply movement acceleration
-        moveDirection = Vector3.Lerp(moveDirection, move, acceleration * Time.deltaTime);
-
-        // Apply gravity
-        if (isGrounded)
+        if (playerCanMove)
         {
-            verticalVelocity = -gravity * Time.deltaTime;
-        }
-        else
-        {
-            verticalVelocity -= gravity/1.2f * Time.deltaTime;
-        }
+            // Calculate how fast we should be moving
+            Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-        moveDirection.y = verticalVelocity;
+            // Checks if player is walking and isGrounded
+            if (targetVelocity.x != 0 || targetVelocity.z != 0)
+            {
+                isMoving = true;
 
-        // Move the character
-        controller.Move(moveDirection * Time.deltaTime);
+            }
+            else
+            {
+                isMoving = false;
+            }
+            // All movement calculations
+            targetVelocity = transform.TransformDirection(targetVelocity) * speed;
+
+            // Apply a force that attempts to reach our target velocity
+            Vector3 velocity = rb.linearVelocity;
+            Vector3 velocityChange = (targetVelocity - velocity);
+            velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocity, maxVelocity);
+            velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocity, maxVelocity);
+            velocityChange.y = 0;
+
+            rb.AddForce(velocityChange, ForceMode.VelocityChange);
+        }
     }
 
     private void CheckGround()
     {
         if (isJumping) return;
 
-        isGrounded = controller.isGrounded;
+        Vector3 origin = transform.position + Vector3.down * (transform.localScale.y * 0.5f);
+        Vector3 direction = transform.TransformDirection(Vector3.down);
+        float distance = 0.75f;
 
-        if (isGrounded)
+        // Sets isGrounded based on a raycast
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
         {
-            coyoteTimer = coyoteTime;
-            jumpCount = maxJumps;
+            Debug.DrawRay(origin, direction * distance, Color.red);
+            isGrounded = true;
+            coyoteTimer = coyoteTime; // Reset coyote timer when grounded
+            jumpCount = maxJumps; // Reset jump count when grounded
+        }
+        else
+        {
+            isGrounded = false;
         }
     }
     private void Jump()
@@ -181,7 +190,8 @@ public class FPSController : MonoBehaviour
         isJumping = true;
         Invoke("ResetJump", 0.2f);
 
-        verticalVelocity = jumpPower; // Apply jump force
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z); // Reset vertical velocity
+        rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
 
         if (isGrounded || coyoteTimer > 0f)
         jumpCount = maxJumps - 1;
@@ -189,13 +199,13 @@ public class FPSController : MonoBehaviour
         jumpCount--;
 
         isGrounded = false;
-        coyoteTimer = 0f;
+        coyoteTimer = 0f; // To prevent multiple jumps during coyote time
     }
     private void ResetJump() { isJumping = false; } // to prevent reseting the jump count
 
     public void ResetVilocity(float velocity)
     {
-        verticalVelocity = velocity;
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, velocity, rb.linearVelocity.z);
     }
     public void ChangeSpeed(float modifier)
     {
