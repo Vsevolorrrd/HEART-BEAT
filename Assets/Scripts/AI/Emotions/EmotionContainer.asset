@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1dfb33c94478e74b9cdb1b72b878867, type: 3}
   m_Name: EmotionContainer
   m_EditorClassIdentifier: 
-  idle: {fileID: 917412130, guid: 8b46b7d23aa4e4747b18b3aa4b25acc9, type: 3}
-  hurt: {fileID: 637506901, guid: 8b46b7d23aa4e4747b18b3aa4b25acc9, type: 3}
-  angry: {fileID: -1946459975, guid: 8b46b7d23aa4e4747b18b3aa4b25acc9, type: 3}
-  superAngry: {fileID: 1942332112, guid: 8b46b7d23aa4e4747b18b3aa4b25acc9, type: 3}
-  happy: {fileID: 1913633957, guid: 8b46b7d23aa4e4747b18b3aa4b25acc9, type: 3}
-  surprised: {fileID: 287832425, guid: 8b46b7d23aa4e4747b18b3aa4b25acc9, type: 3}
-  sad: {fileID: 1359563015, guid: 8b46b7d23aa4e4747b18b3aa4b25acc9, type: 3}
-  deadInside: {fileID: -2030876055, guid: 8b46b7d23aa4e4747b18b3aa4b25acc9, type: 3}
+  idle: {fileID: 1629390479, guid: 63061d2636fb7f34aa8c6417c9e7c24c, type: 3}
+  hurt: {fileID: -1701867157, guid: 63061d2636fb7f34aa8c6417c9e7c24c, type: 3}
+  angry: {fileID: -339945734, guid: 63061d2636fb7f34aa8c6417c9e7c24c, type: 3}
+  superAngry: {fileID: -626447053, guid: 63061d2636fb7f34aa8c6417c9e7c24c, type: 3}
+  happy: {fileID: -107118387, guid: 63061d2636fb7f34aa8c6417c9e7c24c, type: 3}
+  surprised: {fileID: 749890413, guid: 63061d2636fb7f34aa8c6417c9e7c24c, type: 3}
+  sad: {fileID: -1974169917, guid: 63061d2636fb7f34aa8c6417c9e7c24c, type: 3}
+  deadInside: {fileID: 243549516, guid: 63061d2636fb7f34aa8c6417c9e7c24c, type: 3}

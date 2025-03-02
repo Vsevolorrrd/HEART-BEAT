@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8b46b7d23aa4e4747b18b3aa4b25acc9
+guid: 63061d2636fb7f34aa8c6417c9e7c24c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BeatlingBase_1
+      name: BeatlingsBody_1
       rect:
         serializedVersion: 2
         x: 0
@@ -112,14 +112,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4f9369bde675574b909aa30e3b848bf
-      internalID: -1829588457
+      spriteID: f3443939b97389c4e9dd4b8e109f97d7
+      internalID: -1483837281
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingBase_2
+      name: BeatlingsBody_2
       rect:
         serializedVersion: 2
         x: 512
@@ -134,14 +134,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 303ec02dba28b7946b08693ac9147808
-      internalID: -1351131714
+      spriteID: 0305bc1200e39504b85ed4d677305410
+      internalID: 1780821000
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsBase_3
+      name: BeatlingsBod_2
       rect:
         serializedVersion: 2
         x: 1024
@@ -156,14 +156,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7bf736eb7b465549ba82a5a5636a9c8
-      internalID: -888197841
+      spriteID: df948304d095a92498c0709ae3133903
+      internalID: 629784279
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_1
+      name: Beatlings_Sad
       rect:
         serializedVersion: 2
         x: 1536
@@ -178,14 +178,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e49fa9205f8692b4e834d6d9ffe43dd1
-      internalID: -1616104598
+      spriteID: dc258437e15ef90459f267315cd30e5e
+      internalID: -1974169917
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_2
+      name: BeatlingsWithoutFrame_4
       rect:
         serializedVersion: 2
         x: 2048
@@ -200,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c3f9bc6241a545648ae5ec9e3e54a899
-      internalID: 1385849267
+      spriteID: 31ff039b6f5f83944b0380eee9ce049c
+      internalID: -865611909
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_3
+      name: Beatlings_SuperAngry
       rect:
         serializedVersion: 2
         x: 0
@@ -222,14 +222,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: edb28baa2d2cf054a946b0f365ae87fc
-      internalID: 1942332112
+      spriteID: 9a0f69bcac2163b43b7127423dbab89b
+      internalID: -626447053
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_4
+      name: Beatlings_Sliping
       rect:
         serializedVersion: 2
         x: 512
@@ -244,14 +244,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 74b7214291b012f46b99b20120105d89
-      internalID: -1270721602
+      spriteID: fe857baa80d4db24789c46645dc06fd2
+      internalID: 572645725
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_5
+      name: Beatlings_Dizzy
       rect:
         serializedVersion: 2
         x: 1024
@@ -266,18 +266,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6716f9c2c5a7674e9e2715b2eed4b61
-      internalID: -1307683772
+      spriteID: 4129e5eb6d288c949adaef23b513cc85
+      internalID: 1137842428
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_6
+      name: Beatlings_Smile
       rect:
         serializedVersion: 2
         x: 1536
-        y: 1027
+        y: 1024
         width: 512
         height: 512
       alignment: 0
@@ -288,14 +288,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f503c5b8acd5a1f44976c6898b4bad1a
-      internalID: 1913633957
+      spriteID: 20a47cad5ce460640baf99f4a430f191
+      internalID: -107118387
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_7
+      name: Beatlings_SuperHappy
       rect:
         serializedVersion: 2
         x: 2048
@@ -310,14 +310,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: adba2c849e2ba034bb2d97602ee14071
-      internalID: 847830102
+      spriteID: e8d467ed4b84a7046aa8895a00b323ca
+      internalID: -655340020
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_8
+      name: Beatlings_Suprised
       rect:
         serializedVersion: 2
         x: 0
@@ -332,14 +332,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e2f9eb1a012ebb341b7480c6ad1f0307
-      internalID: 287832425
+      spriteID: a8f64f01daa770f4f8b35fbd19dfd1cd
+      internalID: 749890413
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_9
+      name: Beatlings_Hurt
       rect:
         serializedVersion: 2
         x: 512
@@ -354,14 +354,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 853e1aa847e4e5f4ba978feee16d27ce
-      internalID: 637506901
+      spriteID: d201346624f15324d95f9dae1864d422
+      internalID: -1701867157
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_10
+      name: Beatlings_Angry
       rect:
         serializedVersion: 2
         x: 1024
@@ -376,14 +376,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b6079b78743bb1428edd02d2f8ecdaa
-      internalID: -1946459975
+      spriteID: 3834bea2d553f4f46a2772f7e7192517
+      internalID: -339945734
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_11
+      name: Beatlings_Silly
       rect:
         serializedVersion: 2
         x: 1536
@@ -398,14 +398,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1be10c8beb84f7247a49afd7aeffe80e
-      internalID: 1973007402
+      spriteID: 8e5fd260569d46744af037c0d97851ae
+      internalID: 1095109140
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_12
+      name: Beatlings_Crying
       rect:
         serializedVersion: 2
         x: 2048
@@ -420,14 +420,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 83875a75de05708479f04328965c8d86
-      internalID: 1359563015
+      spriteID: c9bff2b068e48f84b99fc43377cf0806
+      internalID: -92035758
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsGlases
+      name: Beatlings_SunGlasses
       rect:
         serializedVersion: 2
         x: 0
@@ -442,14 +442,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 060acae2415e71c44993f6f2395a0e3a
-      internalID: 926773155
+      spriteID: 7fecdbd2de528ca4d91f89d1accd5e4b
+      internalID: -679097123
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_13
+      name: Beatlings_Dead
       rect:
         serializedVersion: 2
         x: 512
@@ -464,14 +464,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db54d2bbb56113746b9893ee59a8c526
-      internalID: -2030876055
+      spriteID: 7734ec413c30255449151d8b04a9667a
+      internalID: 243549516
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_14
+      name: Beatlings_default
       rect:
         serializedVersion: 2
         x: 1024
@@ -486,14 +486,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8fcbcb31f18b2e44891ccac154b45e67
-      internalID: 917412130
+      spriteID: acf2fe1a933d93840a3b10c9c9c7afa7
+      internalID: 1629390479
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_15
+      name: Beatlings_Money!
       rect:
         serializedVersion: 2
         x: 1536
@@ -508,14 +508,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 11652ea141d28804aa5a458e49b6f2f8
-      internalID: -1800840697
+      spriteID: 8f9881758b6f19949b9006ba96bbbeeb
+      internalID: 75495596
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_16
+      name: Beatlings_I_Love_You
       rect:
         serializedVersion: 2
         x: 2048
@@ -530,8 +530,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3a3ac90ea10bf14ab4450ce0dcd6269
-      internalID: -728600723
+      spriteID: ca6f7470553fca3428c121cd73e73ccb
+      internalID: 60526428
       vertices: []
       indices: 
       edges: []
@@ -540,7 +540,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 26c537aab3818d744bb21d89d92348cb
+    spriteID: d01803da649dc1b429e8418211d8e9e0
     internalID: 0
     vertices: []
     indices: 
@@ -550,26 +550,26 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BeatlingBase_1: -1829588457
-      BeatlingBase_2: -1351131714
-      BeatlingsBase_3: -888197841
-      BeatlingsGlases: 926773155
-      BeatlingsTest_1: -1616104598
-      BeatlingsTest_10: -1946459975
-      BeatlingsTest_11: 1973007402
-      BeatlingsTest_12: 1359563015
-      BeatlingsTest_13: -2030876055
-      BeatlingsTest_14: 917412130
-      BeatlingsTest_15: -1800840697
-      BeatlingsTest_16: -728600723
-      BeatlingsTest_2: 1385849267
-      BeatlingsTest_3: 1942332112
-      BeatlingsTest_4: -1270721602
-      BeatlingsTest_5: -1307683772
-      BeatlingsTest_6: 1913633957
-      BeatlingsTest_7: 847830102
-      BeatlingsTest_8: 287832425
-      BeatlingsTest_9: 637506901
+      BeatlingsBod_2: 629784279
+      BeatlingsBody_1: -1483837281
+      BeatlingsBody_2: 1780821000
+      BeatlingsWithoutFrame_4: -865611909
+      Beatlings_Angry: -339945734
+      Beatlings_Crying: -92035758
+      Beatlings_Dead: 243549516
+      Beatlings_Dizzy: 1137842428
+      Beatlings_Hurt: -1701867157
+      Beatlings_I_Love_You: 60526428
+      Beatlings_Money!: 75495596
+      Beatlings_Sad: -1974169917
+      Beatlings_Silly: 1095109140
+      Beatlings_Sliping: 572645725
+      Beatlings_Smile: -107118387
+      Beatlings_SunGlasses: -679097123
+      Beatlings_SuperAngry: -626447053
+      Beatlings_SuperHappy: -655340020
+      Beatlings_Suprised: 749890413
+      Beatlings_default: 1629390479
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
