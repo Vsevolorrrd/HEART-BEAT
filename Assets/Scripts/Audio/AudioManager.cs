@@ -7,6 +7,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource soundFXPrefab;
     private List<AudioSource> loopSources;
     private List<AudioSource> audioPool = new List<AudioSource>();
+    [SerializeField] int maxSoundsPlaying = 25;
+    private int currentSoundsPlaying = 0;
 
     private static AudioManager _instance;
 
@@ -93,6 +95,9 @@ public class AudioManager : MonoBehaviour
     }
     public void PlaySound(AudioClip audioClip, float volume = 1, Transform spawn = null, bool loop = false, float pitch = 1f)
     {
+        if (currentSoundsPlaying >= maxSoundsPlaying)
+        return;  // Do not play the sound if the limit is exceeded
+
         if (spawn == null)
         spawn = transform; // Default to this object's transform
         AudioSource audioSource = Instantiate(soundFXPrefab, spawn.position, Quaternion.identity);
@@ -114,6 +119,9 @@ public class AudioManager : MonoBehaviour
     }
     public void PlayRandomSound(AudioClip[] audioClip, float volume = 1, Transform spawn = null, bool loop = false, float pitch = 1f)
     {
+        if (currentSoundsPlaying >= maxSoundsPlaying)
+        return;  // Do not play the sound if the limit is exceeded
+
         int R = Random.Range(0, audioClip.Length);
 
         if (spawn == null)

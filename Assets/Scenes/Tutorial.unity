@@ -596,9 +596,9 @@ GameObject:
   m_Component:
   - component: {fileID: 211388319}
   - component: {fileID: 211388323}
-  - component: {fileID: 211388322}
   - component: {fileID: 211388321}
   - component: {fileID: 211388324}
+  - component: {fileID: 211388322}
   - component: {fileID: 211388320}
   m_Layer: 0
   m_Name: Buddy
@@ -621,6 +621,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1149352591}
+  - {fileID: 1125682497}
   m_Father: {fileID: 1606863631}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &211388320
@@ -706,7 +707,7 @@ SpriteRenderer:
   m_SortingLayerID: -1431224517
   m_SortingLayer: 2
   m_SortingOrder: 5
-  m_Sprite: {fileID: 917412130, guid: 8b46b7d23aa4e4747b18b3aa4b25acc9, type: 3}
+  m_Sprite: {fileID: -573129790, guid: c8b24a9cddc1cd24a821d23cbe29c4aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -751,6 +752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8778e03702460c246a585eaf2113f7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleSmooth: 1
   scaleMultiplier: 1.1
   scaleBackSpeed: 0.1
 --- !u!1 &215713868
@@ -2262,6 +2264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8778e03702460c246a585eaf2113f7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleSmooth: 1
   scaleMultiplier: 1.07
   scaleBackSpeed: 0.1
 --- !u!114 &606412259
@@ -2484,6 +2487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8778e03702460c246a585eaf2113f7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleSmooth: 1
   scaleMultiplier: 1.07
   scaleBackSpeed: 0.1
 --- !u!114 &642877275
@@ -2891,6 +2895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8778e03702460c246a585eaf2113f7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleSmooth: 1
   scaleMultiplier: 1.07
   scaleBackSpeed: 0.1
 --- !u!114 &730578689
@@ -3432,6 +3437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8778e03702460c246a585eaf2113f7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleSmooth: 1
   scaleMultiplier: 1.07
   scaleBackSpeed: 0.1
 --- !u!114 &1067649049
@@ -3833,6 +3839,76 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1839320592}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1125682496
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1125682497}
+  - component: {fileID: 1125682499}
+  - component: {fileID: 1125682500}
+  m_Layer: 6
+  m_Name: DialogueTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1125682497
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125682496}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 211388319}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1125682499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125682496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6927b8b11eaa33449a97cb3272d3e7fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue: {fileID: 11400000, guid: 0fb385f8d9a90134cbe1d5c9b30569a9, type: 2}
+  controller: {fileID: 211388321}
+--- !u!136 &1125682500
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125682496}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1130679913
 GameObject:
   m_ObjectHideFlags: 0
@@ -4125,12 +4201,12 @@ SpriteRenderer:
   m_SortingLayerID: -1431224517
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1829588457, guid: 8b46b7d23aa4e4747b18b3aa4b25acc9, type: 3}
+  m_Sprite: {fileID: 1124453450, guid: c8b24a9cddc1cd24a821d23cbe29c4aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.560625, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -7734,6 +7810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8778e03702460c246a585eaf2113f7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleSmooth: 1
   scaleMultiplier: 1.07
   scaleBackSpeed: 0.1
 --- !u!114 &2091310182
@@ -8090,6 +8167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8778e03702460c246a585eaf2113f7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleSmooth: 1
   scaleMultiplier: 1.07
   scaleBackSpeed: 0.1
 --- !u!114 &2136346491
@@ -8315,6 +8393,10 @@ PrefabInstance:
       propertyPath: acceleration
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4285499823416637908, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
+      propertyPath: snapClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 97ec3f85377727a48ae1cb194edf10bc, type: 3}
     - target: {fileID: 4295777191573606621, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

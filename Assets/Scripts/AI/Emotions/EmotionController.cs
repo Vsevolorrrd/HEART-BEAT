@@ -3,6 +3,7 @@ using UnityEngine;
 public enum EmotionType
 {
     Idle,
+    Speaking,
     Hurt,
     Angry,
     SuperAngry,

@@ -15,13 +15,13 @@ public class MeleeWeapon : RhythmInput
     private int currentAttack;
     private bool heavy = false;
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         currentAttack = 0;
         currentDamage = damage;
     }
-    public override void Update()
+    protected override void Update()
     {
         if (Input.GetKey(actionKey))
         {
@@ -67,7 +67,7 @@ public class MeleeWeapon : RhythmInput
         heavy = false;
     }
 
-    public override void OnPerfectHit()
+    protected override void OnPerfectHit()
     {
         if (heavy)
         {
@@ -80,7 +80,7 @@ public class MeleeWeapon : RhythmInput
             heavyPrepTime = 0;
         }
     }
-    public override void OnGoodHit()
+    protected override void OnGoodHit()
     {
         if (heavy)
         {

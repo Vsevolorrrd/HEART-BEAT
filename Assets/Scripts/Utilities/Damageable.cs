@@ -4,9 +4,10 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class Damageable : MonoBehaviour
 {
-    [SerializeField] float maxHealth = 100f;
+    [SerializeField] protected float maxHealth = 100f;
     [SerializeField] protected bool isVulnerable = true;
     public bool isDead = false;
+    private bool isBlinking = false; // Prevents multiple calls
 
     [Header("Visual Effects")]
     [SerializeField] bool blink = true;
@@ -14,6 +15,10 @@ public class Damageable : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] ParticleSystem damageEffect;
     [SerializeField] GameObject Remains;
+
+    [Header("Audio")]
+    //[SerializeField] AudioClip damageSound;
+    //[SerializeField] AudioClip deathSound;
 
     [Header("Debug")]
     [SerializeField] protected float currentHealth;
@@ -26,9 +31,11 @@ public class Damageable : MonoBehaviour
     protected virtual void Initialize()
     {
         currentHealth = maxHealth;
+        if (damageEffect)
+        damageEffect.gameObject.SetActive(true);
     }
 
-    public void Heal(float amount)
+    protected virtual void Heal(float amount)
     {
         if (isDead || amount <= 0)
         return;
@@ -51,7 +58,10 @@ public class Damageable : MonoBehaviour
             return;
         }
 
-        if (blink)
+        if (damageEffect)
+        damageEffect.Play();
+
+        if (blink && !isBlinking)
         {
             if (meshRenderer)
             StartCoroutine(Blink3D());
@@ -74,7 +84,9 @@ public class Damageable : MonoBehaviour
     private IEnumerator Blink3D()
     {
         if (meshRenderer == null || !meshRenderer.material.HasProperty("_Color"))
-            yield break;
+        yield break;
+
+        isBlinking = true; // Prevents multiple calls
 
         Material mat = meshRenderer.material;
         Color originalColor = mat.color;
@@ -91,14 +103,17 @@ public class Damageable : MonoBehaviour
             yield return null;
         }
 
-        mat.color = originalColor;
+        mat.color = originalColor; // Ensure color is right
+        isBlinking = false; // Allows new calls
     }
 
     // 2D Blink Effect
     private IEnumerator Blink2D()
     {
         if (spriteRenderer == null)
-            yield break;
+        yield break;
+
+        isBlinking = true; // Prevents multiple calls
 
         Color originalColor = spriteRenderer.color;
         Color blinkColor = Color.white * 2f;
@@ -114,7 +129,8 @@ public class Damageable : MonoBehaviour
             yield return null;
         }
 
-        spriteRenderer.color = originalColor;
+        spriteRenderer.color = originalColor; // Ensure color is right
+        isBlinking = false; // Allows new calls
     }
 
     #endregion

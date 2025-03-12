@@ -4,6 +4,7 @@ using UnityEngine;
 public class EmotionContainer : ScriptableObject
 {
     public Sprite idle;
+    public Sprite speaking;
     public Sprite hurt;
     public Sprite angry;
     public Sprite superAngry;
@@ -17,6 +18,7 @@ public class EmotionContainer : ScriptableObject
         return emotion switch
         {
             EmotionType.Hurt => hurt,
+            EmotionType.Speaking => speaking,
             EmotionType.Angry => angry,
             EmotionType.SuperAngry => superAngry,
             EmotionType.Happy => happy,

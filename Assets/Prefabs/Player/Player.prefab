@@ -46,14 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88fdb2a00a449064f9853fad6f388cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioclip: {fileID: 8300000, guid: e47a1fb1fdc5cef4585a343ff2216d00, type: 3}
-  perfectShot: {fileID: 8300000, guid: a6ab0871d6721634ea43972d83787dd6, type: 3}
   perfectThreshold: 0.1
   streakGainPerfect: 2
   goodThreshold: 0.15
   streakGainGood: 1
   actionKey: 323
   playerInput: 1
+  audioclip: {fileID: 8300000, guid: e47a1fb1fdc5cef4585a343ff2216d00, type: 3}
+  perfectShot: {fileID: 8300000, guid: a6ab0871d6721634ea43972d83787dd6, type: 3}
   cam: {fileID: 6651157350833734218}
   damage: 10
   range: 100
@@ -409,8 +409,6 @@ MonoBehaviour:
   playerInput: 1
   damage: 10
   heavyDamage: 15
-  speed: 5
-  cooldown: 0.2
   heavyReadyTime: 1
   comboTime: 1
 --- !u!1 &6064625661927546140
@@ -5798,12 +5796,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1515177705883663484}
+  - component: {fileID: 2855808101895019682}
+  - component: {fileID: 7656141362023319138}
   - component: {fileID: 5010705142048132632}
   - component: {fileID: 4635411821660464276}
   - component: {fileID: 5872740296004797795}
+  - component: {fileID: 5020304683037797507}
   - component: {fileID: 291199694043827141}
   - component: {fileID: 5766634958720728171}
   - component: {fileID: 1183997357057276286}
+  - component: {fileID: 2185342829802693226}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5827,6 +5829,48 @@ Transform:
   - {fileID: 8214979014429562803}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2855808101895019682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8977769797477751119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f74174d0ea72034d92bd6f2c26352d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7656141362023319138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8977769797477751119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c390c117da50a74438f2bcf6d8967d9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  isVulnerable: 1
+  isDead: 0
+  blink: 0
+  meshRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  damageEffect: {fileID: 0}
+  Remains: {fileID: 0}
+  currentHealth: 0
+  useHealthBar: 1
+  healthBarBG: {fileID: 0}
+  healthBar: {fileID: 0}
+  healthBarDuration: 1
+  healtBarCG: {fileID: 0}
+  useDamageOverlay: 1
+  DamageOverlayDuration: 1
+  DamageOverlayCG: {fileID: 0}
+  DeathScreen: {fileID: 0}
 --- !u!114 &5010705142048132632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5846,7 +5890,7 @@ MonoBehaviour:
   maxLookAngle: 80
   lockCursor: 1
   playerCanMove: 1
-  speed: 8
+  speed: 10
   acceleration: 12
   isMoving: 0
   jumpKey: 32
@@ -5902,13 +5946,48 @@ MonoBehaviour:
   teleportDuration: 0.2
   teleportCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   echoJumpClip: {fileID: 8300000, guid: a95fc46d4d18a7443b3d2c66d0cf418d, type: 3}
   fovIncrease: 15
   fovTransitionTime: 0.2
+--- !u!114 &5020304683037797507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8977769797477751119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ddcbaba8269f334d93bbfca17751923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactRange: 2
+  interactKey: 324
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &291199694043827141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5963,6 +6042,29 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &2185342829802693226
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8977769797477751119}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9011824316335484308
 GameObject:

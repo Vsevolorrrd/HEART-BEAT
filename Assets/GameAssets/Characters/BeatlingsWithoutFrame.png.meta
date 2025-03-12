@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8b46b7d23aa4e4747b18b3aa4b25acc9
+guid: c8b24a9cddc1cd24a821d23cbe29c4aa
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BeatlingBase_1
+      name: BeatlingsWithoutFrame_0
       rect:
         serializedVersion: 2
         x: 0
@@ -105,21 +105,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4f9369bde675574b909aa30e3b848bf
-      internalID: -1829588457
+      spriteID: eb7ec7e1031d3a8408030e34830458a2
+      internalID: 1064416958
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingBase_2
+      name: BeatlingsWithoutFrame_1
       rect:
         serializedVersion: 2
         x: 512
@@ -127,21 +127,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 303ec02dba28b7946b08693ac9147808
-      internalID: -1351131714
+      spriteID: 76246eaea1b60e043b566fd6cc0b382d
+      internalID: 1124453450
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsBase_3
+      name: BeatlingsWithoutFrame_2
       rect:
         serializedVersion: 2
         x: 1024
@@ -149,21 +149,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7bf736eb7b465549ba82a5a5636a9c8
-      internalID: -888197841
+      spriteID: 7e17e0e88d7863a42b850b2e8937edbd
+      internalID: 1360258857
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_1
+      name: BeatlingsWithoutFrame_3
       rect:
         serializedVersion: 2
         x: 1536
@@ -171,21 +171,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e49fa9205f8692b4e834d6d9ffe43dd1
-      internalID: -1616104598
+      spriteID: 38448b49c8b9dc34aa62b6bf7b320f5e
+      internalID: -257642762
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_2
+      name: BeatlingsWithoutFrame_4
       rect:
         serializedVersion: 2
         x: 2048
@@ -193,21 +193,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c3f9bc6241a545648ae5ec9e3e54a899
-      internalID: 1385849267
+      spriteID: 80b8bd852f816124698b2c64d5254d67
+      internalID: 578215977
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_3
+      name: BeatlingsWithoutFrame_5
       rect:
         serializedVersion: 2
         x: 0
@@ -215,21 +215,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: edb28baa2d2cf054a946b0f365ae87fc
-      internalID: 1942332112
+      spriteID: 3547c01a19d1248449aad850393f3e10
+      internalID: -899818079
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_4
+      name: BeatlingsWithoutFrame_6
       rect:
         serializedVersion: 2
         x: 512
@@ -237,21 +237,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 74b7214291b012f46b99b20120105d89
-      internalID: -1270721602
+      spriteID: 299648f213597474a99284066e5072ea
+      internalID: 1110663591
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_5
+      name: BeatlingsWithoutFrame_7
       rect:
         serializedVersion: 2
         x: 1024
@@ -259,43 +259,43 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6716f9c2c5a7674e9e2715b2eed4b61
-      internalID: -1307683772
+      spriteID: e6928b126ffd71b48b092ce6e7f09d3b
+      internalID: -601976058
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_6
+      name: BeatlingsWithoutFrame_8
       rect:
         serializedVersion: 2
         x: 1536
-        y: 1027
+        y: 1024
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f503c5b8acd5a1f44976c6898b4bad1a
-      internalID: 1913633957
+      spriteID: ea246b9567a3d7449b39c56357af1463
+      internalID: -183706320
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_7
+      name: BeatlingsWithoutFrame_9
       rect:
         serializedVersion: 2
         x: 2048
@@ -303,21 +303,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: adba2c849e2ba034bb2d97602ee14071
-      internalID: 847830102
+      spriteID: 1815a4a856a737246b4291379190088d
+      internalID: 1059508479
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_8
+      name: BeatlingsWithoutFrame_10
       rect:
         serializedVersion: 2
         x: 0
@@ -325,21 +325,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e2f9eb1a012ebb341b7480c6ad1f0307
-      internalID: 287832425
+      spriteID: 84d5b7ccc326a8b4ca236a2e2b1f2ed1
+      internalID: 1358642874
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_9
+      name: BeatlingsWithoutFrame_11
       rect:
         serializedVersion: 2
         x: 512
@@ -347,21 +347,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 853e1aa847e4e5f4ba978feee16d27ce
-      internalID: 637506901
+      spriteID: 48f424a8684c8b14e90f3649f06f2d56
+      internalID: 146386187
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_10
+      name: BeatlingsWithoutFrame_12
       rect:
         serializedVersion: 2
         x: 1024
@@ -369,21 +369,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b6079b78743bb1428edd02d2f8ecdaa
-      internalID: -1946459975
+      spriteID: 05f8c6eb79fd14440bcacbdba397b88e
+      internalID: 1254399061
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_11
+      name: BeatlingsWithoutFrame_13
       rect:
         serializedVersion: 2
         x: 1536
@@ -391,21 +391,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1be10c8beb84f7247a49afd7aeffe80e
-      internalID: 1973007402
+      spriteID: b50ab4d93e63b694e849c59d8981a392
+      internalID: -573129790
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_12
+      name: BeatlingsWithoutFrame_14
       rect:
         serializedVersion: 2
         x: 2048
@@ -413,21 +413,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 83875a75de05708479f04328965c8d86
-      internalID: 1359563015
+      spriteID: 78a5b7997b563a04aaf25785c7d8fb5d
+      internalID: -10583006
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsGlases
+      name: BeatlingsWithoutFrame_15
       rect:
         serializedVersion: 2
         x: 0
@@ -435,21 +435,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 060acae2415e71c44993f6f2395a0e3a
-      internalID: 926773155
+      spriteID: e80a44d64b7b6684984a1fcf1fa07bb0
+      internalID: -540630138
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_13
+      name: BeatlingsWithoutFrame_16
       rect:
         serializedVersion: 2
         x: 512
@@ -457,21 +457,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db54d2bbb56113746b9893ee59a8c526
-      internalID: -2030876055
+      spriteID: 19b031ed7c7e8c0409edd3fbd3171cf4
+      internalID: 259412967
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_14
+      name: BeatlingsWithoutFrame_17
       rect:
         serializedVersion: 2
         x: 1024
@@ -479,21 +479,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8fcbcb31f18b2e44891ccac154b45e67
-      internalID: 917412130
+      spriteID: 29db2c0fffb0cac4dbf45df863424f8a
+      internalID: 979019402
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_15
+      name: BeatlingsWithoutFrame_18
       rect:
         serializedVersion: 2
         x: 1536
@@ -501,21 +501,21 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 11652ea141d28804aa5a458e49b6f2f8
-      internalID: -1800840697
+      spriteID: 0fee1bb2ad68e4b41a8c57253ec913b4
+      internalID: 1867661572
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BeatlingsTest_16
+      name: BeatlingsWithoutFrame_19
       rect:
         serializedVersion: 2
         x: 2048
@@ -523,15 +523,15 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3a3ac90ea10bf14ab4450ce0dcd6269
-      internalID: -728600723
+      spriteID: 0891cc6d9f130e34496c788fa0d1f3f8
+      internalID: -1972328457
       vertices: []
       indices: 
       edges: []
@@ -540,7 +540,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 26c537aab3818d744bb21d89d92348cb
+    spriteID: 71c051a1ceaff50448c5abfada9350b8
     internalID: 0
     vertices: []
     indices: 
@@ -550,26 +550,26 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BeatlingBase_1: -1829588457
-      BeatlingBase_2: -1351131714
-      BeatlingsBase_3: -888197841
-      BeatlingsGlases: 926773155
-      BeatlingsTest_1: -1616104598
-      BeatlingsTest_10: -1946459975
-      BeatlingsTest_11: 1973007402
-      BeatlingsTest_12: 1359563015
-      BeatlingsTest_13: -2030876055
-      BeatlingsTest_14: 917412130
-      BeatlingsTest_15: -1800840697
-      BeatlingsTest_16: -728600723
-      BeatlingsTest_2: 1385849267
-      BeatlingsTest_3: 1942332112
-      BeatlingsTest_4: -1270721602
-      BeatlingsTest_5: -1307683772
-      BeatlingsTest_6: 1913633957
-      BeatlingsTest_7: 847830102
-      BeatlingsTest_8: 287832425
-      BeatlingsTest_9: 637506901
+      BeatlingsWithoutFrame_0: 1064416958
+      BeatlingsWithoutFrame_1: 1124453450
+      BeatlingsWithoutFrame_10: 1358642874
+      BeatlingsWithoutFrame_11: 146386187
+      BeatlingsWithoutFrame_12: 1254399061
+      BeatlingsWithoutFrame_13: -573129790
+      BeatlingsWithoutFrame_14: -10583006
+      BeatlingsWithoutFrame_15: -540630138
+      BeatlingsWithoutFrame_16: 259412967
+      BeatlingsWithoutFrame_17: 979019402
+      BeatlingsWithoutFrame_18: 1867661572
+      BeatlingsWithoutFrame_19: -1972328457
+      BeatlingsWithoutFrame_2: 1360258857
+      BeatlingsWithoutFrame_3: -257642762
+      BeatlingsWithoutFrame_4: 578215977
+      BeatlingsWithoutFrame_5: -899818079
+      BeatlingsWithoutFrame_6: 1110663591
+      BeatlingsWithoutFrame_7: -601976058
+      BeatlingsWithoutFrame_8: -183706320
+      BeatlingsWithoutFrame_9: 1059508479
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

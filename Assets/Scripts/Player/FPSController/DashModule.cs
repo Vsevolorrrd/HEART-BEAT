@@ -18,7 +18,7 @@ public class DashModule : RhythmInput
     [SerializeField] private float fovIncrease = 15f;
 
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
 
@@ -27,7 +27,7 @@ public class DashModule : RhythmInput
         startDashSpeed = dashSpeed;
     }
 
-    public override void Update()
+    protected override void Update()
     {
         if (!playerInput || !controller.isMoving || isDashing) return;
 
@@ -37,12 +37,12 @@ public class DashModule : RhythmInput
         }
     }
 
-    public override void OnPerfectHit()
+    protected override void OnPerfectHit()
     {
         StartCoroutine(Dash(1.2f));
     }
 
-    public override void OnGoodHit()
+    protected override void OnGoodHit()
     {
         StartCoroutine(Dash(1f));
     }
@@ -70,7 +70,7 @@ public class DashModule : RhythmInput
 
     #region events
 
-    public override void OnDestroy()
+    protected override void OnDestroy()
     {
         base.OnDestroy();
         BEAT_Manager.MusicLevelIncreased -= changePlayerStats;

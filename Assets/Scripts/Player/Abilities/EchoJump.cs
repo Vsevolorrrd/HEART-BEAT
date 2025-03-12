@@ -20,7 +20,7 @@ public class EchoJump : RhythmInput
     private EchoPoint echoPoint = null;
     private bool isTeleporting = false;
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
 
@@ -28,7 +28,7 @@ public class EchoJump : RhythmInput
         charController = GetComponent<CharacterController>();
     }
 
-    public override void Update()
+    protected override void Update()
     {
         if (!playerInput || isTeleporting) return;
 
@@ -78,7 +78,7 @@ public class EchoJump : RhythmInput
         }
     }
 
-    public override void OnPerfectHit()
+    protected override void OnPerfectHit()
     {
         base.OnPerfectHit();
         AudioManager.Instance.PlaySound(echoJumpClip, 0.7f);
@@ -86,14 +86,14 @@ public class EchoJump : RhythmInput
         echoPoint = null;
     }
 
-    public override void OnGoodHit()
+    protected override void OnGoodHit()
     {
         base.OnGoodHit();
         AudioManager.Instance.PlaySound(echoJumpClip, 0.7f);
         StartCoroutine(SmoothTeleport(echoPoint.transform.position));
         echoPoint = null;
     }
-    public override void OnMiss()
+    protected override void OnMiss()
     {
         base.OnMiss();
         echoPoint = null;

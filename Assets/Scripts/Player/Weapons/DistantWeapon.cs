@@ -35,12 +35,12 @@ public class DistantWeapon : RhythmInput
     //these are shown in the inspector, but cannot be modified while the game is not running
     [SerializeField] protected float nextShotMinTime = 0; //when can the next attack be fired
 
-    public override void Start()
+    protected override void Start()
     {
         MainMenu.OnPause += HandlePause;
         anim = GetComponent<Animator>();
     }
-    public override void Update()
+    protected override void Update()
     {
         if (!playerInput || isBlocked)
         return;
@@ -53,7 +53,7 @@ public class DistantWeapon : RhythmInput
             HandleKeyPress();
         }
     }
-    public override void HandleKeyPress()
+    protected override void HandleKeyPress()
     {
         float currentTime = Time.time;
 

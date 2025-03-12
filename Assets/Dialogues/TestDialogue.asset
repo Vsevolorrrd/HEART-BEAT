@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5c6747be5b542468b30a08bf58bb01, type: 3}
+  m_Name: TestDialogue
+  m_EditorClassIdentifier: 
+  dialogueNodes:
+  - blocks:
+    - dialogueText: Hey how is it going?
+    - dialogueText: Is it hard to stay on beat
+  - blocks:
+    - dialogueText: Well,
+    - dialogueText: this is the way to go
+  - blocks:
+    - dialogueText: Did, you know
+    - dialogueText: that
+    - dialogueText: giraphes
+    - dialogueText: have the same amount
+    - dialogueText: of bones
+    - dialogueText: in it's neck

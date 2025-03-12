@@ -19,7 +19,7 @@ public abstract class RhythmInput : MonoBehaviour
     protected float firstPressTime = -999f;
     protected bool isBlocked = false;
 
-    public virtual void Update()
+    protected virtual void Update()
     {
         if (!playerInput || isBlocked)
         return;
@@ -29,7 +29,7 @@ public abstract class RhythmInput : MonoBehaviour
             HandleKeyPress();
         }
     }
-    public virtual void HandleKeyPress()
+    protected virtual void HandleKeyPress()
     {
         float currentTime = Time.time;
 
@@ -63,7 +63,7 @@ public abstract class RhythmInput : MonoBehaviour
         Debug.Log("Input unblocked.");
     }
 
-    public virtual void EvaluateTiming()
+    protected virtual void EvaluateTiming()
     {
         float songPosition = BEAT_Manager.Instance.GetSongPositionInBeats();
         float nearestBeat = Mathf.Round(songPosition); // Nearest beat
@@ -89,27 +89,27 @@ public abstract class RhythmInput : MonoBehaviour
             OnMiss();
         }
     }
-    public virtual void OnPerfectHit()
+    protected virtual void OnPerfectHit()
     {
         Debug.Log("Perfect Hit!");
     }
-    public virtual void OnGoodHit()
+    protected virtual void OnGoodHit()
     {
         Debug.Log("Good Hit!");
     }
-    public virtual void OnMiss()
+    protected virtual void OnMiss()
     {
         Debug.Log("Miss!");
     }
 
     #region events
 
-    public virtual void Start()
+    protected virtual void Start()
     {
         MainMenu.OnPause += HandlePause;
     }
 
-    public virtual void OnDestroy()
+    protected virtual void OnDestroy()
     {
         MainMenu.OnPause -= HandlePause;
     }

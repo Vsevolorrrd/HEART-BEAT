@@ -62,6 +62,8 @@ public class FPSController : MonoBehaviour
 
         MainMenu.OnPause += HandlePause;
 
+        DialogueManager.OnPauseInput += HandlePause;
+
         BEAT_Manager.MusicLevelIncreased += changePlayerStats;
 
     }
@@ -231,6 +233,8 @@ public class FPSController : MonoBehaviour
     private void OnDestroy()
     {
         MainMenu.OnPause -= HandlePause;
+
+        DialogueManager.OnPauseInput -= HandlePause;
 
         BEAT_Manager.MusicLevelIncreased += changePlayerStats;
     }
