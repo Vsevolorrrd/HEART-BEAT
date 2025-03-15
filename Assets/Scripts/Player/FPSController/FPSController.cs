@@ -3,9 +3,11 @@ using Unity.Cinemachine;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(JumpModule))]
 public class FPSController : MonoBehaviour
 {
     private CharacterController controller;
+    private JumpModule jumpModule;
 
     [Header("Camera Settings")]
     public CinemachineCamera playerCam;
@@ -31,10 +33,11 @@ public class FPSController : MonoBehaviour
     [Header("Jumping")]
     public KeyCode jumpKey = KeyCode.Space;
     public float jumpPower = 5f;
-    public int maxJumps = 1;
+    public int maxJumps = 3;
     private int jumpCount = 0;
     private bool isGrounded = false;
     private bool isJumping = false;
+    private bool firstJumpUsed = false;
 
     [Header("Gravity & Coyote Time")]
     public float gravity = 20f;
@@ -47,6 +50,7 @@ public class FPSController : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        jumpModule = GetComponent<JumpModule>();
         defaultFOV = playerCam.Lens.FieldOfView;
     }
 
@@ -132,9 +136,18 @@ public class FPSController : MonoBehaviour
     {
         if (!isGrounded) coyoteTimer -= Time.deltaTime;
 
-        if (Input.GetKeyDown(jumpKey) && (jumpCount > 0 || coyoteTimer > 0f))
+        // First jump can be done anytime
+        if (!firstJumpUsed && Input.GetKeyDown(jumpKey) && (jumpCount > 0 || coyoteTimer > 0f))
         {
             Jump();
+            firstJumpUsed = true;
+            return;
+        }
+
+        // All other jumps must be on beat
+        if (firstJumpUsed && Input.GetKeyDown(jumpKey) && jumpCount > 0)
+        {
+            jumpModule.CheckJump();
         }
     }
     private void Movement()
@@ -176,9 +189,10 @@ public class FPSController : MonoBehaviour
         {
             coyoteTimer = coyoteTime;
             jumpCount = maxJumps;
+            firstJumpUsed = false;
         }
     }
-    private void Jump()
+    public void Jump()
     {
         isJumping = true;
         Invoke("ResetJump", 0.2f);
@@ -208,7 +222,6 @@ public class FPSController : MonoBehaviour
 
     private void changePlayerStats(int level)
     {
-        maxJumps = level;
         switch (level)
         {
             case 3:

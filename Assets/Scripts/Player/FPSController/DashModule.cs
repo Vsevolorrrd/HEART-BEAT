@@ -4,6 +4,7 @@ using System.Collections;
 public class DashModule : RhythmInput
 {
     private FPSController controller;
+    private PlayerHealth playerHealth;
 
     public float dashSpeed = 20f;
     public float dashDuration = 0.2f;
@@ -24,6 +25,7 @@ public class DashModule : RhythmInput
 
         BEAT_Manager.MusicLevelIncreased += changePlayerStats;
         controller = GetComponent<FPSController>();
+        playerHealth = GetComponent<PlayerHealth>();
         startDashSpeed = dashSpeed;
     }
 
@@ -50,6 +52,7 @@ public class DashModule : RhythmInput
     private IEnumerator Dash(float modifier)
     {
         isDashing = true;
+        playerHealth.SetVulnerability(false);
         AudioManager.Instance.PlaySound(dashModuleClip, 0.5f);
         if (dashEffect) dashEffect.Play();
 
@@ -66,6 +69,7 @@ public class DashModule : RhythmInput
 
         controller.ChangeSpeed(-dashSpeed * modifier);
         isDashing = false;
+        playerHealth.SetVulnerability(true);
     }
 
     #region events

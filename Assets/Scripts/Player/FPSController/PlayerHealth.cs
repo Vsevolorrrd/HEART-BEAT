@@ -4,20 +4,23 @@ using UnityEngine;
 
 public class PlayerHealth : Damageable
 {
+    [SerializeField] float damageCooldown = 0.1f;
+    private bool recentlyDamaged = false;
+
     [Header("Health Bar")]
-    public bool useHealthBar = true;
-    public Image healthBarBG;
-    public Image healthBar;
+    [SerializeField] bool useHealthBar = true;
+    [SerializeField] Image healthBarBG;
+    [SerializeField] Image healthBar;
 
     [Header("Damage Overlay")]
-    public bool useDamageOverlay = true;
-    public float DamageOverlayDuration = 1f;
-    public CanvasGroup DamageOverlayCG;
+    [SerializeField] bool useDamageOverlay = true;
+    [SerializeField] float DamageOverlayDuration = 1f;
+    [SerializeField] CanvasGroup DamageOverlayCG;
 
-    private bool showOverlay;
+    [SerializeField] bool showOverlay;
 
     [Header("Death screen")]
-    public GameObject DeathScreen;
+    [SerializeField] GameObject DeathScreen;
 
     protected override void Initialize()
     {
@@ -61,38 +64,43 @@ public class PlayerHealth : Damageable
     }
     private void Update()
     {
-        // Handles HealthBar 
         if (useHealthBar && healthBar != null && !isDead)
         {
             float healthPercent = currentHealth / maxHealth;
             healthBar.transform.localScale = new Vector3(healthPercent, 1f, 1f);
         }
-        if (useDamageOverlay && !showOverlay)// to hide the bar
+        if (useDamageOverlay && !showOverlay && DamageOverlayCG != null)
         {
-            DamageOverlayCG.alpha -= 3 * Time.deltaTime;
+            DamageOverlayCG.alpha = Mathf.Max(0, DamageOverlayCG.alpha - 3 * Time.deltaTime);
         }
     }
     public override void Damage(float damage)
     {
-        if (isDead || !isVulnerable || damage <= 0)
-            return;
+        if (recentlyDamaged || isDead || !isVulnerable || damage <= 0)
+        return;
 
         currentHealth -= damage;
+        recentlyDamaged = true;
 
         if (currentHealth <= 0)
         {
             PlayerDeath();
+            return;
         }
-        else
+        else if (useDamageOverlay && DamageOverlayCG != null)
         {
-            if (useDamageOverlay)// to show the bar
-            {
-                StartCoroutine(ShowDamageOverlay());
-            }
+            StartCoroutine(ShowDamageOverlay());
         }
+        Invoke(nameof(ResetDamageCooldown), damageCooldown);
+    }
+    private void ResetDamageCooldown()
+    {
+        recentlyDamaged = false;
     }
     private IEnumerator ShowDamageOverlay()
     {
+        if (DamageOverlayCG == null) yield break;
+
         DamageOverlayCG.alpha = 1;
         showOverlay = true;
 
@@ -126,5 +134,9 @@ public class PlayerHealth : Damageable
 
         // Disable player object
         gameObject.SetActive(false);
+    }
+    public void SetVulnerability(bool vulnerable)
+    {
+        isVulnerable = vulnerable;
     }
 }

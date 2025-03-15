@@ -25,14 +25,16 @@ public class Damageable : MonoBehaviour
 
     protected void Start()
     {
+        currentHealth = maxHealth;
+        if (damageEffect)
+        damageEffect.gameObject.SetActive(true);
+
         Initialize();
     }
 
     protected virtual void Initialize()
     {
-        currentHealth = maxHealth;
-        if (damageEffect)
-        damageEffect.gameObject.SetActive(true);
+
     }
 
     protected virtual void Heal(float amount)

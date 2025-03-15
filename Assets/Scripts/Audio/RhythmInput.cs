@@ -11,8 +11,8 @@ public abstract class RhythmInput : MonoBehaviour
     public KeyCode actionKey = KeyCode.Space;
     [HideInInspector] public bool playerInput = true;
 
-    // Anti Spam
-    protected int maxPresses = 3;
+    [Header("Anti Spam")]
+    public int maxPresses = 3;
     protected float pressWindow = 0.4f; // Time window for counting presses
     protected float inputCooldown = 1.5f; // Cooldown after max presses
     protected int pressCount = 0;
