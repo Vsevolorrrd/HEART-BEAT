@@ -37,7 +37,7 @@ public class Damageable : MonoBehaviour
 
     }
 
-    protected virtual void Heal(float amount)
+    public virtual void Heal(float amount)
     {
         if (isDead || amount <= 0)
         return;

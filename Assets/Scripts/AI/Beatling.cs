@@ -3,8 +3,10 @@ using UnityEngine;
 public class Beatling : AI
 {
     private EmotionController emoController;
+    private AIOnDeath aiOnDeath;
 
     [Header("Melee Attack")]
+    [SerializeField] float rashSpeed = 20f;
     [SerializeField] float attackDelay = 0f;
     [SerializeField] int attackDelayInBeats = 2;
     [SerializeField] AIWeapon weapon;
@@ -15,6 +17,7 @@ public class Beatling : AI
     {
         base.Initialize();
         emoController = GetComponent<EmotionController>();
+        aiOnDeath = GetComponent<AIOnDeath>();
         weapon.SetUser(this);
     }
     protected override void OnBeat()
@@ -30,6 +33,8 @@ public class Beatling : AI
             else
             {
                 Invoke("AttackDelay", attackDelay);
+                emoController.SetEmotion(EmotionType.SuperAngry);
+                agent.speed = rashSpeed;
                 beatsUntilAttack = attackDelayInBeats; // Reset delay
             }
         }
@@ -40,6 +45,7 @@ public class Beatling : AI
     }
     private void AttackDelay()
     {
+        agent.speed = speed;
         weapon.WeaponAttack();
     }
     public override void Damage(float damage)
@@ -59,5 +65,9 @@ public class Beatling : AI
         agent.isStopped = true;
         emoController.SetEmotion(EmotionType.DeadInside, false);
         weapon.gameObject.SetActive(false);
+        if (aiOnDeath)
+        {
+            aiOnDeath.Dead();
+        }
     }
 }

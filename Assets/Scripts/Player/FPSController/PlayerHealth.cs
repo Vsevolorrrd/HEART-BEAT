@@ -108,7 +108,7 @@ public class PlayerHealth : Damageable
 
         showOverlay = false;
     }
-    protected override void Heal(float amount)
+    public override void Heal(float amount)
     {
         if (isDead || amount <= 0)
         return;

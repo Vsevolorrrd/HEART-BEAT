@@ -16,6 +16,16 @@ public class PlayerManager : MonoBehaviour
             return;
         }
         _instance = this;
+        OnAwake();
     }
     #endregion
+
+    [HideInInspector] public PlayerHealth playerHealth;
+    [HideInInspector] public FPSController controller;
+
+    private void OnAwake()
+    {
+        playerHealth = GetComponent<PlayerHealth>();
+        controller = GetComponent<FPSController>();
+    }
 }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class RhythmStreakManager : MonoBehaviour
 {
     public static RhythmStreakManager Instance { get; private set; }
+    private PlayerHealth playerHealth;
 
     [Header("UI")]
     [SerializeField] Slider streakBar;
@@ -45,6 +46,7 @@ public class RhythmStreakManager : MonoBehaviour
             streakBar.maxValue = maxStreak;
             streakBar.value = 0;
         }
+        playerHealth = PlayerManager.Instance.playerHealth;
     }
 
     private void Update()
@@ -58,6 +60,7 @@ public class RhythmStreakManager : MonoBehaviour
     public void RegisterHit(float modifier)
     {
         streak += streakGain * modifier;
+        playerHealth.Heal(modifier);
     }
 
     private void UpdateUI()

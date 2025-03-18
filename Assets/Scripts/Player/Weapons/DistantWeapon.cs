@@ -10,11 +10,12 @@ public class DistantWeapon : RhythmInput
 
     [Header("Stats")]
     [SerializeField] Camera cam;
-    [SerializeField] float damage = 10f;
+    [SerializeField] float damage = 25f;
     [SerializeField] float range = 100f;
     [SerializeField] float cooldown = 0.2f;
     [SerializeField] int bulletsPerShot = 1;
     [SerializeField] float spread = 0f;
+    [SerializeField] LayerMask layerMaskToHit;
 
     [Header("Visual Effects")]
     [SerializeField] ParticleSystem GunSmoke;
@@ -31,8 +32,7 @@ public class DistantWeapon : RhythmInput
     [SerializeField] float shakeAmplitude = 1f;
     [SerializeField] float shakeFrequency = 1f;
 
-    [Header("Debug")]
-    //these are shown in the inspector, but cannot be modified while the game is not running
+    [Header("Debug")] //these are shown in the inspector, but cannot be modified while the game is not running
     [SerializeField] protected float nextShotMinTime = 0; //when can the next attack be fired
 
     protected override void Start()
@@ -90,7 +90,7 @@ public class DistantWeapon : RhythmInput
 
             RaycastHit hit;
 
-            if (Physics.Raycast(cam.transform.position, spreadDirection, out hit, range))
+            if (Physics.Raycast(cam.transform.position, spreadDirection, out hit, range, layerMaskToHit))
             {
                 Debug.Log(hit.transform.name);
 

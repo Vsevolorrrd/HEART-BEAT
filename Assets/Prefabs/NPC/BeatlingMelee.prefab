@@ -74,8 +74,8 @@ MonoBehaviour:
   attackPoint: {fileID: 5800116225639232368}
   damageableLayerMask:
     serializedVersion: 2
-    m_Bits: 8
-  attackRadious: 2
+    m_Bits: 128
+  attackRadious: 3
 --- !u!1 &1241193456725667519
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +102,7 @@ Transform:
   m_GameObject: {fileID: 1241193456725667519}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -188,7 +188,7 @@ Transform:
   m_GameObject: {fileID: 4934552672408357893}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.13052624, w: 0.9914449}
-  m_LocalPosition: {x: 1.2, y: 0.5, z: -0.2}
+  m_LocalPosition: {x: 1.2, y: 0.5, z: 0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -314,15 +314,16 @@ MonoBehaviour:
   Remains: {fileID: 0}
   currentHealth: 0
   currentState: 0
-  sightRange: 30
-  attackRange: 3
+  sightRange: 45
+  attackRange: 3.5
   retreatRange: 20
-  speed: 5
+  speed: 11
   rotationSpeed: 5
   patrolPoints: []
   canRetreat: 0
   currentPatrolPoint: 0
   target: {fileID: 0}
+  rashSpeed: 20
   attackDelay: 0.7
   attackDelayInBeats: 2
   weapon: {fileID: 403866873865433601}
@@ -400,7 +401,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1431224517
   m_SortingLayer: 2
-  m_SortingOrder: 5
+  m_SortingOrder: 0
   m_Sprite: {fileID: -573129790, guid: c8b24a9cddc1cd24a821d23cbe29c4aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -532,7 +533,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1431224517
   m_SortingLayer: 2
-  m_SortingOrder: 10
+  m_SortingOrder: 0
   m_Sprite: {fileID: -1100229906, guid: 945ffb18ab29af5458f35a1f49418474, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

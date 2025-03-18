@@ -1,12 +1,27 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
-public class EchoJump : RhythmInput
+public interface IInteractable
 {
+    void Interact();
+}
+
+public class LevelInteraction : RhythmInput
+{
+
     private FPSController controller;
     private CharacterController charController;
 
+    [Header("Interaction Settings")]
     [SerializeField] Camera playerCam;
+    [SerializeField] float maxRayDistance = 30f;
+    [SerializeField] LayerMask interactionLayer;
+
+    [Header("Snap")]
+    [SerializeField] Animator snapAnim;
+    [SerializeField] AudioClip snapClip;
+
+    [Header("Echo Jump")]
     [SerializeField] float maxTeleportDistance = 30f;
     [SerializeField] float minTeleportDistance = 3f;
     [SerializeField] float teleportDuration = 0.2f;
@@ -20,6 +35,24 @@ public class EchoJump : RhythmInput
     private EchoPoint echoPoint = null;
     private bool isTeleporting = false;
 
+
+    private static LevelInteraction _instance;
+
+    #region Singleton
+    public static LevelInteraction Instance => _instance;
+
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Debug.LogWarning("LevelInteraction already exists, destroying duplicate.");
+            Destroy(gameObject);
+            return;
+        }
+        _instance = this;
+    }
+    #endregion
+
     protected override void Start()
     {
         base.Start();
@@ -27,15 +60,63 @@ public class EchoJump : RhythmInput
         controller = GetComponent<FPSController>();
         charController = GetComponent<CharacterController>();
     }
-
     protected override void Update()
     {
-        if (!playerInput || isTeleporting) return;
+        if (!playerInput || isBlocked || isTeleporting)
+        return;
 
         if (Input.GetKeyDown(actionKey))
         {
-            FindEchoPoint();
+            HandleKeyPress();
         }
+    }
+    protected override void OnPerfectHit()
+    {
+        PerformInteraction();
+    }
+
+    protected override void OnGoodHit()
+    {
+        PerformInteraction();
+    }
+    protected override void OnMiss()
+    {
+        Snap();
+    }
+    private void PerformInteraction()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, maxRayDistance, interactionLayer))
+        {
+            IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+
+            if (interactable != null)
+            {
+                interactable.Interact();  // Calls the appropriate interaction
+            }
+            else
+            {
+                Snap(); // Snap if no interactable object is hit
+            }
+        }
+        else
+        {
+            Snap(); // Snap if no interactable object is hit
+        }
+    }
+    private void Snap()
+    {
+        if (snapAnim)
+        snapAnim.SetTrigger("Snap");
+
+        AudioManager.Instance.PlayPooledSound(snapClip, 0.8f);
+    }
+
+    public void TeleportTo(Vector3 targetPosition)
+    {
+        AudioManager.Instance.PlaySound(echoJumpClip, 0.8f);
+        StartCoroutine(SmoothTeleport(targetPosition));
+        //echoPoint = null;
     }
     private void FindEchoPoint()
     {
@@ -78,27 +159,6 @@ public class EchoJump : RhythmInput
         }
     }
 
-    protected override void OnPerfectHit()
-    {
-        base.OnPerfectHit();
-        AudioManager.Instance.PlaySound(echoJumpClip, 0.7f);
-        StartCoroutine(SmoothTeleport(echoPoint.transform.position));
-        echoPoint = null;
-    }
-
-    protected override void OnGoodHit()
-    {
-        base.OnGoodHit();
-        AudioManager.Instance.PlaySound(echoJumpClip, 0.7f);
-        StartCoroutine(SmoothTeleport(echoPoint.transform.position));
-        echoPoint = null;
-    }
-    protected override void OnMiss()
-    {
-        base.OnMiss();
-        echoPoint = null;
-    }
-
     private IEnumerator SmoothTeleport(Vector3 targetPosition)
     {
         isTeleporting = true;
@@ -113,7 +173,7 @@ public class EchoJump : RhythmInput
             float t = elapsedTime / teleportDuration;
             float easedT = teleportCurve.Evaluate(t);
             Vector3 newPos = Vector3.Lerp(startPosition, targetPosition, easedT);
-            
+
             charController.enabled = false;
             transform.position = newPos;
             charController.enabled = true;
@@ -128,4 +188,5 @@ public class EchoJump : RhythmInput
         isTeleporting = false;
         Debug.Log("Echo Jump Complete!");
     }
+
 }

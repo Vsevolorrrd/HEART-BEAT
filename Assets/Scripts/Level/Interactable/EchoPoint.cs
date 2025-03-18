@@ -1,7 +1,12 @@
 using UnityEngine;
 
-public class EchoPoint : RespondToBeat
+public class EchoPoint : RespondToBeat, IInteractable
 {
+    public void Interact()
+    {
+        LevelInteraction.Instance.TeleportTo(transform.position);
+    }
+
     public override void OnBeat()
     {
         // Scale the object up

@@ -33,6 +33,7 @@ public class FPSController : MonoBehaviour
     [Header("Jumping")]
     public KeyCode jumpKey = KeyCode.Space;
     public float jumpPower = 5f;
+    private float startJumpPower;
     public int maxJumps = 3;
     private int jumpCount = 0;
     private bool isGrounded = false;
@@ -57,6 +58,7 @@ public class FPSController : MonoBehaviour
     void Start()
     {
         startSpeed = speed;
+        startJumpPower = jumpPower;
         startAcceleration = acceleration;
 
         if (lockCursor)
@@ -225,14 +227,17 @@ public class FPSController : MonoBehaviour
         switch (level)
         {
             case 3:
+                jumpPower = startJumpPower * 1.3f;
                 speed = startSpeed * 1.5f;
                 acceleration = startAcceleration * 1.5f;
                 break;
             case 2:
+                jumpPower = startJumpPower * 1.1f;
                 speed = startSpeed * 1.2f;
                 acceleration = startAcceleration * 1.2f;
                 break;
             case 1:
+                jumpPower = startJumpPower;
                 speed = startSpeed;
                 acceleration = startAcceleration;
                 break;

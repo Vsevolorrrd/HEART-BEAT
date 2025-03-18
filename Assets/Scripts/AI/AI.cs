@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class AI : Damageable
@@ -20,19 +21,20 @@ public class AI : Damageable
     protected bool hasAlerted = false;
 
     [Header("Basic Behaviour")]
-    [SerializeField] protected float sightRange = 30f;
+    [SerializeField] protected float sightRange = 50f;
     [SerializeField] protected float attackRange = 3f;
     [SerializeField] protected float retreatRange = 20f;
     [SerializeField] protected float speed = 5f;
     [SerializeField] protected float rotationSpeed = 5f;
     [SerializeField] protected Transform[] patrolPoints;
-
     [SerializeField] protected bool canRetreat = false;
+    private float checkInterval = 3f;
 
 
     [Header("Debug")]
     [SerializeField] protected int currentPatrolPoint = 0;
     [SerializeField] protected Transform target;
+
 
     //[Header("Sound Effects")]
 
@@ -46,6 +48,9 @@ public class AI : Damageable
         actor = GetComponent<Actor>();
         agent.speed = speed;
         currentState = AIState.Idle;
+        checkInterval = checkInterval + Random.Range(-1f, 1f); // so the AI dont update on the same frames
+
+        StartCoroutine(RecheckTarget()); // Start periodic enemy rechecking
     }
 
     protected virtual void Update()
@@ -175,6 +180,19 @@ public class AI : Damageable
         }
         hasAlerted = true; // Prevent re-alerting in the same event
         */
+    }
+    private IEnumerator RecheckTarget()
+    {
+        while (!isDead)
+        {
+            yield return new WaitForSeconds(checkInterval); // Adjust check speed dynamically
+
+            Actor newTarget = FindEnemy();
+            if (newTarget != null && newTarget.transform != target)
+            {
+                target = newTarget.transform; // Switch to a better target
+            }
+        }
     }
     #region events
 

@@ -2,95 +2,131 @@ using UnityEngine;
 
 public class MeleeWeapon : RhythmInput
 {
-    [Header("MeleeWeapon")]
-    [SerializeField] float damage = 10f;
-    [SerializeField] float heavyDamage = 15f;
-    [SerializeField] float heavyReadyTime = 1f;
-    [SerializeField] float comboTime = 1f;
+    [Header("Melee Attack")]
+    [SerializeField] float damage = 50f;
+    [SerializeField] float attackCooldown = 0.2f;
+    [SerializeField] float attackRadious = 3f;
+    [SerializeField] Transform attackPoint;
+    [SerializeField] LayerMask attackLayer;
+    private float lastAttackTime = 0f;
 
+    [Header("Combo System")]
+    [SerializeField] float comboResetTime = 1f;
+    [SerializeField] float comboMultiplier = 1.5f;
+    private bool lastAttackUp = false;
+    private bool comboActive = false;
+    private float lastComboTime = 0f;
 
-    private float timeSinceLastAttack;
-    private float heavyPrepTime;
-    private float currentDamage;
-    private int currentAttack;
-    private bool heavy = false;
+    [Header("Scroll Sensitivity")]
+    [SerializeField] float scrollThreshold = 0.2f;
+    private float scroll = 0f;
+
+    private Animator anim;
 
     protected override void Start()
     {
-        base.Start();
-        currentAttack = 0;
-        currentDamage = damage;
+        MainMenu.OnPause += HandlePause;
+        anim = GetComponent<Animator>();
     }
     protected override void Update()
     {
-        if (Input.GetKey(actionKey))
+        if (!playerInput || isBlocked)
+            return;
+
+        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+
+        if (Mathf.Abs(scrollInput) > 0) // If any scroll input is detected
         {
-            heavyPrepTime += Time.deltaTime;
-            if (heavyPrepTime > 0.5)
+            scroll += scrollInput;
+
+            if (Mathf.Abs(scroll) >= scrollThreshold) // If threshold is exceeded
             {
-                heavyAttackPrep();
+                if (scroll > 0)
+                {
+                    HandleScrollAttack(true);
+                }
+                else if (scroll < 0)
+                {
+                    HandleScrollAttack(false);
+                }
+                scroll = 0f; // Reset after registering an attack
             }
         }
-        if (Input.GetKeyUp(actionKey))
-        {
-            EvaluateTiming();
-        }
     }
-    public void Attack()
-    {
-        currentDamage = damage;
-        currentAttack++;
-        if (currentAttack > 2)
-        {
-            currentAttack = 1;
-        }
-        if (timeSinceLastAttack > comboTime)
-        {
-            currentAttack = 1;
-        }
-        //Anim.SetTrigger("Attack" + currentAttack);
 
-        timeSinceLastAttack = 0;
-    }
-    public void heavyAttackPrep()
+    private void HandleScrollAttack(bool isUp)
     {
-        //Anim.SetBool("HeavyAttackPreporation", true);
-        if (heavyPrepTime >= heavyReadyTime)
+        if (Time.time - lastAttackTime < attackCooldown)
+        return; // Prevent spam
+
+        if (Time.time - lastComboTime <= comboResetTime && lastAttackUp != isUp)
         {
-            heavy = true;
+            comboActive = true;
         }
-    }
-    public void heavyAttack()
-    {
-        //Anim.SetTrigger("HeavyAttack");
-        currentDamage = heavyDamage;
-        heavy = false;
+        else
+        {
+            comboActive = false;
+        }
+
+        lastAttackUp = isUp;
+        lastComboTime = Time.time;
+
+        EvaluateTiming();
+        lastAttackTime = Time.time;
     }
 
     protected override void OnPerfectHit()
     {
-        if (heavy)
-        {
-            heavyAttack();
-            heavyPrepTime = 0;
-        }
-        else
-        {
-            Attack();
-            heavyPrepTime = 0;
-        }
+        ExecuteAttack(2f, 2f);
     }
+
     protected override void OnGoodHit()
     {
-        if (heavy)
+        ExecuteAttack(1.5f, 1.5f);
+    }
+
+    protected override void OnMiss()
+    {
+        ExecuteAttack(1f, 1f);
+    }
+
+    private void ExecuteAttack(float damageModifier, float radiousModifier)
+    {
+        float damageOverall = damage * damageModifier;
+        float radiousOverall = attackRadious * radiousModifier;
+
+        if (comboActive)
         {
-            heavyAttack();
-            heavyPrepTime = 0;
+            damageOverall = damageOverall * comboMultiplier;
+        }
+
+
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, radiousOverall, attackLayer);
+
+        foreach (Collider enemy in hitEnemies)
+        {
+            Damageable target = enemy.GetComponent<Damageable>();
+            if (target != null)
+            {
+                target.Damage(damageOverall);
+                Vector3 knockbackDirection = (enemy.transform.position - transform.position).normalized;
+                Rigidbody rb = enemy.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    //rb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
+                }
+            }
+        }
+
+        if (lastAttackUp)
+        {
+            if (anim)
+            anim.SetTrigger("AttackUp");
         }
         else
         {
-            Attack();
-            heavyPrepTime = 0;
+            if (anim)
+            anim.SetTrigger("AttackDown");
         }
     }
 }

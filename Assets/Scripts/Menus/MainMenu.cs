@@ -19,6 +19,11 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    public void StartArena()
+    {
+        SetPauseState(false);
+        SceneLoader.Instance.LoadScene("InfiniteArena");
+    }
     public void StartGame()
     {
         SetPauseState(false);
