@@ -6,8 +6,6 @@ public class Beatling : AI
     private AIOnDeath aiOnDeath;
 
     [Header("Melee Attack")]
-    [SerializeField] float rashSpeed = 20f;
-    [SerializeField] float attackDelay = 0f;
     [SerializeField] int attackDelayInBeats = 2;
     [SerializeField] AIWeapon weapon;
 
@@ -32,9 +30,8 @@ public class Beatling : AI
             }
             else
             {
-                Invoke("AttackDelay", attackDelay);
                 emoController.SetEmotion(EmotionType.SuperAngry);
-                agent.speed = rashSpeed;
+                weapon.WeaponAttack();
                 beatsUntilAttack = attackDelayInBeats; // Reset delay
             }
         }
@@ -42,11 +39,6 @@ public class Beatling : AI
         {
             beatsUntilAttack = 0;
         }
-    }
-    private void AttackDelay()
-    {
-        agent.speed = speed;
-        weapon.WeaponAttack();
     }
     public override void Damage(float damage)
     {

@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8778e03702460c246a585eaf2113f7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleSmooth: 1
   scaleMultiplier: 1.2
   scaleBackSpeed: 0.1
 --- !u!222 &1099658706018526393
@@ -975,6 +976,7 @@ MonoBehaviour:
   beatBarLeft: {fileID: 7069903683291263457}
   beatBarRight: {fileID: 7995343513025099394}
   beatBarContainer: {fileID: 2820378477576951469}
+  perfectHit: {fileID: 0}
   dotSpeed: 200
   startOffset: 400
   stopDistance: 100
@@ -1091,6 +1093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8778e03702460c246a585eaf2113f7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleSmooth: 1
   scaleMultiplier: 1.2
   scaleBackSpeed: 0.1
 --- !u!222 &6619445380496396995

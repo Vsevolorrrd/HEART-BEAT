@@ -53,7 +53,10 @@ public class SceneLoader : MonoBehaviour
         obj.SetActive(true);
 
         if (SceneManager.GetActiveScene().name != "MainMenu")
-        BEAT_Manager.Instance.StartTheMusic();
+        {
+            BEAT_Manager.Instance.StartTheMusic();
+            BeatUI.Instance.StartBeatUI();
+        }
     }
     public void LoadScene(string name)
     {
@@ -74,5 +77,6 @@ public class SceneLoader : MonoBehaviour
 
         yield return new WaitForSeconds(1);
         BEAT_Manager.Instance.StartTheMusic();
+        BeatUI.Instance.StartBeatUI();
     }
 }

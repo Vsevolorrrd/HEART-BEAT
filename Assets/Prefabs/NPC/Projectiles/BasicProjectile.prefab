@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impactEffect: {fileID: 0}
+  owner: {fileID: 0}
   damage: 0
   speed: 0
 --- !u!135 &-1829826323995503883

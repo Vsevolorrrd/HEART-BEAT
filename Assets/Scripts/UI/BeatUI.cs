@@ -29,6 +29,7 @@ public class BeatUI : MonoBehaviour
     private List<(RectTransform dot, CanvasGroup cg)> activeDots = 
     new List<(RectTransform, CanvasGroup)>();
     private bool beatBar = true;
+    private bool isActive = false;
 
     private Vector3 originalScale;
     private static BeatUI _instance;
@@ -73,19 +74,28 @@ public class BeatUI : MonoBehaviour
     }
     #endregion
 
-    private void Start()
+    public void StartBeatUI()
     {
+        if (isActive) return;
+
+        isActive = true;
         hitFeedbackText.text = "";
         hitFeedbackText.gameObject.SetActive(false);
         originalScale = hitFeedbackText.transform.localScale;
 
-        BEAT_Manager.BEAT += OnBeat;
+        foreach (var (dot, _) in activeDots)
+        {
+            Destroy(dot.gameObject);
+        }
+        activeDots.Clear();
 
-        // Hide bars if disabled
+        BEAT_Manager.BEAT += OnBeat;
         SetBarsActive(beatBar);
     }
     void Update()
     {
+        if (!isActive) return;
+
         for (int i = activeDots.Count - 1; i >= 0; i--)
         {
             var (dot, cg) = activeDots[i];
@@ -193,6 +203,24 @@ public class BeatUI : MonoBehaviour
         hitFeedbackText.gameObject.SetActive(false);
         hitFeedbackText.text = ""; // Clear text after fading
     }
+    /*
+    private IEnumerator FadeOutPerfectHit()
+    {
+        perfectHit.alpha = 1f;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadeDuration)
+        {
+            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+            perfectHit.alpha = alpha;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        perfectHit.alpha = 0f;
+    }
+    */
     public void ToggleBeatBar()
     {
         beatBar = !beatBar;

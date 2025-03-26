@@ -2,131 +2,84 @@ using UnityEngine;
 
 public class MeleeWeapon : RhythmInput
 {
-    [Header("Melee Attack")]
-    [SerializeField] float damage = 50f;
-    [SerializeField] float attackCooldown = 0.2f;
+    [Header("Melee Weapon")]
+    [SerializeField] float damage = 10f;
+    [SerializeField] float comboTime = 1f;
     [SerializeField] float attackRadious = 3f;
+    [SerializeField] float knockbackForce = 5f;
     [SerializeField] Transform attackPoint;
     [SerializeField] LayerMask attackLayer;
-    private float lastAttackTime = 0f;
 
-    [Header("Combo System")]
-    [SerializeField] float comboResetTime = 1f;
-    [SerializeField] float comboMultiplier = 1.5f;
-    private bool lastAttackUp = false;
-    private bool comboActive = false;
-    private float lastComboTime = 0f;
-
-    [Header("Scroll Sensitivity")]
-    [SerializeField] float scrollThreshold = 0.2f;
-    private float scroll = 0f;
-
+    private float timeSinceLastAttack = 0f;
+    private int currentAttack = 0; // Combo counter
     private Animator anim;
+
+    [Header("Debug")] //these are shown in the inspector, but cannot be modified while the game is not running
+    [SerializeField] protected float nextAttackMinTime = 0; //when can the next attack be fired
 
     protected override void Start()
     {
-        MainMenu.OnPause += HandlePause;
-        anim = GetComponent<Animator>();
+        base.Start();
+        currentAttack = 0;
     }
     protected override void Update()
     {
         if (!playerInput || isBlocked)
-            return;
+        return;
 
-        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        timeSinceLastAttack += Time.deltaTime;
 
-        if (Mathf.Abs(scrollInput) > 0) // If any scroll input is detected
+        if (Input.GetKeyDown(actionKey))
         {
-            scroll += scrollInput;
-
-            if (Mathf.Abs(scroll) >= scrollThreshold) // If threshold is exceeded
-            {
-                if (scroll > 0)
-                {
-                    HandleScrollAttack(true);
-                }
-                else if (scroll < 0)
-                {
-                    HandleScrollAttack(false);
-                }
-                scroll = 0f; // Reset after registering an attack
-            }
+            EvaluateTiming();
         }
     }
-
-    private void HandleScrollAttack(bool isUp)
-    {
-        if (Time.time - lastAttackTime < attackCooldown)
-        return; // Prevent spam
-
-        if (Time.time - lastComboTime <= comboResetTime && lastAttackUp != isUp)
-        {
-            comboActive = true;
-        }
-        else
-        {
-            comboActive = false;
-        }
-
-        lastAttackUp = isUp;
-        lastComboTime = Time.time;
-
-        EvaluateTiming();
-        lastAttackTime = Time.time;
-    }
-
-    protected override void OnPerfectHit()
-    {
-        ExecuteAttack(2f, 2f);
-    }
-
-    protected override void OnGoodHit()
-    {
-        ExecuteAttack(1.5f, 1.5f);
-    }
-
-    protected override void OnMiss()
-    {
-        ExecuteAttack(1f, 1f);
-    }
-
-    private void ExecuteAttack(float damageModifier, float radiousModifier)
+    private void NormalAttack(float damageModifier, float radiousModifier)
     {
         float damageOverall = damage * damageModifier;
         float radiousOverall = attackRadious * radiousModifier;
+        currentAttack++;
 
-        if (comboActive)
+        if (currentAttack > 2 || timeSinceLastAttack > comboTime)
         {
-            damageOverall = damageOverall * comboMultiplier;
+            currentAttack = 1;
         }
+        if (anim)
+        anim.SetTrigger(currentAttack);
 
-
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, radiousOverall, attackLayer);
+        Attack(damageOverall, radiousOverall);
+        timeSinceLastAttack = 0;
+    }
+    public void Attack(float attackDamage, float radious)
+    {
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, radious, attackLayer);
 
         foreach (Collider enemy in hitEnemies)
         {
             Damageable target = enemy.GetComponent<Damageable>();
             if (target != null)
             {
-                target.Damage(damageOverall);
+                target.Damage(attackDamage);
                 Vector3 knockbackDirection = (enemy.transform.position - transform.position).normalized;
                 Rigidbody rb = enemy.GetComponent<Rigidbody>();
                 if (rb != null)
                 {
-                    //rb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
+                    rb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
                 }
             }
         }
+    }
 
-        if (lastAttackUp)
-        {
-            if (anim)
-            anim.SetTrigger("AttackUp");
-        }
-        else
-        {
-            if (anim)
-            anim.SetTrigger("AttackDown");
-        }
+    protected override void OnPerfectHit()
+    {
+        NormalAttack(2f, 1.5f);
+    }
+    protected override void OnGoodHit()
+    {
+        NormalAttack(1.5f, 1.3f);
+    }
+    protected override void OnMiss()
+    {
+        NormalAttack(1f, 1f);
     }
 }

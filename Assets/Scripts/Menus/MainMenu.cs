@@ -27,7 +27,7 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         SetPauseState(false);
-        SceneLoader.Instance.LoadScene("Tutorial");
+        SceneLoader.Instance.LoadScene("Tutorial_Old");
     }
 
     public void OpenMainMenu()

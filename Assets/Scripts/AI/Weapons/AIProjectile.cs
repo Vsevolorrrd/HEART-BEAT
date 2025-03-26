@@ -5,11 +5,13 @@ public class AIProjectile : MonoBehaviour
 {
     //these values are set by the weapon shooting projectile
     [SerializeField] GameObject impactEffect;
+    [SerializeField] Damageable owner;
     [SerializeField] protected float damage;
     [SerializeField] protected float speed;
 
-    public virtual void Initialize(float damage, float speed, float duration)
+    public virtual void Initialize(Damageable owner, float damage, float speed, float duration)
     {
+        this.owner = owner;
         this.damage = damage;
         this.speed = speed;
         Destroy(gameObject, duration);
@@ -19,8 +21,6 @@ public class AIProjectile : MonoBehaviour
     {
         MoveUpdate();
     }
-
-    //Inheriting classes can override this to move in a different way
     protected void MoveUpdate()
     {
         float moveby = speed * Time.deltaTime;
@@ -31,16 +31,17 @@ public class AIProjectile : MonoBehaviour
     {
         var targetable = collision.GetComponent<Damageable>();
 
-        Impact(collision);
+        if (targetable == owner)
+        return;
+
+        Impact();
+
         if (targetable == null)
         return;
 
         targetable.Damage(damage);
     }
-
-    //Inheriting classes can override this to have different
-    //impact behaviors (such as bouncing on walls, or piercing through enemies)
-    public void Impact(Collider collision)
+    public void Impact()
     {
         if (impactEffect)
         Instantiate(impactEffect, transform.position, transform.rotation);

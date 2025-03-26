@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class DialogueManager : RhythmInput
 {
-    [SerializeField] private TMP_Text dialogueText;
-    [SerializeField] private GameObject dialogueUI;
-    [SerializeField] private Dialogue currentDialogue;
+    [SerializeField] TMP_Text dialogueText;
+    [SerializeField] GameObject dialogueUI;
+    [SerializeField] Dialogue currentDialogue;
+    [SerializeField] float delay = 2f;
 
     private int nodeIndex = 0;
     private int blockIndex = 0;
@@ -86,11 +87,21 @@ public class DialogueManager : RhythmInput
         {
             dialogueText.text += " " + node.blocks[blockIndex].dialogueText; // add spaces between blocks
             blockIndex++;
+            if (blockIndex == node.blocks.Count)
+            {
+                awaitingInput = false;
+                Invoke("Delay", delay);
+            }
+
         }
         else
         {
             NextNode();
         }
+    }
+    private void Delay()
+    {
+        awaitingInput = true;
     }
 
     private void NextNode()

@@ -2,9 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RhythmStreakManager : MonoBehaviour
+public class RhythmStreakManager : Singleton<RhythmStreakManager>
 {
-    public static RhythmStreakManager Instance { get; private set; }
     private PlayerHealth playerHealth;
 
     [Header("UI")]
@@ -22,17 +21,6 @@ public class RhythmStreakManager : MonoBehaviour
     [SerializeField] float streak = 0f;
     private int currentMusicLevel = 1; // Start at level 1
 
-
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
 
     private void Start()
     {

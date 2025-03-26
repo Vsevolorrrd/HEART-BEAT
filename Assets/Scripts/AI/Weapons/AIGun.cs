@@ -20,7 +20,7 @@ public class AIGun : AIWeapon
     }
     protected virtual void InitializeProjectile(AIProjectile projectile)
     {
-        projectile.Initialize(attackDamage, projectileSpeed, projectileLifetime);
+        projectile.Initialize(user, attackDamage, projectileSpeed, projectileLifetime);
     }
 
     protected Quaternion GetProjectileSpreadHorizontal(float currentAccuracy)
