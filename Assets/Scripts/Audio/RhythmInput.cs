@@ -65,18 +65,18 @@ public abstract class RhythmInput : MonoBehaviour
 
     protected virtual void EvaluateTiming()
     {
-        float songPosition = BEAT_Manager.Instance.GetSongPositionInBeats();
-        float nearestBeat = Mathf.Round(songPosition); // Nearest beat
-        float timeDifference = Mathf.Abs(songPosition - nearestBeat) * BEAT_Manager.Instance.GetSecPerBeat();
+        float songPositionInBeats = BEAT_Manager.Instance.GetSongPositionInBeats();
+        float nearestBeat = Mathf.Round(songPositionInBeats); // Nearest beat
+        float timeDifference = Mathf.Abs(songPositionInBeats - nearestBeat) * BEAT_Manager.Instance.GetSecPerBeat();
 
-        if (timeDifference <= perfectThreshold)
+        if (timeDifference <= RhythmDifficulty.perfectThreshold)
         {
             HitEffect.Instance.playHitEffect("Perfect");
             BeatUI.Instance.ShowHitFeedback("Perfect");
             RhythmStreakManager.Instance.RegisterHit(streakGainPerfect);
             OnPerfectHit();
         }
-        else if (timeDifference <= goodThreshold)
+        else if (timeDifference <= RhythmDifficulty.goodThreshold)
         {
             HitEffect.Instance.playHitEffect("Good");
             BeatUI.Instance.ShowHitFeedback("Good");
@@ -89,18 +89,9 @@ public abstract class RhythmInput : MonoBehaviour
             OnMiss();
         }
     }
-    protected virtual void OnPerfectHit()
-    {
-        Debug.Log("Perfect Hit!");
-    }
-    protected virtual void OnGoodHit()
-    {
-        Debug.Log("Good Hit!");
-    }
-    protected virtual void OnMiss()
-    {
-        Debug.Log("Miss!");
-    }
+    protected virtual void OnPerfectHit() { Debug.Log("Perfect Hit!"); }
+    protected virtual void OnGoodHit() { Debug.Log("Good Hit!"); }
+    protected virtual void OnMiss() { Debug.Log("Miss!"); }
 
     #region events
 

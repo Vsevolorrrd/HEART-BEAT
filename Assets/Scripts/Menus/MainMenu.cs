@@ -1,16 +1,28 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.Collections.LowLevel.Unsafe;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject pauseMenuUI; // Assign your pause menu UI in the Inspector
+    [SerializeField] GameObject pauseMenuUI; // Assign pause menu UI in the Inspector
+    [SerializeField] GameObject mainBlock;
+    [SerializeField] GameObject settings;
+    [SerializeField] Slider sensitivitySlider;
     private bool isPaused = false;
     public bool canOpenPauseMenu = false;
     public bool lockCursor = false;
 
     public static Action<bool> OnPause;
 
+    private void Start()
+    {
+        if (sensitivitySlider)
+        {
+            sensitivitySlider.value = PlayerManager.Instance.controller.MouseSensitivity;
+        }
+    }
     void Update()
     {
         if (canOpenPauseMenu && Input.GetKeyDown(KeyCode.Escape))
@@ -54,9 +66,23 @@ public class MainMenu : MonoBehaviour
         if(pauseMenuUI)
         pauseMenuUI.SetActive(isPaused);
 
-        Time.timeScale = isPaused ? 0f : 1f;
-        Cursor.lockState = isPaused ? CursorLockMode.None : (lockCursor ? CursorLockMode.Locked : CursorLockMode.None);
-        Cursor.visible = isPaused || !lockCursor;
+        if (isPaused)
+        {
+            mainBlock.gameObject.SetActive(true);
+            settings.gameObject.SetActive(false);
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            if (lockCursor)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+        }
 
         OnPause?.Invoke(isPaused);
     }
@@ -66,5 +92,14 @@ public class MainMenu : MonoBehaviour
         SetPauseState(false);
         Debug.Log("Quitting Game...");
         Application.Quit();
+    }
+    public void SetRhythmDifficulty(int difficulty)
+    {
+        RhythmDifficulty.Instance.SetDifficulty(difficulty);
+    }
+
+    public void UpdateSensitivity(float newValue)
+    {
+        PlayerManager.Instance.controller.MouseSensitivity = newValue;
     }
 }

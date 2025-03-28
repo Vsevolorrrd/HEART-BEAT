@@ -8566,6 +8566,10 @@ PrefabInstance:
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 6620452834879827126, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
+      propertyPath: song
+      value: 
+      objectReference: {fileID: 11400000, guid: 0d05b5ce3f9df2441b57ab0dca988ed4, type: 2}
+    - target: {fileID: 6620452834879827126, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: transitionSpeed
       value: 0.5
       objectReference: {fileID: 0}
@@ -8576,6 +8580,10 @@ PrefabInstance:
     - target: {fileID: 7120471688880252661, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: m_Height
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7595564572771050147, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7704506219241341774, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: Loop

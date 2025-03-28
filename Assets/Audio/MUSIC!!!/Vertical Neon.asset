@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c81eeb90a4a51c4183497b6310b00f2, type: 3}
+  m_Name: Vertical Neon
+  m_EditorClassIdentifier: 
+  songBPM: 105
+  Leadingtrack: {fileID: 8300000, guid: 77f87a609e233d2448bc128769cbf45f, type: 3}
+  track_2: {fileID: 8300000, guid: 7279716180b260549bfb75da75ee9f5f, type: 3}
+  track_3: {fileID: 8300000, guid: 0fb556175691b084e841c7bb976b9daa, type: 3}
+  footSteps: {fileID: 0}
+  transition: {fileID: 0}

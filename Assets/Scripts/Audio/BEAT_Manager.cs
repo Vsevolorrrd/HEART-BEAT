@@ -6,7 +6,7 @@ public class BEAT_Manager : MonoBehaviour
 {
     [SerializeField] Music song;
     [SerializeField] float secPerBeat;
-    [SerializeField] float songPosition;
+    [SerializeField] float songPositionInSeconds;
     [SerializeField] float songPositionInBeats;
     [SerializeField] float dspSongTime;
 
@@ -22,7 +22,7 @@ public class BEAT_Manager : MonoBehaviour
     private bool isPaused = false;
 
     private float songBPM;
-    private float nextBeat;
+    [SerializeField] float nextBeatInSeconds;
     private int musicLevel;
     private bool musicStarted = false;
 
@@ -50,6 +50,7 @@ public class BEAT_Manager : MonoBehaviour
 
     public float GetSongPositionInBeats() => songPositionInBeats;
     public float GetSecPerBeat() => secPerBeat;
+    public float GetSongBPM() => songBPM;
     public int GetMusicLevel() => musicLevel;
 
 
@@ -71,7 +72,7 @@ public class BEAT_Manager : MonoBehaviour
         dspSongTime = (float)AudioSettings.dspTime;
 
         StartAudio();
-        nextBeat = secPerBeat;
+        nextBeatInSeconds = secPerBeat;
         musicStarted = true;
 
         MainMenu.OnPause += HandlePause;
@@ -94,14 +95,14 @@ public class BEAT_Manager : MonoBehaviour
     {
         if (isPaused) return;
 
-        songPosition = (float)(AudioSettings.dspTime - dspSongTime);
-        songPositionInBeats = songPosition / secPerBeat;
+        songPositionInSeconds = (float)(AudioSettings.dspTime - dspSongTime);
+        songPositionInBeats = songPositionInSeconds / secPerBeat;
 
         // Trigger BEAT event when the song reaches the next beat
-        if (songPosition >= nextBeat)
+        if (songPositionInSeconds >= nextBeatInSeconds)
         {
             BEAT?.Invoke();
-            nextBeat = Mathf.Ceil(songPosition / secPerBeat) * secPerBeat;
+            nextBeatInSeconds = Mathf.Ceil(songPositionInSeconds / secPerBeat) * secPerBeat;
             // Mathf.Ceil - rounds a number up
         }
     }

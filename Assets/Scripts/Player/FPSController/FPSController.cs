@@ -10,43 +10,45 @@ public class FPSController : MonoBehaviour
     private JumpModule jumpModule;
 
     [Header("Camera Settings")]
-    public CinemachineCamera playerCam;
-    public bool invertCamera = false;
-    public bool cameraCanMove = true;
-    public float mouseSensitivity = 2f;
-    public float maxLookAngle = 85f;
+    [SerializeField] CinemachineCamera playerCam;
+    [SerializeField] bool invertCamera = false;
+    [SerializeField] bool cameraCanMove = true;
+    [SerializeField] float maxLookAngle = 85f;
+    public float MouseSensitivity = 2f;
 
     [Header("Cursor")]
-    public bool lockCursor = true;
+    [SerializeField] bool lockCursor = true;
     private float yaw = 0f;
     private float pitch = 0f;
 
     [Header("Movement")]
-    public bool playerCanMove = true;
-    public float speed = 5f;
-    public float acceleration = 10f;
+    [SerializeField] bool playerCanMove = true;
+    [SerializeField] float speed = 5f;
+    [SerializeField] float acceleration = 10f;
+
     private float startSpeed;
     private float startAcceleration;
     private Vector3 moveDirection = Vector3.zero;
     [HideInInspector] public bool isMoving = false;
 
     [Header("Jumping")]
-    public KeyCode jumpKey = KeyCode.Space;
-    public float jumpPower = 5f;
+    [SerializeField] KeyCode jumpKey = KeyCode.Space;
+    [SerializeField] float jumpPower = 5f;
+    [SerializeField] int maxJumps = 3;
+
     private float startJumpPower;
-    public int maxJumps = 3;
     private int jumpCount = 0;
     private bool isGrounded = false;
     private bool isJumping = false;
     private bool firstJumpUsed = false;
 
     [Header("Gravity & Coyote Time")]
-    public float gravity = 20f;
-    public float coyoteTime = 0.2f;
-    private float coyoteTimer = 0f;
-    private float verticalVelocity = 0f;
+    [SerializeField] float gravity = 20f;
+    [SerializeField] float coyoteTime = 0.2f;
+    [SerializeField] float coyoteTimer = 0f;
+    [SerializeField] float verticalVelocity = 0f;
 
-    private float defaultFOV;
+    [SerializeField] float defaultFOV;
 
     private void Awake()
     {
@@ -95,8 +97,8 @@ public class FPSController : MonoBehaviour
     {
         if (!cameraCanMove) return;
 
-        yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
-        pitch += (invertCamera ? 1 : -1) * mouseSensitivity * Input.GetAxis("Mouse Y");
+        yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * MouseSensitivity;
+        pitch += (invertCamera ? 1 : -1) * MouseSensitivity * Input.GetAxis("Mouse Y");
         pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
 
         transform.localEulerAngles = new Vector3(0, yaw, 0);

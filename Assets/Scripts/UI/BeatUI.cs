@@ -22,9 +22,10 @@ public class BeatUI : MonoBehaviour
     [SerializeField] Transform beatBarContainer; // Parent for beat dots
 
 
-    [SerializeField] float dotSpeed = 200f;
+    [SerializeField] float baseSpeed = 200f;
     [SerializeField] float startOffset = 400f;
     [SerializeField] float stopDistance = 80f;
+    private float dotSpeed;
 
     private List<(RectTransform dot, CanvasGroup cg)> activeDots = 
     new List<(RectTransform, CanvasGroup)>();
@@ -78,6 +79,11 @@ public class BeatUI : MonoBehaviour
     {
         if (isActive) return;
 
+        // Adjust dotSpeed based on BPM
+        float BPM = BEAT_Manager.Instance.GetSongBPM();
+        float bpmScale = BPM / 120f;
+        dotSpeed = baseSpeed * bpmScale;
+
         isActive = true;
         hitFeedbackText.text = "";
         hitFeedbackText.gameObject.SetActive(false);
@@ -102,7 +108,7 @@ public class BeatUI : MonoBehaviour
 
             // Move left dots to the right, right dots to the left
             if (dot.anchoredPosition.x < 0)
-            dot.anchoredPosition += Vector2.right * (dotSpeed * Time.deltaTime); // make the movenment more reliable <---
+            dot.anchoredPosition += Vector2.right * (dotSpeed * Time.deltaTime);
             else
             dot.anchoredPosition += Vector2.left * (dotSpeed * Time.deltaTime);
 
@@ -126,9 +132,11 @@ public class BeatUI : MonoBehaviour
 
     private void OnBeat()
     {
-
-        SpawnBeatDot(-startOffset); // Left dot
-        SpawnBeatDot(startOffset);  // Right dot
+        if (activeDots.Count < 14)
+        {
+            SpawnBeatDot(-startOffset); // Left dot
+            SpawnBeatDot(startOffset); // Right dot
+        }
     }
     private void SpawnBeatDot(float startX)
     {
