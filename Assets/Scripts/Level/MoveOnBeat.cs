@@ -10,7 +10,7 @@ public class MoveOnBeat : RespondToBeat
     protected float moveTime = 0.2f;
     protected Coroutine moveRoutine;
 
-    public override void OnBeat()
+    protected override void OnBeat()
     {
         if (timesMoved >= timesToMove)
         {

@@ -50,6 +50,9 @@ public class FPSController : MonoBehaviour
 
     [SerializeField] float defaultFOV;
 
+    [Header("Sound Effects")]
+    [SerializeField] AudioClip jumpSound;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -201,6 +204,7 @@ public class FPSController : MonoBehaviour
         isJumping = true;
         Invoke("ResetJump", 0.2f);
 
+        AudioManager.Instance.PlayPooledSound(jumpSound, 0.8f);
         verticalVelocity = jumpPower; // Apply jump force
 
         if (isGrounded || coyoteTimer > 0f)

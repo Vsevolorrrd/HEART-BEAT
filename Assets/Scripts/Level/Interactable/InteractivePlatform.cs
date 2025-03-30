@@ -5,7 +5,7 @@ public class InteractivePlatform : MoveOnBeat, IInteractable
     {
         canMove = true;
     }
-    public override void OnBeat()
+    protected override void OnBeat()
     {
         if (!canMove) return;
 

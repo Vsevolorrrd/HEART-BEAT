@@ -52,9 +52,6 @@ public class BeatUI : MonoBehaviour
                     GameObject singletonObject = new GameObject("BeatUI");
                     _instance = singletonObject.AddComponent<BeatUI>();
                 }
-
-                // Make the BeatUI persist across scenes
-                DontDestroyOnLoad(_instance.gameObject);
             }
 
             return _instance;

@@ -17,7 +17,7 @@ public class Press : RespondToBeat
         targetScale = new Vector3(originalScale.x, originalScale.y * scaleMultiplier, originalScale.z);
     }
 
-    public override void OnBeat()
+    protected override void OnBeat()
     {
         transform.localScale = targetScale;
         dangerous = true;

@@ -8,7 +8,6 @@ public interface IInteractable
 
 public class LevelInteraction : RhythmInput
 {
-
     private FPSController controller;
     private CharacterController charController;
 
@@ -72,59 +71,29 @@ public class LevelInteraction : RhythmInput
     }
     protected override void OnPerfectHit()
     {
-        PerformInteraction();
+        FindEchoPoint();
     }
 
     protected override void OnGoodHit()
     {
-        PerformInteraction();
+        FindEchoPoint();
     }
     protected override void OnMiss()
     {
         Snap();
     }
-    private void PerformInteraction()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, maxRayDistance, interactionLayer))
-        {
-            IInteractable interactable = hit.collider.GetComponent<IInteractable>();
-
-            if (interactable != null)
-            {
-                interactable.Interact();  // Calls the appropriate interaction
-            }
-            else
-            {
-                Snap(); // Snap if no interactable object is hit
-            }
-        }
-        else
-        {
-            Snap(); // Snap if no interactable object is hit
-        }
-    }
     private void Snap()
     {
         if (snapAnim)
         snapAnim.SetTrigger("Snap");
-
         AudioManager.Instance.PlayPooledSound(snapClip, 0.8f);
-    }
-
-    public void TeleportTo(Vector3 targetPosition)
-    {
-        AudioManager.Instance.PlaySound(echoJumpClip, 0.8f);
-        StartCoroutine(SmoothTeleport(targetPosition));
-        //echoPoint = null;
     }
     private void FindEchoPoint()
     {
-        RaycastHit[] hits = Physics.RaycastAll(playerCam.transform.position, playerCam.transform.forward, maxTeleportDistance);
+        var hits = Physics.RaycastAll(playerCam.transform.position, playerCam.transform.forward, maxTeleportDistance, interactionLayer);
         float closestDistance = float.MaxValue;
         EchoPoint bestEchoPoint = null;
 
-        // Loop through all raycast hits
         for (int i = 0; i < hits.Length; i++)
         {
             EchoPoint ep = hits[i].collider.GetComponent<EchoPoint>();
@@ -149,16 +118,35 @@ public class LevelInteraction : RhythmInput
         if (bestEchoPoint != null)
         {
             echoPoint = bestEchoPoint;
-            Debug.Log($"Selected EchoPoint at {closestDistance} meters.");
-            EvaluateTiming();
+            echoPoint.Interact();
         }
         else
         {
-            Debug.Log("No valid EchoPoint found.");
-            echoPoint = null;
+            PerformInteraction();
         }
     }
+    private void PerformInteraction()
+    {
+        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out RaycastHit hit, maxRayDistance, interactionLayer))
+        {
+            IInteractable interactable = hit.collider.GetComponent<IInteractable>();
 
+            if (interactable != null)
+                interactable.Interact(); // Calls the appropriate interaction
+            else
+                Snap(); // Snap if no interactable object is hit
+        }
+        else
+        {
+            Snap(); // Snap if no interactable object is hit
+        }
+    }
+    public void TeleportTo(Vector3 targetPosition)
+    {
+        if (isTeleporting) return;
+        AudioManager.Instance?.PlaySound(echoJumpClip, 0.8f);
+        StartCoroutine(SmoothTeleport(targetPosition));
+    }
     private IEnumerator SmoothTeleport(Vector3 targetPosition)
     {
         isTeleporting = true;
@@ -186,7 +174,5 @@ public class LevelInteraction : RhythmInput
         controller.ResetVilocity(0);
         transform.position = targetPosition;
         isTeleporting = false;
-        Debug.Log("Echo Jump Complete!");
     }
-
 }

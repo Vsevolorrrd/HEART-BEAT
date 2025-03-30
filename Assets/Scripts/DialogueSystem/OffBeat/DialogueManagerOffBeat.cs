@@ -49,7 +49,7 @@ public class DialogueManagerOffBeat : RespondToBeat
         AdvanceDialogue();
     }
 
-    public override void OnBeat()
+    protected override void OnBeat()
     {
         if (currentDialogue == null || isWaiting || !started)
         return;

@@ -7,7 +7,7 @@ public class EchoPoint : RespondToBeat, IInteractable
         LevelInteraction.Instance.TeleportTo(transform.position);
     }
 
-    public override void OnBeat()
+    protected override void OnBeat()
     {
         // Scale the object up
         transform.localScale = Vector3.one * 1.2f;

@@ -17,7 +17,7 @@ public class ScaleToBeat : RespondToBeat
         targetScale = originalScale * scaleMultiplier;
     }
 
-    public override void OnBeat()
+    protected override void OnBeat()
     {
         // Scale the object up
         transform.localScale = targetScale;

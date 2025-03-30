@@ -12,5 +12,5 @@ public abstract class RespondToBeat : MonoBehaviour
         BEAT_Manager.BEAT -= OnBeat;
     }
 
-    public abstract void OnBeat();
+    protected abstract void OnBeat();
 }

@@ -11,12 +11,14 @@ public class DashModule : RhythmInput
     private float startDashSpeed;
     private bool isDashing = false;
 
-    [SerializeField] AudioClip dashModuleClip;
     [SerializeField] ParticleSystem dashEffect;
 
     [Header("FOV Settings")]
     [SerializeField] Camera playerCam;
     [SerializeField] private float fovIncrease = 15f;
+
+    [Header("Sound Effects")]
+    [SerializeField] AudioClip dashModuleClip;
 
 
     protected override void Start()
