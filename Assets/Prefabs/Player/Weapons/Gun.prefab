@@ -166,17 +166,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88fdb2a00a449064f9853fad6f388cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perfectThreshold: 0.1
+  thresholdModifier: 0
   streakGainPerfect: 2
-  goodThreshold: 0.15
   streakGainGood: 1
   actionKey: 323
   playerInput: 1
   maxPresses: 3
   shotSound: {fileID: 8300000, guid: e47a1fb1fdc5cef4585a343ff2216d00, type: 3}
   perfectShot: {fileID: 8300000, guid: a6ab0871d6721634ea43972d83787dd6, type: 3}
-  reloadSound: {fileID: 8300000, guid: a6ab0871d6721634ea43972d83787dd6, type: 3}
-  perfectReloadSound: {fileID: 8300000, guid: a6ab0871d6721634ea43972d83787dd6, type: 3}
+  startReload: {fileID: 0}
+  reload: {fileID: 0}
+  perfectReload: {fileID: 0}
   cam: {fileID: 0}
   range: 100
   layerMaskToHit:

@@ -85,6 +85,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7963922847495899780}
+  - component: {fileID: 1426191945548990034}
   - component: {fileID: 5381473669496951798}
   m_Layer: 0
   m_Name: Body
@@ -108,6 +109,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6085336184026716248}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1426191945548990034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241193456725667519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 305ca08878d92f446996f382588adb35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 5381473669496951798}
+  sprites:
+  - {fileID: 1064416958, guid: c8b24a9cddc1cd24a821d23cbe29c4aa, type: 3}
+  - {fileID: 1124453450, guid: c8b24a9cddc1cd24a821d23cbe29c4aa, type: 3}
+  - {fileID: 1360258857, guid: c8b24a9cddc1cd24a821d23cbe29c4aa, type: 3}
+  changeInterval: 0.1
 --- !u!212 &5381473669496951798
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -279,6 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e78b5f821e692145a2c34cfe0680d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inAllAxes: 0
 --- !u!114 &6490319738484281576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,12 +552,12 @@ SpriteRenderer:
   m_SortingLayerID: -1431224517
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1100229906, guid: 945ffb18ab29af5458f35a1f49418474, type: 3}
+  m_Sprite: {fileID: 508517484, guid: d280bd9102ceb114ead1c6663dbc9ed2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.7111111, y: 2.8444445}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

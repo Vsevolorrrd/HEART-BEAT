@@ -95,11 +95,11 @@ public class Shotgun : DistantWeapon
         float nearestBeat = Mathf.Round(songPositionInBeats);
         float timeDifference = Mathf.Abs(songPositionInBeats - nearestBeat) * BEAT_Manager.Instance.GetSecPerBeat();
 
-        if (timeDifference <= RhythmDifficulty.perfectThreshold)
+        if (timeDifference <= RhythmDifficulty.perfectThreshold + thresholdModifier)
         {
             OnPerfectPump();
         }
-        else if (timeDifference <= RhythmDifficulty.goodThreshold)
+        else if (timeDifference <= RhythmDifficulty.goodThreshold + thresholdModifier)
         {
             OnGoodPump();
         }

@@ -4,9 +4,8 @@ using System.Collections;
 public abstract class RhythmInput : MonoBehaviour
 {
     [Header("RhythmInput")]
-    public float perfectThreshold = 0.1f;  // 100 ms for Perfect
+    public float thresholdModifier = 0.1f;  // 100 ms for Perfect
     public float streakGainPerfect = 2f;
-    public float goodThreshold = 0.15f;    // 150 ms for Good
     public float streakGainGood = 1f;
     public KeyCode actionKey = KeyCode.Space;
     [HideInInspector] public bool playerInput = true;
@@ -69,14 +68,14 @@ public abstract class RhythmInput : MonoBehaviour
         float nearestBeat = Mathf.Round(songPositionInBeats); // Nearest beat
         float timeDifference = Mathf.Abs(songPositionInBeats - nearestBeat) * BEAT_Manager.Instance.GetSecPerBeat();
 
-        if (timeDifference <= RhythmDifficulty.perfectThreshold)
+        if (timeDifference <= RhythmDifficulty.perfectThreshold + thresholdModifier)
         {
             HitEffect.Instance.playHitEffect("Perfect");
             BeatUI.Instance.ShowHitFeedback("Perfect");
             RhythmStreakManager.Instance.RegisterHit(streakGainPerfect);
             OnPerfectHit();
         }
-        else if (timeDifference <= RhythmDifficulty.goodThreshold)
+        else if (timeDifference <= RhythmDifficulty.goodThreshold + thresholdModifier)
         {
             HitEffect.Instance.playHitEffect("Good");
             BeatUI.Instance.ShowHitFeedback("Good");

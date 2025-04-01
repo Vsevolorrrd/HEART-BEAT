@@ -166,9 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 684090c70133ea2459117bc567e20599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perfectThreshold: 0.1
+  thresholdModifier: 0
   streakGainPerfect: 2
-  goodThreshold: 0.15
   streakGainGood: 1
   actionKey: 323
   playerInput: 1

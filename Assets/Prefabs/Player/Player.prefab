@@ -372,9 +372,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 944c7743d85fe304c92fdb5b8ee767df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perfectThreshold: 0.1
+  thresholdModifier: 0.1
   streakGainPerfect: 2
-  goodThreshold: 0.15
   streakGainGood: 1
   actionKey: 325
   playerInput: 1
@@ -5353,6 +5352,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7281731212244971675}
+  - component: {fileID: 6882742666480753056}
   - component: {fileID: 7688257873746799809}
   m_Layer: 7
   m_Name: Snap
@@ -5377,6 +5377,26 @@ Transform:
   - {fileID: 7038614421757648001}
   m_Father: {fileID: 4656819400422486285}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6882742666480753056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7688265196028907422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19b645074bd61774faeb449e0303c005, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thresholdModifier: 0.1
+  streakGainPerfect: 2
+  streakGainGood: 1
+  actionKey: 324
+  playerInput: 1
+  maxPresses: 3
+  snapAnim: {fileID: 7688257873746799809}
+  snapClip: {fileID: 8300000, guid: d0e2a01a1cb53164abe9c630890bdd81, type: 3}
 --- !u!95 &7688257873746799809
 Animator:
   serializedVersion: 7
@@ -5787,6 +5807,7 @@ MonoBehaviour:
   coyoteTimer: 0
   verticalVelocity: 0
   defaultFOV: 0
+  jumpSound: {fileID: 8300000, guid: 16b93a5b603823642ae0770c584b99c7, type: 3}
 --- !u!114 &1072953782785083305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5799,9 +5820,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63e5610f6cadf984f98e45902d7ba173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perfectThreshold: 0.1
+  thresholdModifier: 0.05
   streakGainPerfect: 1.5
-  goodThreshold: 0.15
   streakGainGood: 1
   actionKey: 32
   playerInput: 1
@@ -5818,20 +5838,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3052523a7330041b1bc2a078f7e71d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perfectThreshold: 0.1
+  thresholdModifier: 0.1
   streakGainPerfect: 2
-  goodThreshold: 0.15
   streakGainGood: 1
   actionKey: 324
   playerInput: 1
   maxPresses: 3
+  snap: {fileID: 6882742666480753056}
   playerCam: {fileID: 6651157350833734218}
   maxRayDistance: 30
   interactionLayer:
     serializedVersion: 2
     m_Bits: 64
-  snapAnim: {fileID: 7688257873746799809}
-  snapClip: {fileID: 8300000, guid: d0e2a01a1cb53164abe9c630890bdd81, type: 3}
   maxTeleportDistance: 30
   minTeleportDistance: 3
   teleportDuration: 0.2
@@ -5862,6 +5880,7 @@ MonoBehaviour:
   echoJumpClip: {fileID: 8300000, guid: a95fc46d4d18a7443b3d2c66d0cf418d, type: 3}
   fovIncrease: 15
   fovTransitionTime: 0.2
+  interactionSound: {fileID: 0}
 --- !u!114 &4635411821660464276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5874,19 +5893,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8af1fc08fe38c645af7504311a64a1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perfectThreshold: 0.1
+  thresholdModifier: 0.05
   streakGainPerfect: 1
-  goodThreshold: 0.2
   streakGainGood: 0.5
   actionKey: 101
   playerInput: 1
   maxPresses: 3
   dashSpeed: 25
   dashDuration: 0.2
-  dashModuleClip: {fileID: 8300000, guid: ab98daa58d0ed944b9b4ff1e82a59d3b, type: 3}
   dashEffect: {fileID: 7837077697443646405}
   playerCam: {fileID: 6651157350833734218}
   fovIncrease: 25
+  dashModuleClip: {fileID: 8300000, guid: 6993f568c1384fa469a53485558d0157, type: 3}
 --- !u!114 &5020304683037797507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6034,6 +6052,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 6651157350833734218}
+    - target: {fileID: 3996716246747917865, guid: f659aef4472d6e6459da949056dc425b, type: 3}
+      propertyPath: thresholdModifier
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6051778622175896961, guid: f659aef4472d6e6459da949056dc425b, type: 3}
       propertyPath: m_Name
       value: Revolver
@@ -6104,6 +6126,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 6651157350833734218}
+    - target: {fileID: 6284009404807878152, guid: 7ee54f7f537f57644b408987963dc63c, type: 3}
+      propertyPath: thresholdModifier
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

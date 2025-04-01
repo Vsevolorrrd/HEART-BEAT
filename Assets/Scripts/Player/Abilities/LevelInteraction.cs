@@ -11,14 +11,13 @@ public class LevelInteraction : RhythmInput
     private FPSController controller;
     private CharacterController charController;
 
+    [Header("Snap")]
+    [SerializeField] Snap snap;
+
     [Header("Interaction Settings")]
     [SerializeField] Camera playerCam;
     [SerializeField] float maxRayDistance = 30f;
     [SerializeField] LayerMask interactionLayer;
-
-    [Header("Snap")]
-    [SerializeField] Animator snapAnim;
-    [SerializeField] AudioClip snapClip;
 
     [Header("Echo Jump")]
     [SerializeField] float maxTeleportDistance = 30f;
@@ -28,10 +27,13 @@ public class LevelInteraction : RhythmInput
     [SerializeField] AudioClip echoJumpClip;
 
     [Header("FOV Settings")]
-    [SerializeField] private float fovIncrease = 15f;
-    [SerializeField] private float fovTransitionTime = 0.2f;
+    [SerializeField] float fovIncrease = 15f;
+    [SerializeField] float fovTransitionTime = 0.2f;
 
-    private EchoPoint echoPoint = null;
+    [Header("Audio")]
+    [SerializeField] AudioClip interactionSound;
+
+    private IInteractable interactionPoint = null;
     private bool isTeleporting = false;
 
 
@@ -66,27 +68,8 @@ public class LevelInteraction : RhythmInput
 
         if (Input.GetKeyDown(actionKey))
         {
-            HandleKeyPress();
+            FindEchoPoint();
         }
-    }
-    protected override void OnPerfectHit()
-    {
-        FindEchoPoint();
-    }
-
-    protected override void OnGoodHit()
-    {
-        FindEchoPoint();
-    }
-    protected override void OnMiss()
-    {
-        Snap();
-    }
-    private void Snap()
-    {
-        if (snapAnim)
-        snapAnim.SetTrigger("Snap");
-        AudioManager.Instance.PlayPooledSound(snapClip, 0.8f);
     }
     private void FindEchoPoint()
     {
@@ -117,8 +100,8 @@ public class LevelInteraction : RhythmInput
 
         if (bestEchoPoint != null)
         {
-            echoPoint = bestEchoPoint;
-            echoPoint.Interact();
+            interactionPoint = bestEchoPoint;
+            EvaluateTiming();
         }
         else
         {
@@ -131,20 +114,37 @@ public class LevelInteraction : RhythmInput
         {
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
 
-            if (interactable != null)
-                interactable.Interact(); // Calls the appropriate interaction
+            if (interactionPoint != null)
+            {
+                interactionPoint = interactable;
+                EvaluateTiming();
+            }
             else
-                Snap(); // Snap if no interactable object is hit
+            {
+                snap.PerfomSnap(); // Snap if no interactable object is hit
+            }
         }
         else
         {
-            Snap(); // Snap if no interactable object is hit
+            snap.PerfomSnap(); // Snap if no interactable object is hit
         }
+    }
+    protected override void OnPerfectHit()
+    {
+        interactionPoint.Interact();
+    }
+    protected override void OnGoodHit()
+    {
+        interactionPoint.Interact();
+    }
+    protected override void OnMiss()
+    {
+        
     }
     public void TeleportTo(Vector3 targetPosition)
     {
         if (isTeleporting) return;
-        AudioManager.Instance?.PlaySound(echoJumpClip, 0.8f);
+        AudioManager.Instance.PlaySound(echoJumpClip, 0.8f);
         StartCoroutine(SmoothTeleport(targetPosition));
     }
     private IEnumerator SmoothTeleport(Vector3 targetPosition)

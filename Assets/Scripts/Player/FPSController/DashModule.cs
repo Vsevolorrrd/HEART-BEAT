@@ -55,7 +55,7 @@ public class DashModule : RhythmInput
     {
         isDashing = true;
         playerHealth.SetVulnerability(false);
-        AudioManager.Instance.PlaySound(dashModuleClip, 0.5f);
+        AudioManager.Instance.PlaySound(dashModuleClip, 0.7f);
         if (dashEffect) dashEffect.Play();
 
         controller.ChangeSpeed(dashSpeed * modifier);

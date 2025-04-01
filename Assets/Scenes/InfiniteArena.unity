@@ -1018,6 +1018,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4999675010396390043, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
+      propertyPath: snapShowDuration
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5365586743058227876, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: m_Name
       value: FullPackage
@@ -1413,8 +1417,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemies:
-  - {fileID: 7335025655419331833, guid: b4fff93f29854ab4997fb06b46ff0397, type: 3}
-  - {fileID: 7335025655419331833, guid: 0dbc10d0e2d2dbf4ebae40aa2e9bf622, type: 3}
+  - {fileID: 7335025655419331833, guid: 273776011fa06c14f822918fd62427d3, type: 3}
+  - {fileID: 7335025655419331833, guid: f1e28d994d45674468481170abe87861, type: 3}
   spawPoints:
   - {fileID: 668152254}
   - {fileID: 1444252791}

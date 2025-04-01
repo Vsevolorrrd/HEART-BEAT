@@ -129,11 +129,11 @@ public class DistantWeapon : RhythmInput
         float nearestBeat = Mathf.Round(songPositionInBeats); // Nearest beat
         float timeDifference = Mathf.Abs(songPositionInBeats - nearestBeat) * BEAT_Manager.Instance.GetSecPerBeat();
 
-        if (timeDifference <= RhythmDifficulty.perfectThreshold)
+        if (timeDifference <= RhythmDifficulty.perfectThreshold + thresholdModifier)
         {
             OnPerfectShot(target);
         }
-        else if (timeDifference <= RhythmDifficulty.goodThreshold)
+        else if (timeDifference <= RhythmDifficulty.goodThreshold + thresholdModifier)
         {
             OnGoodShot(target);
         }
@@ -181,12 +181,12 @@ public class DistantWeapon : RhythmInput
         float nearestBeat = Mathf.Round(songPositionInBeats); // Nearest beat
         float timeDifference = Mathf.Abs(songPositionInBeats - nearestBeat) * BEAT_Manager.Instance.GetSecPerBeat();
 
-        if (timeDifference <= RhythmDifficulty.perfectThreshold)
+        if (timeDifference <= RhythmDifficulty.perfectThreshold + thresholdModifier)
         {
             PerfectReload();
             RhythmStreakManager.Instance.RegisterHit(streakGainPerfect);
         }
-        else if (timeDifference <= RhythmDifficulty.goodThreshold)
+        else if (timeDifference <= RhythmDifficulty.goodThreshold + thresholdModifier)
         {
             GoodReload();
             RhythmStreakManager.Instance.RegisterHit(streakGainGood);
