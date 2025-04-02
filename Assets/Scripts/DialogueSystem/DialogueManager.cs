@@ -57,8 +57,8 @@ public class DialogueManager : RhythmInput
 
     protected override void Update()
     {
-        if (!playerInput || isBlocked || !awaitingInput)
-            return;
+        if (!PlayerManager.Instance.playerInput || isBlocked || !awaitingInput)
+        return;
 
         if (Input.GetKeyDown(actionKey))
         {

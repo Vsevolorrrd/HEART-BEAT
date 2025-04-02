@@ -19,12 +19,11 @@ public class MeleeWeapon : RhythmInput
 
     protected override void Start()
     {
-        base.Start();
         currentAttack = 0;
     }
     protected override void Update()
     {
-        if (!playerInput || isBlocked)
+        if (!PlayerManager.Instance.playerInput || isBlocked)
         return;
 
         timeSinceLastAttack += Time.deltaTime;

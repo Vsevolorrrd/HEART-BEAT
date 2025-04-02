@@ -8,7 +8,6 @@ public abstract class RhythmInput : MonoBehaviour
     public float streakGainPerfect = 2f;
     public float streakGainGood = 1f;
     public KeyCode actionKey = KeyCode.Space;
-    [HideInInspector] public bool playerInput = true;
 
     [Header("Anti Spam")]
     public int maxPresses = 3;
@@ -20,7 +19,7 @@ public abstract class RhythmInput : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (!playerInput || isBlocked)
+        if (!PlayerManager.Instance.playerInput || isBlocked)
         return;
 
         if (Input.GetKeyDown(actionKey))
@@ -91,22 +90,6 @@ public abstract class RhythmInput : MonoBehaviour
     protected virtual void OnPerfectHit() { Debug.Log("Perfect Hit!"); }
     protected virtual void OnGoodHit() { Debug.Log("Good Hit!"); }
     protected virtual void OnMiss() { Debug.Log("Miss!"); }
+    protected virtual void Start() { }
 
-    #region events
-
-    protected virtual void Start()
-    {
-        MainMenu.OnPause += HandlePause;
-    }
-
-    protected virtual void OnDestroy()
-    {
-        MainMenu.OnPause -= HandlePause;
-    }
-
-    protected void HandlePause(bool isPaused)
-    {
-        playerInput = !isPaused;
-    }
-    #endregion
 }

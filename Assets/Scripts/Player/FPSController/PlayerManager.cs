@@ -22,10 +22,16 @@ public class PlayerManager : MonoBehaviour
 
     [HideInInspector] public PlayerHealth playerHealth;
     [HideInInspector] public FPSController controller;
+    [HideInInspector] public bool playerInput = true;
 
     private void OnAwake()
     {
         playerHealth = GetComponent<PlayerHealth>();
         controller = GetComponent<FPSController>();
+    }
+    public void SetPalyerInput(bool enable)
+    {
+        controller.SetInput(enable);
+        playerInput = enable;
     }
 }

@@ -21,10 +21,10 @@ public class AI : Damageable
     protected bool hasAlerted = false;
 
     [Header("Basic Behaviour")]
-    [SerializeField] protected float sightRange = 50f;
+    [SerializeField] protected float sightRange = 75f;
     [SerializeField] protected float attackRange = 3f;
     [SerializeField] protected float retreatRange = 20f;
-    [SerializeField] protected float speed = 5f;
+    [SerializeField] protected float speed = 10f;
     [SerializeField] protected float rotationSpeed = 5f;
     [SerializeField] protected Transform[] patrolPoints;
     [SerializeField] protected bool canRetreat = false;
@@ -193,6 +193,18 @@ public class AI : Damageable
                 target = newTarget.transform; // Switch to a better target
             }
         }
+    }
+    public void SetSpeed(float newSpeed, bool resetSpeed = true, float time = 1f)
+    {
+        agent.speed = newSpeed;
+        if (resetSpeed)
+        {
+            Invoke("ResetSpeed", time);
+        }
+    }
+    private void ResetSpeed()
+    {
+        agent.speed = speed;
     }
     #region events
 

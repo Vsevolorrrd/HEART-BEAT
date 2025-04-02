@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class BeatUI : MonoBehaviour
 {
@@ -20,15 +21,18 @@ public class BeatUI : MonoBehaviour
     [SerializeField] RectTransform beatBarLeft;
     [SerializeField] RectTransform beatBarRight;
     [SerializeField] Transform beatBarContainer; // Parent for beat dots
+    [SerializeField] Color beatDotColor = Color.red;
 
 
     [SerializeField] float baseSpeed = 200f;
     [SerializeField] float startOffset = 400f;
-    [SerializeField] float stopDistance = 80f;
+    [SerializeField] float stopDistance = 100f;
     private float dotSpeed;
 
     private List<(RectTransform dot, CanvasGroup cg)> activeDots = 
     new List<(RectTransform, CanvasGroup)>();
+    private Coroutine scaleCoroutine;
+    private Coroutine fadeCoroutine;
     private bool beatBar = true;
     private bool isActive = false;
 
@@ -111,16 +115,27 @@ public class BeatUI : MonoBehaviour
 
             if (beatBar)
             {
-                // Calculate fade-in effect
+                // Calculate distance from stop point
                 float distanceToStop = Mathf.Abs(dot.anchoredPosition.x) - stopDistance;
-                float fadeProgress = 1f - Mathf.Clamp01(distanceToStop / startOffset);
-                cg.alpha = fadeProgress; // Adjust alpha based on distance
+                float fadeProgress = 0.7f - Mathf.Clamp01(distanceToStop / startOffset);
+
+                // If within the hit zone, set full opacity
+                if (Mathf.Abs(dot.anchoredPosition.x) <= stopDistance * 1.18f) // Slight buffer for timing
+                {
+                    dot.GetComponent<Image>().color = Color.white;
+                    cg.alpha = 1f;
+                }
+                else
+                {
+                    cg.alpha = fadeProgress;
+                }
+
             }
 
-            // Remove dots when they reach stop distance
+            // Start fade-out process
             if (Mathf.Abs(dot.anchoredPosition.x) <= stopDistance)
             {
-                Destroy(dot.gameObject);
+                StartCoroutine(FadeOutAndRemoveDot(dot, cg));
                 activeDots.RemoveAt(i);
             }
 
@@ -143,13 +158,42 @@ public class BeatUI : MonoBehaviour
         // Add a CanvasGroup for alpha control
         CanvasGroup cg = newDot.gameObject.AddComponent<CanvasGroup>();
         cg.alpha = 0f; // Start fully transparent
+        newDot.GetComponent<Image>().color = beatDotColor;
 
         activeDots.Add((newDot, cg));
     }
+    private IEnumerator FadeOutAndRemoveDot(RectTransform dot, CanvasGroup cg)
+    {
+        float moveDistance = dotSpeed * 0.2f;
+        float fadeTime = moveDistance / dotSpeed;
 
+        float elapsedTime = 0f;
+        Vector2 startPos = dot.anchoredPosition;
+        Vector2 endPos = startPos + (dot.anchoredPosition.x < 0 ? Vector2.right : Vector2.left) * moveDistance;
+
+        while (elapsedTime < fadeTime)
+        {
+            float t = elapsedTime / fadeTime;
+
+            if (elapsedTime >= fadeTime/5f)
+            dot.GetComponent<Image>().color = beatDotColor;
+
+            dot.anchoredPosition = Vector2.Lerp(startPos, endPos, t);
+            cg.alpha = Mathf.Lerp(1f, 0f, t);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        cg.alpha = 0f;
+
+        Destroy(dot.gameObject);
+    }
     public void ShowHitFeedback(string result)
     {
-        StopAllCoroutines(); // Stop any ongoing animation
+        // Stop any ongoing animation
+        if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
+        if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
 
         switch (result)
         {
@@ -172,8 +216,8 @@ public class BeatUI : MonoBehaviour
         hitFeedbackText.transform.localScale = originalScale * punchScale;
 
         // Start scale-back and fade-out animations
-        StartCoroutine(ScaleBackAnimation());
-        StartCoroutine(FadeOutFeedback());
+        scaleCoroutine = StartCoroutine(ScaleBackAnimation());
+        fadeCoroutine = StartCoroutine(FadeOutFeedback());
     }
 
     private IEnumerator ScaleBackAnimation()
@@ -208,24 +252,6 @@ public class BeatUI : MonoBehaviour
         hitFeedbackText.gameObject.SetActive(false);
         hitFeedbackText.text = ""; // Clear text after fading
     }
-    /*
-    private IEnumerator FadeOutPerfectHit()
-    {
-        perfectHit.alpha = 1f;
-
-        float elapsedTime = 0f;
-
-        while (elapsedTime < fadeDuration)
-        {
-            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
-            perfectHit.alpha = alpha;
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        perfectHit.alpha = 0f;
-    }
-    */
     public void ToggleBeatBar()
     {
         beatBar = !beatBar;

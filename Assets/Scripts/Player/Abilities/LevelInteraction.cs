@@ -63,7 +63,7 @@ public class LevelInteraction : RhythmInput
     }
     protected override void Update()
     {
-        if (!playerInput || isBlocked || isTeleporting)
+        if (!PlayerManager.Instance.playerInput || isBlocked || isTeleporting)
         return;
 
         if (Input.GetKeyDown(actionKey))
@@ -114,7 +114,7 @@ public class LevelInteraction : RhythmInput
         {
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
 
-            if (interactionPoint != null)
+            if (interactable != null)
             {
                 interactionPoint = interactable;
                 EvaluateTiming();

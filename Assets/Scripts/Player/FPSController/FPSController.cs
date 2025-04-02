@@ -71,10 +71,6 @@ public class FPSController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        MainMenu.OnPause += HandlePause;
-
-        DialogueManager.OnPauseInput += HandlePause;
-
         BEAT_Manager.MusicLevelIncreased += changePlayerStats;
 
     }
@@ -250,16 +246,12 @@ public class FPSController : MonoBehaviour
         }
     }
 
-    private void HandlePause(bool isPaused)
+    public void SetInput(bool enable)
     {
-        playerCanMove = !isPaused;
+        playerCanMove = enable;
     }
     private void OnDestroy()
     {
-        MainMenu.OnPause -= HandlePause;
-
-        DialogueManager.OnPauseInput -= HandlePause;
-
         BEAT_Manager.MusicLevelIncreased += changePlayerStats;
     }
 

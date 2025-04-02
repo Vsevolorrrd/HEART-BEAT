@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DistantWeapon : RhythmInput
@@ -24,6 +26,8 @@ public class DistantWeapon : RhythmInput
     [SerializeField] protected GameObject impact, projectilePrefab;
     [SerializeField] private ParticleSystem gunSmoke, muzzleFlash;
     [SerializeField] private Transform gunpoint;
+    private Queue<GameObject> impactPool = new Queue<GameObject>();
+    private int poolSize = 25;
 
     [Header("Camera Shake")]
     [SerializeField] private bool cameraShake = true;
@@ -38,15 +42,15 @@ public class DistantWeapon : RhythmInput
 
     protected override void Start()
     {
-        MainMenu.OnPause += HandlePause;
         anim = GetComponent<Animator>();
         currentAmmo = maxAmmo;
         WeaponUI.Instance.UpdateWeaponUI(maxAmmo, currentAmmo);
+        InitializeImpactPool();
     }
 
     protected override void Update()
     {
-        if (!playerInput || isBlocked) return;
+        if (!PlayerManager.Instance.playerInput || isBlocked) return;
 
         if (Input.GetKeyDown(reloadKey))
         {
@@ -200,4 +204,35 @@ public class DistantWeapon : RhythmInput
     protected virtual void PerfectReload() { }
     protected virtual void GoodReload() { }
     #endregion
+
+    #region Pooling
+    protected void InitializeImpactPool()
+    {
+        for (int i = 0; i < poolSize; i++)
+        {
+            GameObject _impact = Instantiate(impact);
+            _impact.SetActive(false);
+            impactPool.Enqueue(_impact);
+        }
+    }
+    protected GameObject GetImpactEffect(Vector3 position, Quaternion rotation)
+    {
+        GameObject _impact = impactPool.Count > 0 ? impactPool.Dequeue() : Instantiate(impact);
+        _impact.transform.position = position;
+        _impact.transform.rotation = rotation;
+        _impact.SetActive(true);
+
+        StartCoroutine(ReturnImpactToPool(_impact, 1.5f));
+        return impact;
+    }
+
+    private IEnumerator ReturnImpactToPool(GameObject _impact, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _impact.SetActive(false);
+        impactPool.Enqueue(_impact);
+    }
+
+    #endregion
+
 }

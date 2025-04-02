@@ -79,31 +79,32 @@ public class Metrazer : AI
 
         if (Physics.Raycast(attackPoint.position, shootDirection, out hit, laserRange))
         {
-            hitPosition = hit.point;
 
             Damageable targetHit = hit.collider.GetComponent<Damageable>();
             if (targetHit != null)
             {
-                targetHit.Damage(laserDamage);
+                StartCoroutine(DelayedDamage(targetHit, 0.05f));
             }
         }
-        else
-        {
-            hitPosition = attackPoint.position + shootDirection * laserRange;
-        }
-
+        
+        hitPosition = attackPoint.position + shootDirection * laserRange;
         StartCoroutine(ShowLaserEffect(hitPosition));
+    }
+    private IEnumerator DelayedDamage(Damageable targetHit, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (targetHit != null)
+        {
+            targetHit.Damage(laserDamage);
+        }
     }
 
     private IEnumerator ShowLaserEffect(Vector3 hitPoint)
     {
         laserBeam.enabled = true;
 
-        Vector3 localStart = attackPoint.InverseTransformPoint(attackPoint.position);
-        Vector3 localEnd = attackPoint.InverseTransformPoint(hitPoint);
-
-        laserBeam.SetPosition(0, localStart);
-        laserBeam.SetPosition(1, localEnd);
+        laserBeam.SetPosition(0, attackPoint.position);
+        laserBeam.SetPosition(1, hitPoint);
 
         yield return new WaitForSeconds(0.5f); // Laser visible for a short time
 

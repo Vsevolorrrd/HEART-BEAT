@@ -6,7 +6,7 @@ public class AIGun : AIWeapon
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] int projectilesPerShot = 1;
     [SerializeField] float projectileSpeed = 15f;
-    [SerializeField] float projectileLifetime = 15f;
+    [SerializeField] float projectileLifetime = 10f;
     [SerializeField] float projectileSpread = 0f;
 
     public override void WeaponAttack()

@@ -23,8 +23,6 @@ public class DashModule : RhythmInput
 
     protected override void Start()
     {
-        base.Start();
-
         BEAT_Manager.MusicLevelIncreased += changePlayerStats;
         controller = GetComponent<FPSController>();
         playerHealth = GetComponent<PlayerHealth>();
@@ -33,7 +31,7 @@ public class DashModule : RhythmInput
 
     protected override void Update()
     {
-        if (!playerInput || !controller.isMoving || isDashing) return;
+        if (!PlayerManager.Instance.playerInput || !controller.isMoving || isDashing) return;
 
         if (Input.GetKeyDown(actionKey))
         {
@@ -76,9 +74,8 @@ public class DashModule : RhythmInput
 
     #region events
 
-    protected override void OnDestroy()
+    protected  void OnDestroy()
     {
-        base.OnDestroy();
         BEAT_Manager.MusicLevelIncreased -= changePlayerStats;
     }
 

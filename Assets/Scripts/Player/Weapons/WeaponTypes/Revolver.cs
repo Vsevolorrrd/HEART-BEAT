@@ -5,7 +5,7 @@ public class Revolver : DistantWeapon
 
     protected override void Update()
     {
-        if (!playerInput || isBlocked)
+        if (!PlayerManager.Instance.playerInput || isBlocked)
         return;
 
         if (Input.GetKeyDown(reloadKey))
@@ -55,10 +55,11 @@ public class Revolver : DistantWeapon
             Vector3 direction = (cam.transform.position - hit.point).normalized;
             Vector3 impactPosition = hit.point + direction * 0.5f;
 
-            Instantiate(impact, impactPosition, Quaternion.identity);
+            GetImpactEffect(impactPosition, Quaternion.identity);
         }
 
         Effects();
+        if (currentAmmo <= 0) StartReload();
     }
 
     #region Reload

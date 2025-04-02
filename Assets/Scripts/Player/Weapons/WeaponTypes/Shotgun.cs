@@ -4,11 +4,12 @@ public class Shotgun : DistantWeapon
 {
     [SerializeField] AudioClip pumpSound;
     private bool needsPump = false;
+    private bool evaluated = false;
 
     protected override void Update()
     {
-        if (!playerInput || isBlocked)
-            return;
+        if (!PlayerManager.Instance.playerInput || isBlocked)
+        return;
 
         if (Input.GetKeyDown(reloadKey))
         {
@@ -62,9 +63,10 @@ public class Shotgun : DistantWeapon
     protected override void Shoot()
     {
         if (currentAmmo <= 0) return;
-        currentAmmo--;
-        WeaponUI.Instance.UpdateWeaponUI(maxAmmo, currentAmmo);
 
+        currentAmmo--;
+        evaluated = false;
+        WeaponUI.Instance.UpdateWeaponUI(maxAmmo, currentAmmo);
         AudioManager.Instance.PlayPooledSound(shotSound, 0.9f);
 
         for (int i = 0; i < bulletsPerShot; i++)
@@ -77,17 +79,43 @@ public class Shotgun : DistantWeapon
 
                 Damageable target = hit.transform.GetComponent<Damageable>();
                 if (target && !target.isDead)
-                EvaluateTimingTarget(target);
+                {
+                    EvaluateTimingTarget(target);
+                    evaluated = true;
+                }
 
                 Vector3 direction = (cam.transform.position - hit.point).normalized;
                 Vector3 impactPosition = hit.point + direction * 0.5f;
 
-                Instantiate(impact, impactPosition, Quaternion.identity);
+                GetImpactEffect(impactPosition, Quaternion.identity);
             }
         }
 
         Effects();
         needsPump = true;
+        if (currentAmmo <= 0) StartReload();
+    }
+    protected override void OnPerfectShot(Damageable target)
+    {
+        if (!evaluated)
+        {
+            HitEffect.Instance.playHitEffect("Perfect");
+            BeatUI.Instance.ShowHitFeedback("Perfect");
+            RhythmStreakManager.Instance.RegisterHit(streakGainPerfect);
+            AudioManager.Instance.PlayPooledSound(perfectShot, 0.4f);
+        }
+        target.Damage(damage * 1.5f);
+    }
+
+    protected override void OnGoodShot(Damageable target)
+    {
+        if (!evaluated)
+        {
+            HitEffect.Instance.playHitEffect("Good");
+            BeatUI.Instance.ShowHitFeedback("Good");
+            RhythmStreakManager.Instance.RegisterHit(streakGainGood);
+        }
+        target.Damage(damage);
     }
     private void PumpShotgun()
     {

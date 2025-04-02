@@ -182,7 +182,7 @@ MonoBehaviour:
   layerMaskToHit:
     serializedVersion: 2
     m_Bits: 9
-  damage: 50
+  damage: 100
   bulletsPerShot: 1
   maxAmmo: 6
   spread: 0

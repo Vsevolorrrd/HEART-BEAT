@@ -247,7 +247,7 @@ MonoBehaviour:
     m_Bits: 136
   projectilePrefab: {fileID: 412508633753328286, guid: 0dd3a0a077950ae4a871d8d487613a27, type: 3}
   projectilesPerShot: 5
-  projectileSpeed: 12
+  projectileSpeed: 14
   projectileLifetime: 5
   projectileSpread: 10
 --- !u!1 &7282557898128663202
@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89d87c846fb74c5468175246f41407ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 75
+  maxHealth: 100
   isVulnerable: 1
   isDead: 0
   blink: 1
@@ -371,15 +371,16 @@ MonoBehaviour:
   Remains: {fileID: 0}
   currentHealth: 0
   currentState: 0
-  sightRange: 55
+  sightRange: 75
   attackRange: 20
   retreatRange: 20
-  speed: 10
+  speed: 11
   rotationSpeed: 5
   patrolPoints: []
   canRetreat: 0
   currentPatrolPoint: 0
   target: {fileID: 0}
+  scribbles: []
   attackDelayInBeats: 3
   weapon: {fileID: 5135941901420446233}
 --- !u!114 &807159813069771404

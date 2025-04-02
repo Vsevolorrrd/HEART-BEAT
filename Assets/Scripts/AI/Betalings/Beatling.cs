@@ -5,6 +5,9 @@ public class Beatling : AI
     private EmotionController emoController;
     private AIOnDeath aiOnDeath;
 
+    [Header("Scribbles")]
+    [SerializeField] GameObject[] scribbles;
+
     [Header("Melee Attack")]
     [SerializeField] int attackDelayInBeats = 2;
     [SerializeField] AIWeapon weapon;
@@ -58,8 +61,11 @@ public class Beatling : AI
         emoController.SetEmotion(EmotionType.DeadInside, false);
         weapon.gameObject.SetActive(false);
         if (aiOnDeath)
+        aiOnDeath.Dead();
+
+        for (int i = 0; i < scribbles.Length; i++)
         {
-            aiOnDeath.Dead();
+            scribbles[i].gameObject.SetActive(false);
         }
     }
 }

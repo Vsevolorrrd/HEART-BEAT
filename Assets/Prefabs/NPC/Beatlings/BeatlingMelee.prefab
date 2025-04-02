@@ -76,6 +76,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   attackRadious: 3
+  chargeSpeed: 30
 --- !u!1 &1241193456725667519
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,10 +335,10 @@ MonoBehaviour:
   Remains: {fileID: 0}
   currentHealth: 0
   currentState: 0
-  sightRange: 50
+  sightRange: 75
   attackRange: 3.5
   retreatRange: 20
-  speed: 12
+  speed: 13
   rotationSpeed: 5
   patrolPoints: []
   canRetreat: 0

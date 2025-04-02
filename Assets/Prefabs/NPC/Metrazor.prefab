@@ -140,7 +140,7 @@ MonoBehaviour:
   canRetreat: 0
   currentPatrolPoint: 0
   target: {fileID: 0}
-  shootDelayBeats: 3
+  shootDelayBeats: 5
   rechargeBeats: 10
   laserDamage: 50
   laserRange: 100

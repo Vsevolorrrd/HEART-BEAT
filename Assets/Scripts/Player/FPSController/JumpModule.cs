@@ -1,11 +1,8 @@
-using UnityEngine;
-
 public class JumpModule : RhythmInput
 {
     private FPSController controller;
     protected override void Start()
     {
-        MainMenu.OnPause += HandlePause;
         controller = GetComponent<FPSController>();
     }
     protected override void Update()

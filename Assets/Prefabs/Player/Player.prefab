@@ -376,7 +376,6 @@ MonoBehaviour:
   streakGainPerfect: 2
   streakGainGood: 1
   actionKey: 325
-  playerInput: 1
   maxPresses: 2
   damage: 50
   comboTime: 1
@@ -5393,10 +5392,10 @@ MonoBehaviour:
   streakGainPerfect: 2
   streakGainGood: 1
   actionKey: 324
-  playerInput: 1
   maxPresses: 3
   snapAnim: {fileID: 7688257873746799809}
   snapClip: {fileID: 8300000, guid: d0e2a01a1cb53164abe9c630890bdd81, type: 3}
+  snapShowDuration: 2
 --- !u!95 &7688257873746799809
 Animator:
   serializedVersion: 7
@@ -5747,6 +5746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 0}
   controller: {fileID: 0}
+  playerInput: 1
 --- !u!114 &7656141362023319138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5824,7 +5824,6 @@ MonoBehaviour:
   streakGainPerfect: 1.5
   streakGainGood: 1
   actionKey: 32
-  playerInput: 1
   maxPresses: 2
 --- !u!114 &6144729340775568560
 MonoBehaviour:
@@ -5838,11 +5837,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3052523a7330041b1bc2a078f7e71d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thresholdModifier: 0.1
+  thresholdModifier: 0.05
   streakGainPerfect: 2
   streakGainGood: 1
   actionKey: 324
-  playerInput: 1
   maxPresses: 3
   snap: {fileID: 6882742666480753056}
   playerCam: {fileID: 6651157350833734218}
@@ -5897,7 +5895,6 @@ MonoBehaviour:
   streakGainPerfect: 1
   streakGainGood: 0.5
   actionKey: 101
-  playerInput: 1
   maxPresses: 3
   dashSpeed: 25
   dashDuration: 0.2
