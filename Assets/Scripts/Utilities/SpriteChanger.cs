@@ -11,10 +11,10 @@ public class SpriteChanger : MonoBehaviour
     private void Start()
     {
         if (spriteRenderer == null)
-            spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (sprites.Length > 0)
-            StartCoroutine(ChangeSpriteLoop());
+        StartCoroutine(ChangeSpriteLoop());
     }
 
     private System.Collections.IEnumerator ChangeSpriteLoop()

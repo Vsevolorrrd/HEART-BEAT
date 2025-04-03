@@ -336,7 +336,7 @@ MonoBehaviour:
   currentHealth: 0
   currentState: 0
   sightRange: 75
-  attackRange: 3.5
+  attackRange: 7
   retreatRange: 20
   speed: 13
   rotationSpeed: 5
@@ -344,8 +344,10 @@ MonoBehaviour:
   canRetreat: 0
   currentPatrolPoint: 0
   target: {fileID: 0}
+  scribbles: []
   attackDelayInBeats: 1
   weapon: {fileID: 403866873865433601}
+  lungeAttack: 1
 --- !u!114 &807159813069771404
 MonoBehaviour:
   m_ObjectHideFlags: 0

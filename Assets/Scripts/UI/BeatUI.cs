@@ -119,8 +119,12 @@ public class BeatUI : MonoBehaviour
                 float distanceToStop = Mathf.Abs(dot.anchoredPosition.x) - stopDistance;
                 float fadeProgress = 0.7f - Mathf.Clamp01(distanceToStop / startOffset);
 
-                // If within the hit zone, set full opacity
-                if (Mathf.Abs(dot.anchoredPosition.x) <= stopDistance * 1.18f) // Slight buffer for timing
+                if (Mathf.Abs(dot.anchoredPosition.x) <= stopDistance)
+                {
+                    StartCoroutine(FadeOutAndRemoveDot(dot, cg));
+                    activeDots.RemoveAt(i);
+                }
+                else if (Mathf.Abs(dot.anchoredPosition.x) <= stopDistance * 1.18f) // Slight buffer
                 {
                     dot.GetComponent<Image>().color = Color.white;
                     cg.alpha = 1f;
@@ -130,13 +134,6 @@ public class BeatUI : MonoBehaviour
                     cg.alpha = fadeProgress;
                 }
 
-            }
-
-            // Start fade-out process
-            if (Mathf.Abs(dot.anchoredPosition.x) <= stopDistance)
-            {
-                StartCoroutine(FadeOutAndRemoveDot(dot, cg));
-                activeDots.RemoveAt(i);
             }
 
         }
@@ -262,6 +259,12 @@ public class BeatUI : MonoBehaviour
     {
         beatBarLeft.gameObject.SetActive(state);
         beatBarRight.gameObject.SetActive(state);
+
+        foreach (var (dot, _) in activeDots)
+        {
+            Destroy(dot.gameObject);
+        }
+        activeDots.Clear();
     }
     private void OnEnable()
     {

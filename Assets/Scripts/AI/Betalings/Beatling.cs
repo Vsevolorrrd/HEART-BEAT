@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Beatling : AI
@@ -8,9 +9,11 @@ public class Beatling : AI
     [Header("Scribbles")]
     [SerializeField] GameObject[] scribbles;
 
-    [Header("Melee Attack")]
+    [Header("Attack")]
     [SerializeField] int attackDelayInBeats = 2;
     [SerializeField] AIWeapon weapon;
+    [SerializeField] bool lungeAttack;
+    private float lungeDuration = 0.5f;
 
     private int beatsUntilAttack = 0;
 
@@ -34,14 +37,34 @@ public class Beatling : AI
             else
             {
                 emoController.SetEmotion(EmotionType.SuperAngry);
-                weapon.WeaponAttack();
                 beatsUntilAttack = attackDelayInBeats; // Reset delay
+                if (lungeAttack)
+                StartCoroutine(LungeAttack());
+                else
+                weapon.WeaponAttack();
             }
         }
         else
         {
             beatsUntilAttack = 0;
         }
+    }
+    private IEnumerator LungeAttack()
+    {
+        weapon.WeaponAttack();
+        agent.speed *= 3; // Increase speed during lunge
+        float elapsedTime = 0f;
+
+        while (elapsedTime < lungeDuration)
+        {
+            if (target != null)
+                agent.SetDestination(target.position); // Update position during lunge
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        agent.speed = speed;
     }
     public override void Damage(float damage)
     {

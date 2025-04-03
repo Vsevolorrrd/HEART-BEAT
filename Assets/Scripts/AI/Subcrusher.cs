@@ -3,8 +3,9 @@ using UnityEngine;
 public class Subcrusher : AI
 {
     [SerializeField] int rechargeBeats = 10;
-    [SerializeField] float attackDuration;
+    [SerializeField] float attackDuration = 1f;
     [SerializeField] GameObject attackCollider;
+    [SerializeField] ParticleSystem soundWaveEffect;
 
     private int rechargeCounter = 0;
     private bool isRecharging = false;
@@ -28,6 +29,7 @@ public class Subcrusher : AI
 
     private void attack()
     {
+        soundWaveEffect.Play();
         attackCollider.SetActive(true);
         isRecharging = true;
         Invoke("DisableColider", attackDuration);
@@ -36,5 +38,4 @@ public class Subcrusher : AI
     {
         attackCollider.SetActive(false);
     }
-
 }

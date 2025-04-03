@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using System.Collections;
 
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Actor))]
 public class AI : Damageable
 {
     public enum AIState
@@ -164,23 +165,6 @@ public class AI : Damageable
         }
         return false;
     }
-    protected void Alert()
-    {
-        if (hasAlerted) return;
-
-        /*
-        Collider[] nearbyEnemies = Physics.OverlapSphere(transform.position, alertRadius, LayerMask.GetMask("Enemy"));
-        foreach (Collider enemy in nearbyEnemies)
-        {
-            EnemyAI ai = enemy.GetComponent<EnemyAI>();
-            if (ai != null && ai != this) // Avoid notifying itself
-            {
-                ai.ChangeState(AIState.Chase);
-            }
-        }
-        hasAlerted = true; // Prevent re-alerting in the same event
-        */
-    }
     private IEnumerator RecheckTarget()
     {
         while (!isDead)
@@ -193,18 +177,6 @@ public class AI : Damageable
                 target = newTarget.transform; // Switch to a better target
             }
         }
-    }
-    public void SetSpeed(float newSpeed, bool resetSpeed = true, float time = 1f)
-    {
-        agent.speed = newSpeed;
-        if (resetSpeed)
-        {
-            Invoke("ResetSpeed", time);
-        }
-    }
-    private void ResetSpeed()
-    {
-        agent.speed = speed;
     }
     #region events
 

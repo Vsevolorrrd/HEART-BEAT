@@ -189,7 +189,7 @@ public class Shotgun : DistantWeapon
         HitEffect.Instance.playHitEffect("Good");
         BeatUI.Instance.ShowHitFeedback("Good");
 
-        currentAmmo = maxAmmo - 1;
+        currentAmmo = maxAmmo;
         isReloading = false;
         needsPump = false;
         WeaponUI.Instance.UpdateWeaponUI(maxAmmo, currentAmmo);

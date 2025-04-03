@@ -3,7 +3,6 @@ using UnityEngine;
 public class AISword : AIWeapon
 {
     [SerializeField] float attackRadious = 2f;
-    [SerializeField] float chargeSpeed = 30f;
 
     protected Animator anim;
 
@@ -20,7 +19,6 @@ public class AISword : AIWeapon
         }
 
         AISwordAttack();
-        user.SetSpeed(chargeSpeed);
     }
 
     public void AISwordAttack() // called through animation
