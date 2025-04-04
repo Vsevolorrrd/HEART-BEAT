@@ -23,7 +23,7 @@ public class Damageable : MonoBehaviour
     [Header("Debug")]
     [SerializeField] protected float currentHealth;
 
-    protected void Start()
+    protected void Awake()
     {
         currentHealth = maxHealth;
         if (damageEffect)

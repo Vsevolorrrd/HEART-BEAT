@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5407366856038707562}
   - component: {fileID: 5097937112929139061}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 6310941048125352883}
   - component: {fileID: 1428556932483573017}
   - component: {fileID: 7405518466522410071}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Metrazor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8833819740773007265}
   - component: {fileID: 1765736181752985250}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2735839562618453035}
   - component: {fileID: 5029616749346669064}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -376,7 +376,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5641622245723681737}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Metronome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,7 +409,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2242416141189515381}
   - component: {fileID: 5459094446039192429}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 7374283486760696131}
   - component: {fileID: 887451998808888032}
   - component: {fileID: 5408153014314158784}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Scribble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -655,7 +655,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5982109553823009978}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: All
   m_TagString: Untagged
   m_Icon: {fileID: 0}

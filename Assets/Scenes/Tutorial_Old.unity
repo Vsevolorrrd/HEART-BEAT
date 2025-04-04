@@ -1034,7 +1034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb62de34ac5ff9a4ea6aaaebbaf8f8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 500
+  maxHealth: 700
   isVulnerable: 1
   isDead: 0
   blink: 1
@@ -6847,6 +6847,10 @@ PrefabInstance:
     - target: {fileID: 7335025655419331833, guid: b4fff93f29854ab4997fb06b46ff0397, type: 3}
       propertyPath: m_Name
       value: BeatlingMelee
+      objectReference: {fileID: 0}
+    - target: {fileID: 7335025655419331833, guid: b4fff93f29854ab4997fb06b46ff0397, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

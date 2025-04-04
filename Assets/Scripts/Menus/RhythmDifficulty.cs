@@ -18,6 +18,10 @@ public class RhythmDifficulty : Singleton<RhythmDifficulty>
     [SerializeField] float easyGoodThreshold = 0.16f;
 
 
+    private void Start()
+    {
+        ApplyDifficulty(normalPerfectThreshold, normalGoodThreshold);
+    }
     public void SetDifficulty(int difficulty)
     {
         switch (difficulty)

@@ -65,6 +65,7 @@ public class Shotgun : DistantWeapon
         if (currentAmmo <= 0) return;
 
         currentAmmo--;
+        needsPump = true;
         evaluated = false;
         WeaponUI.Instance.UpdateWeaponUI(maxAmmo, currentAmmo);
         AudioManager.Instance.PlayPooledSound(shotSound, 0.9f);
@@ -75,8 +76,6 @@ public class Shotgun : DistantWeapon
 
             if (Physics.Raycast(cam.transform.position, GetSpreadDirection(), out hit, range, layerMaskToHit))
             {
-                Debug.Log(hit.transform.name);
-
                 Damageable target = hit.transform.GetComponent<Damageable>();
                 if (target && !target.isDead)
                 {
@@ -92,7 +91,6 @@ public class Shotgun : DistantWeapon
         }
 
         Effects();
-        needsPump = true;
         if (currentAmmo <= 0) StartReload();
     }
     protected override void OnPerfectShot(Damageable target)
@@ -116,6 +114,15 @@ public class Shotgun : DistantWeapon
             RhythmStreakManager.Instance.RegisterHit(streakGainGood);
         }
         target.Damage(damage);
+    }
+    protected override void OnMissShot(Damageable target)
+    {
+        if (!evaluated)
+        {
+            BeatUI.Instance.ShowHitFeedback("Miss");
+        }
+        BeatUI.Instance.ShowHitFeedback("Miss");
+        target.Damage(damage * 0.5f);
     }
     private void PumpShotgun()
     {

@@ -11,12 +11,13 @@ public class AI : Damageable
         Idle,
         Chase,
         Fight,
-        Retreat
+        Stunned
     }
 
     [Header("AI")]
     public AIState currentState;
 
+    public ArenaSpawn ArenaSpawn;
     protected NavMeshAgent agent;
     protected Actor actor;
     protected bool hasAlerted = false;
@@ -30,6 +31,7 @@ public class AI : Damageable
     [SerializeField] protected Transform[] patrolPoints;
     [SerializeField] protected bool canRetreat = false;
     private float checkInterval = 3f;
+    private float stunTimer = 0f;
 
 
     [Header("Debug")]
@@ -78,9 +80,8 @@ public class AI : Damageable
                 if (!IsInAttackRange()) ChangeState(AIState.Chase);
                 break;
 
-            case AIState.Retreat:
-                Retreat();
-                if (Vector3.Distance(transform.position, target.position) > retreatRange) ChangeState(AIState.Fight);
+            case AIState.Stunned:
+                Stunned();
                 break;
         }
     }
@@ -140,10 +141,19 @@ public class AI : Damageable
         // Stop the agent immediately
         agent.isStopped = true;
     }
-    protected virtual void Retreat()
+    protected virtual void Stunned()
     {
-        Vector3 direction = (transform.position - target.position).normalized;
-        agent.SetDestination(transform.position + direction * retreatRange);
+        stunTimer -= Time.deltaTime;
+        if (stunTimer <= 0f)
+        {
+            ChangeState(AIState.Idle); // or return to a previous state if you track that
+        }
+    }
+    public void Stun(float duration)
+    {
+        stunTimer = duration;
+        ChangeState(AIState.Stunned);
+        agent.isStopped = true;
     }
 
     // Utility functions
@@ -177,6 +187,12 @@ public class AI : Damageable
                 target = newTarget.transform; // Switch to a better target
             }
         }
+    }
+    public override void Die()
+    {
+        base.Die();
+        if (ArenaSpawn)
+        ArenaSpawn.Died();
     }
     #region events
 

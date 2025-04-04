@@ -129,10 +129,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3971440833680448877}
-  - component: {fileID: 3996716246747917865}
+  - component: {fileID: 6171394076805491401}
   - component: {fileID: 498307623554117353}
   m_Layer: 7
-  m_Name: Revolver
+  m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -154,7 +154,7 @@ Transform:
   - {fileID: 6183349845942258176}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3996716246747917865
+--- !u!114 &6171394076805491401
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6051778622175896961}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 684090c70133ea2459117bc567e20599, type: 3}
+  m_Script: {fileID: 11500000, guid: 513c3ad9734bf804b93e8bbb4f0eb992, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   thresholdModifier: 0
@@ -173,17 +173,17 @@ MonoBehaviour:
   maxPresses: 3
   shotSound: {fileID: 8300000, guid: b33551cd9660d554da0c47d811066115, type: 3}
   perfectShot: {fileID: 8300000, guid: a6ab0871d6721634ea43972d83787dd6, type: 3}
-  startReload: {fileID: 8300000, guid: 430d583198015d84dad67f4be86c922e, type: 3}
-  reload: {fileID: 8300000, guid: 7a3110d27ba381240b36f285d8f9a394, type: 3}
+  startReload: {fileID: 8300000, guid: 514fb9a11731e71498ffe2ecd9cc217c, type: 3}
+  reload: {fileID: 8300000, guid: a4b6e10af70ddab43a6412d3f71bb6a1, type: 3}
   perfectReload: {fileID: 8300000, guid: a6ab0871d6721634ea43972d83787dd6, type: 3}
   cam: {fileID: 0}
   range: 100
   layerMaskToHit:
     serializedVersion: 2
     m_Bits: 9
-  damage: 100
-  bulletsPerShot: 1
-  maxAmmo: 6
+  damage: 35
+  bulletsPerShot: 2
+  maxAmmo: 12
   spread: 0
   impact: {fileID: 1984570409267010047, guid: f128316c90cb2e54488f0856f7480a71, type: 3}
   projectilePrefab: {fileID: 0}
@@ -196,6 +196,7 @@ MonoBehaviour:
   shakeFrequency: 1
   reloadKey: 114
   nextShotMinTime: 0
+  shotDelayTime: 0.1
 --- !u!95 &498307623554117353
 Animator:
   serializedVersion: 7

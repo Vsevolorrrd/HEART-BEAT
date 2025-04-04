@@ -106,8 +106,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1653517011
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 1257009866, guid: 334f5dd526497bf458004c54f0eb3c6c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -170,7 +170,6 @@ MonoBehaviour:
   streakGainPerfect: 2
   streakGainGood: 1
   actionKey: 323
-  playerInput: 1
   maxPresses: 3
   shotSound: {fileID: 8300000, guid: e47a1fb1fdc5cef4585a343ff2216d00, type: 3}
   perfectShot: {fileID: 8300000, guid: a6ab0871d6721634ea43972d83787dd6, type: 3}

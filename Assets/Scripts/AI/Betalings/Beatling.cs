@@ -4,7 +4,6 @@ using UnityEngine;
 public class Beatling : AI
 {
     private EmotionController emoController;
-    private AIOnDeath aiOnDeath;
 
     [Header("Scribbles")]
     [SerializeField] GameObject[] scribbles;
@@ -21,7 +20,6 @@ public class Beatling : AI
     {
         base.Initialize();
         emoController = GetComponent<EmotionController>();
-        aiOnDeath = GetComponent<AIOnDeath>();
         weapon.SetUser(this);
     }
     protected override void OnBeat()
@@ -83,12 +81,12 @@ public class Beatling : AI
         agent.isStopped = true;
         emoController.SetEmotion(EmotionType.DeadInside, false);
         weapon.gameObject.SetActive(false);
-        if (aiOnDeath)
-        aiOnDeath.Dead();
 
         for (int i = 0; i < scribbles.Length; i++)
         {
             scribbles[i].gameObject.SetActive(false);
         }
+        if(ArenaSpawn)
+        ArenaSpawn.Died();
     }
 }

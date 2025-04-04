@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Unity.Collections.LowLevel.Unsafe;
 
 public class MainMenu : MonoBehaviour
 {
@@ -29,17 +28,6 @@ public class MainMenu : MonoBehaviour
         {
             TogglePause();
         }
-    }
-
-    public void StartArena()
-    {
-        SetPauseState(false);
-        SceneLoader.Instance.LoadScene("InfiniteArena");
-    }
-    public void StartGame()
-    {
-        SetPauseState(false);
-        SceneLoader.Instance.LoadScene("Tutorial_Old");
     }
 
     public void OpenMainMenu()
@@ -86,7 +74,6 @@ public class MainMenu : MonoBehaviour
 
         PlayerManager.Instance.SetPalyerInput(!isPaused);
     }
-
     public void QuitGame()
     {
         SetPauseState(false);
@@ -97,7 +84,6 @@ public class MainMenu : MonoBehaviour
     {
         RhythmDifficulty.Instance.SetDifficulty(difficulty);
     }
-
     public void UpdateSensitivity(float newValue)
     {
         PlayerManager.Instance.controller.MouseSensitivity = newValue;

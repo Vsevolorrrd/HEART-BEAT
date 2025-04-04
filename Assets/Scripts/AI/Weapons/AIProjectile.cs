@@ -9,7 +9,7 @@ public class AIProjectile : MonoBehaviour
     [SerializeField] protected float damage;
     [SerializeField] protected float speed;
 
-    public virtual void Initialize(Damageable owner, float damage, float speed, float duration)
+    public void Initialize(Damageable owner, float damage, float speed, float duration)
     {
         this.owner = owner;
         this.damage = damage;

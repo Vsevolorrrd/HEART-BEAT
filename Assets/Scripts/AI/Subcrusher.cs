@@ -6,6 +6,7 @@ public class Subcrusher : AI
     [SerializeField] float attackDuration = 1f;
     [SerializeField] GameObject attackCollider;
     [SerializeField] ParticleSystem soundWaveEffect;
+    [SerializeField] ParticleSystem chargeEffect;
 
     private int rechargeCounter = 0;
     private bool isRecharging = false;
@@ -17,6 +18,7 @@ public class Subcrusher : AI
             rechargeCounter++;
             if (rechargeCounter >= rechargeBeats)
             {
+                chargeEffect.Play();
                 isRecharging = false;
                 rechargeCounter = 0;
             }

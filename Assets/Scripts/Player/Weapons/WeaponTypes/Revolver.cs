@@ -46,8 +46,6 @@ public class Revolver : DistantWeapon
 
         if (Physics.Raycast(cam.transform.position, GetSpreadDirection(), out hit, range, layerMaskToHit))
         {
-            Debug.Log(hit.transform.name);
-
             Damageable target = hit.transform.GetComponent<Damageable>();
             if (target && !target.isDead)
             EvaluateTimingTarget(target);
@@ -75,8 +73,8 @@ public class Revolver : DistantWeapon
 
             anim.SetTrigger("InsertBullet");
 
-            AudioManager.Instance.PlayPooledSound(perfectReload, 0.6f);
-            AudioManager.Instance.PlayPooledSound(reload, 0.4f);
+            AudioManager.Instance.PlayPooledSound(perfectReload, 0.5f);
+            AudioManager.Instance.PlayPooledSound(reload, 0.7f);
 
             if (currentAmmo == maxAmmo)
             {
@@ -97,7 +95,7 @@ public class Revolver : DistantWeapon
 
             anim.SetTrigger("InsertBullet");
 
-            AudioManager.Instance.PlayPooledSound(reload, 0.4f);
+            AudioManager.Instance.PlayPooledSound(reload, 0.7f);
 
             if (currentAmmo == maxAmmo)
             {

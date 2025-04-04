@@ -18,8 +18,8 @@ public class RhythmStreakManager : Singleton<RhythmStreakManager>
     [SerializeField] float maxStreak = 300f;
     [SerializeField] float streakGain = 5f; // Streak gained per successful hit (whiout modifier)
     [SerializeField] float streakDecayRate = 7f; // Streak lost per second
-    [SerializeField] float streak = 0f;
     private int currentMusicLevel = 1; // Start at level 1
+    private float streak = 0f;
 
 
     private void Start()
