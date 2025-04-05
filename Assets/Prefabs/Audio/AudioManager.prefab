@@ -45,3 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundFXPrefab: {fileID: 3106248749868816533, guid: a1e7a9f63791f6e49be38904075a66f8, type: 3}
+  maxSoundsPlaying: 25
+  buttonSound: {fileID: 8300000, guid: f0fdef1fca431bf4c8678c5389f56289, type: 3}
+  hoverSound: {fileID: 8300000, guid: cde7bdef8c6b70944b1f3a72a0205aa1, type: 3}

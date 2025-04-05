@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 3962535329303858030}
   - component: {fileID: 6310941048125352883}
   - component: {fileID: 1428556932483573017}
+  - component: {fileID: 6283099277714470390}
   - component: {fileID: 7405518466522410071}
   m_Layer: 3
   m_Name: Metrazor
@@ -131,6 +132,7 @@ MonoBehaviour:
   Remains: {fileID: 0}
   currentHealth: 0
   currentState: 0
+  ArenaSpawn: {fileID: 0}
   sightRange: 50
   attackRange: 20
   retreatRange: 20
@@ -140,7 +142,7 @@ MonoBehaviour:
   canRetreat: 0
   currentPatrolPoint: 0
   target: {fileID: 0}
-  shootDelayBeats: 5
+  shootDelayBeats: 4
   rechargeBeats: 10
   laserDamage: 50
   laserRange: 100
@@ -171,6 +173,27 @@ CapsuleCollider:
   m_Height: 2.6
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &6283099277714470390
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068019752844140384}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.7
+  m_Center: {x: 0, y: 2.24, z: 0}
 --- !u!195 &7405518466522410071
 NavMeshAgent:
   m_ObjectHideFlags: 0

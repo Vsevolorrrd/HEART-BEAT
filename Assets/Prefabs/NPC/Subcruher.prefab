@@ -15092,6 +15092,7 @@ MonoBehaviour:
   Remains: {fileID: 0}
   currentHealth: 0
   currentState: 0
+  ArenaSpawn: {fileID: 0}
   sightRange: 75
   attackRange: 11
   retreatRange: 20
@@ -15101,6 +15102,7 @@ MonoBehaviour:
   canRetreat: 0
   currentPatrolPoint: 0
   target: {fileID: 0}
+  attackDelayBeats: 3
   rechargeBeats: 10
   attackDuration: 1.1
   attackCollider: {fileID: 9179227773065061062}
@@ -15126,7 +15128,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 2.8, y: 2.6, z: 1.4}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!195 &2158032600648634280
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15197,7 +15199,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 20
   scaleDuration: 1
+  timeBeforeDamaging: 0.37
   targetScale: {x: 1, y: 1, z: 1}
+  canDamage: 0
 --- !u!65 &4532651674082331170
 BoxCollider:
   m_ObjectHideFlags: 0

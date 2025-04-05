@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using Unity.Burst.CompilerServices;
 
 public class BeatUI : MonoBehaviour
 {
@@ -119,19 +120,24 @@ public class BeatUI : MonoBehaviour
                 float distanceToStop = Mathf.Abs(dot.anchoredPosition.x) - stopDistance;
                 float fadeProgress = 0.7f - Mathf.Clamp01(distanceToStop / startOffset);
 
+                bool isHint = dot.GetComponent<HintDot>() != null;
+
                 if (Mathf.Abs(dot.anchoredPosition.x) <= stopDistance)
                 {
                     StartCoroutine(FadeOutAndRemoveDot(dot, cg));
                     activeDots.RemoveAt(i);
                 }
-                else if (Mathf.Abs(dot.anchoredPosition.x) <= stopDistance * 1.18f) // Slight buffer
+                else if (!isHint)
                 {
-                    dot.GetComponent<Image>().color = Color.white;
-                    cg.alpha = 1f;
-                }
-                else
-                {
-                    cg.alpha = fadeProgress;
+                    if (Mathf.Abs(dot.anchoredPosition.x) <= stopDistance * 1.18f) // Slight buffer
+                    {
+                        dot.GetComponent<Image>().color = Color.white;
+                        cg.alpha = 1f;
+                    }
+                    else
+                    {
+                        cg.alpha = fadeProgress;
+                    }
                 }
 
             }
@@ -141,7 +147,7 @@ public class BeatUI : MonoBehaviour
 
     private void OnBeat()
     {
-        if (activeDots.Count < 14)
+        if (activeDots.Count < 16)
         {
             SpawnBeatDot(-startOffset); // Left dot
             SpawnBeatDot(startOffset); // Right dot
@@ -185,6 +191,29 @@ public class BeatUI : MonoBehaviour
         cg.alpha = 0f;
 
         Destroy(dot.gameObject);
+    }
+    public void AddHintDots(Color hintColor)
+    {
+        if (activeDots.Count < 16)
+        {
+            SpawnHintDot(-startOffset, hintColor); // Left dot
+            SpawnHintDot(startOffset, hintColor); // Right dot
+        }
+    }
+    private void SpawnHintDot(float startX, Color hintColor)
+    {
+        RectTransform newDot = Instantiate(beatDotPrefab, beatBarContainer);
+        newDot.anchoredPosition = new Vector2(startX, 0);
+
+        CanvasGroup cg = newDot.gameObject.AddComponent<CanvasGroup>();
+        cg.alpha = 1f;
+
+        Image img = newDot.GetComponent<Image>();
+        img.color = hintColor;
+
+        // Mark this dot as a hint
+        newDot.gameObject.AddComponent<HintDot>();
+        activeDots.Add((newDot, cg));
     }
     public void ShowHitFeedback(string result)
     {

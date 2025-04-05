@@ -16,6 +16,7 @@ public class Metrazer : AI
     private int rechargeCounter = 0;
     private bool isRecharging = false;
     private bool right;
+    private bool hint = true;
 
     protected override void Initialize()
     {
@@ -37,6 +38,12 @@ public class Metrazer : AI
 
         if (currentState == AIState.Fight)
         {
+            if (hint)
+            {
+                BeatUI.Instance.AddHintDots(Color.red);
+                hint = false;
+            }
+
             beatCounter++;
             RotateMetronome();
 
@@ -46,6 +53,7 @@ public class Metrazer : AI
                 ResetMetronome();
                 beatCounter = 0;
                 isRecharging = true;  // Start recharge after shooting
+                hint = true;
             }
         }
     }

@@ -14,7 +14,7 @@ public class WeaponUI : Singleton<WeaponUI>
     public void UpdateWeaponUI(int max, int current)
     {
        maxAmmoText.text = max.ToString();
-       currentAmmoText.text = current.ToString() + " /";
+       currentAmmoText.text = current.ToString();
     }
     public void ShowReloadUI()
     {

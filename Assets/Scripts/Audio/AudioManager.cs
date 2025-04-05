@@ -10,6 +10,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] int maxSoundsPlaying = 25;
     private int currentSoundsPlaying = 0;
 
+    [Header("UI Sound")]
+    public AudioClip buttonSound;
+    public AudioClip hoverSound;
+
     private static AudioManager _instance;
 
     #region Singleton
