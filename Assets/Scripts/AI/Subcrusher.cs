@@ -17,6 +17,8 @@ public class Subcrusher : AI
 
     protected override void OnBeat()
     {
+        if (isDead) return;
+
         if (isRecharging)
         {
             rechargeCounter++;
@@ -65,5 +67,14 @@ public class Subcrusher : AI
     {
         attackCollider.SetActive(false);
         EnemyManager.Instance.FinishedHeavyAttack();
+    }
+    public override void Die()
+    {
+        if (attack) // if enemy dies while attacking, he needs to free space for other enemies
+        {
+            EnemyManager.Instance.FinishedHeavyAttack();
+            BeatUI.Instance.RemoveHintDots();
+        }
+        base.Die();
     }
 }

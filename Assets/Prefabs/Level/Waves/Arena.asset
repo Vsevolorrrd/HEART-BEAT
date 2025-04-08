@@ -53,18 +53,18 @@ MonoBehaviour:
     - enemy: {fileID: 7335025655419331833, guid: 273776011fa06c14f822918fd62427d3, type: 3}
       howManyToSpawn: 2
     - enemy: {fileID: 7335025655419331833, guid: f1e28d994d45674468481170abe87861, type: 3}
-      howManyToSpawn: 6
+      howManyToSpawn: 0
     - enemy: {fileID: 9042448515965118703, guid: 39eb1210e0e0c16449dbb8dad828bca8, type: 3}
       howManyToSpawn: 0
     - enemy: {fileID: 3068019752844140384, guid: 9a3f880c76f9bdd45a56eaf3a3510548, type: 3}
-      howManyToSpawn: 0
+      howManyToSpawn: 1
   - Enemies:
     - enemy: {fileID: 7335025655419331833, guid: 273776011fa06c14f822918fd62427d3, type: 3}
-      howManyToSpawn: 10
+      howManyToSpawn: 6
     - enemy: {fileID: 7335025655419331833, guid: f1e28d994d45674468481170abe87861, type: 3}
       howManyToSpawn: 1
     - enemy: {fileID: 9042448515965118703, guid: 39eb1210e0e0c16449dbb8dad828bca8, type: 3}
-      howManyToSpawn: 3
+      howManyToSpawn: 2
     - enemy: {fileID: 3068019752844140384, guid: 9a3f880c76f9bdd45a56eaf3a3510548, type: 3}
-      howManyToSpawn: 0
+      howManyToSpawn: 1
   minimumEnemies: 2

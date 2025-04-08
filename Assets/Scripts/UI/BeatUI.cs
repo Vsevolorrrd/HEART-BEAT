@@ -33,9 +33,11 @@ public class BeatUI : Singleton<BeatUI>
     new List<(RectTransform, CanvasGroup)>();
     private Coroutine scaleCoroutine;
     private Coroutine fadeCoroutine;
+
     private bool beatBar = true;
     private bool isActive = false;
     private bool paused = false;
+    private bool removeHints = false;
 
     private Vector3 originalScale;
     public void StartBeatUI()
@@ -83,6 +85,15 @@ public class BeatUI : Singleton<BeatUI>
 
                 bool isHint = dot.GetComponent<HintDot>() != null;
 
+                // remove hints
+                if (isHint && removeHints)
+                {
+                    activeDots.RemoveAt(i);
+                    Destroy(dot.gameObject);
+                    removeHints = false;
+                }
+
+                // main logic
                 if (Mathf.Abs(dot.anchoredPosition.x) <= stopDistance)
                 {
                     StartCoroutine(FadeOutAndRemoveDot(dot, cg));
@@ -156,6 +167,9 @@ public class BeatUI : Singleton<BeatUI>
 
         Destroy(dot.gameObject);
     }
+
+    #region HintDots
+
     public void AddHintDots(Color hintColor)
     {
         if (activeDots.Count < 20)
@@ -163,6 +177,10 @@ public class BeatUI : Singleton<BeatUI>
             SpawnHintDot(-startOffset, hintColor); // Left dot
             SpawnHintDot(startOffset, hintColor); // Right dot
         }
+    }
+    public void RemoveHintDots()
+    {
+        removeHints = true;
     }
     private void SpawnHintDot(float startX, Color hintColor)
     {
@@ -179,6 +197,11 @@ public class BeatUI : Singleton<BeatUI>
         newDot.gameObject.AddComponent<HintDot>();
         activeDots.Add((newDot, cg));
     }
+
+    #endregion
+
+    #region HitFeedback
+
     public void ShowHitFeedback(string result)
     {
         // Stop any ongoing animation
@@ -242,6 +265,11 @@ public class BeatUI : Singleton<BeatUI>
         hitFeedbackText.gameObject.SetActive(false);
         hitFeedbackText.text = ""; // Clear text after fading
     }
+
+    #endregion
+
+    #region Utilities
+
     public void ToggleBeatBar()
     {
         beatBar = !beatBar;
@@ -274,4 +302,7 @@ public class BeatUI : Singleton<BeatUI>
         PauseMenu.OnPause -= Pause;
         BEAT_Manager.BEAT -= OnBeat;
     }
+
+    #endregion
+
 }

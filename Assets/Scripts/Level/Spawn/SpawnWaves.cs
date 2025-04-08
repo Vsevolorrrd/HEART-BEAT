@@ -5,6 +5,7 @@ public class SpawnWaves : ScriptableObject
 {
     public Wave[] waves;
     public int minimumEnemies = 3;
+    public bool KillheavyEnemiesToProgress = true;
 }
 
 [System.Serializable]

@@ -6,12 +6,14 @@ public class ArenaSpawn : MonoBehaviour
     [SerializeField] ParticleSystem spawnEffect;
     [SerializeField] Transform[] spawPoints;
     [SerializeField] bool infinite = false;
-    private int enemyCount;
+    [SerializeField] int enemyCount;
+    [SerializeField] int heavyEnemyCount;
     private int currentWave;
 
     private void Start()
     {
         currentWave = 0;
+        heavyEnemyCount = 0;
         Spawn();
     }
     private void Spawn()
@@ -35,6 +37,7 @@ public class ArenaSpawn : MonoBehaviour
         }
 
         enemyCount += GetTotalEnemiesInWave();
+        heavyEnemyCount += GetTotalHeavyEnemiesInWave();
         currentWave++;
     }
     private int GetTotalEnemiesInWave()
@@ -46,9 +49,30 @@ public class ArenaSpawn : MonoBehaviour
         }
         return totalEnemies;
     }
+    private int GetTotalHeavyEnemiesInWave()
+    {
+        int totalHeavyEnemies = 0;
+        for (int i = 2; i < spawnWaves.waves[currentWave].Enemies.Length; i++)
+        {
+            totalHeavyEnemies += spawnWaves.waves[currentWave].Enemies[i].howManyToSpawn;
+        }
+        return totalHeavyEnemies;
+    }
     public void Died()
     {
         enemyCount--;
+
+        if (spawnWaves.KillheavyEnemiesToProgress)
+        {
+            if ((enemyCount <= spawnWaves.minimumEnemies && heavyEnemyCount <= 0) || enemyCount <= 0)
+            {
+                if (currentWave < spawnWaves.waves.Length || infinite)
+                Spawn();
+            }
+
+            return;
+        }
+
         if (enemyCount <= spawnWaves.minimumEnemies || enemyCount <= 0)
         {
             if (currentWave < spawnWaves.waves.Length || infinite)

@@ -33,6 +33,8 @@ public class Metrazer : AI
     }
     protected override void OnBeat()
     {
+        if (isDead) return;
+
         if (isRecharging)
         {
             rechargeCounter++;
@@ -64,6 +66,7 @@ public class Metrazer : AI
                 ResetMetronome();
                 beatCounter = 0;
                 isRecharging = true;  // Start recharge after shooting
+                attack = false;
                 hint = true;
             }
 
@@ -91,7 +94,6 @@ public class Metrazer : AI
     private void Shoot()
     {
         if (target == null) return;
-        attack = false;
 
         Instantiate(laserPrefab, attackPoint.position, Quaternion.Euler(attackPoint.rotation.eulerAngles));
 
@@ -117,5 +119,14 @@ public class Metrazer : AI
         {
             targetHit.Damage(laserDamage);
         }
+    }
+    public override void Die()
+    {
+        if (attack) // if enemy dies while attacking, he needs to free space for other enemies
+        {
+            EnemyManager.Instance.FinishedHeavyAttack();
+            BeatUI.Instance.RemoveHintDots();
+        }
+        base.Die();
     }
 }

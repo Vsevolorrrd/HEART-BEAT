@@ -15082,7 +15082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9df99c3295d58914db17f556de83b407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 650
+  maxHealth: 500
   isVulnerable: 1
   isDead: 0
   blink: 1
@@ -15201,8 +15201,6 @@ MonoBehaviour:
   scaleDuration: 1
   timeBeforeDamaging: 0.6
   targetScale: {x: 1, y: 1, z: 1}
-  canDamage: 0
-  callOnce: 1
 --- !u!65 &4532651674082331170
 BoxCollider:
   m_ObjectHideFlags: 0
