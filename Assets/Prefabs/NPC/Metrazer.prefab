@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 6283099277714470390}
   - component: {fileID: 7405518466522410071}
   m_Layer: 3
-  m_Name: Metrazor
+  m_Name: Metrazer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

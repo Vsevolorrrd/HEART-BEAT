@@ -52,7 +52,7 @@ public class DashModule : RhythmInput
     private IEnumerator Dash(float modifier)
     {
         isDashing = true;
-        playerHealth.SetVulnerability(false);
+        playerHealth.SetVulnerability(false, dashDuration + 0.2f); // slight edge for the player
         AudioManager.Instance.PlaySound(dashModuleClip, 0.7f);
         if (dashEffect) dashEffect.Play();
 
@@ -69,7 +69,6 @@ public class DashModule : RhythmInput
 
         controller.ChangeSpeed(-dashSpeed * modifier);
         isDashing = false;
-        playerHealth.SetVulnerability(true);
     }
 
     #region events

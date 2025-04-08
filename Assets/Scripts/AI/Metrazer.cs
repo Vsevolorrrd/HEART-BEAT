@@ -17,6 +17,7 @@ public class Metrazer : AI
     private bool isRecharging = false;
     private bool right;
     private bool hint = true;
+    private bool attack = false;
 
     protected override void Initialize()
     {
@@ -43,7 +44,10 @@ public class Metrazer : AI
             return;
         }
 
-        if (currentState == AIState.Fight)
+        if (currentState == AIState.Fight && EnemyManager.Instance.RequestHeavyAttack())
+        attack = true;
+
+        if (attack)
         {
             if (hint)
             {
@@ -62,6 +66,7 @@ public class Metrazer : AI
                 isRecharging = true;  // Start recharge after shooting
                 hint = true;
             }
+
         }
     }
     private void RotateMetronome()
@@ -86,8 +91,9 @@ public class Metrazer : AI
     private void Shoot()
     {
         if (target == null) return;
+        attack = false;
 
-        Instantiate(laserPrefab, attackPoint.position, Quaternion.Euler(attackPoint.position));
+        Instantiate(laserPrefab, attackPoint.position, Quaternion.Euler(attackPoint.rotation.eulerAngles));
 
         Vector3 shootDirection = (target.position - attackPoint.position).normalized;
         RaycastHit hit;
@@ -101,7 +107,8 @@ public class Metrazer : AI
                 StartCoroutine(DelayedDamage(targetHit, 0.05f));
             }
         }
-        
+
+        EnemyManager.Instance.FinishedHeavyAttack();
     }
     private IEnumerator DelayedDamage(Damageable targetHit, float delay)
     {

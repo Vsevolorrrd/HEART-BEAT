@@ -135,8 +135,14 @@ public class PlayerHealth : Damageable
         // Disable player object
         gameObject.SetActive(false);
     }
-    public void SetVulnerability(bool vulnerable)
+    public void SetVulnerability(bool vulnerable, float resetTime = 0)
     {
         isVulnerable = vulnerable;
+        if (resetTime > 0)
+        Invoke("ResetVulnerability", resetTime);
+    }
+    private void ResetVulnerability()
+    {
+        isVulnerable = true;
     }
 }

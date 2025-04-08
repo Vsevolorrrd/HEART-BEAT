@@ -2,7 +2,7 @@ public class ThingsToDo // Thanks Anna for the idea!
 {
     /*
      * 1 Create regular difficulty settings
-     * 2
+     * 2 Dodge ball with metrazers
      * 3
      * 4
      * 5

@@ -28,7 +28,7 @@ public class Subcrusher : AI
             return;
         }
 
-        if (currentState == AIState.Fight)
+        if (currentState == AIState.Fight && EnemyManager.Instance.RequestHeavyAttack())
         attack = true;
 
         if (attack)
@@ -64,5 +64,6 @@ public class Subcrusher : AI
     private void DisableColider()
     {
         attackCollider.SetActive(false);
+        EnemyManager.Instance.FinishedHeavyAttack();
     }
 }
