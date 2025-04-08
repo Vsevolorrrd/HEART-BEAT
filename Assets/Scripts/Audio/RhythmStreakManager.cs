@@ -17,7 +17,6 @@ public class RhythmStreakManager : Singleton<RhythmStreakManager>
     [Header("Variables")]
     [SerializeField] float maxStreak = 300f;
     [SerializeField] float streakGain = 5f; // Streak gained per successful hit (whiout modifier)
-    [SerializeField] float streakDecayRate = 7f; // Streak lost per second
     private int currentMusicLevel = 1; // Start at level 1
     private float streak = 0f;
 
@@ -39,7 +38,7 @@ public class RhythmStreakManager : Singleton<RhythmStreakManager>
 
     private void Update()
     {
-        streak -= streakDecayRate * Time.deltaTime;
+        streak -= RhythmDifficulty.streakDecayRate * Time.deltaTime;
         streak = Mathf.Clamp(streak, 0, maxStreak);
         UpdateUI();
         UpdateMusicLevel();

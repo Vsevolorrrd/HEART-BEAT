@@ -75,7 +75,7 @@ public class BEAT_Manager : MonoBehaviour
         nextBeatInSeconds = secPerBeat;
         musicStarted = true;
 
-        MainMenu.OnPause += HandlePause;
+        PauseMenu.OnPause += HandlePause;
     }
     private void StartAudio()
     {
@@ -149,7 +149,7 @@ public class BEAT_Manager : MonoBehaviour
 
     private void OnDestroy()
     {
-        MainMenu.OnPause -= HandlePause;
+        PauseMenu.OnPause -= HandlePause;
     }
 
     private void HandlePause(bool pause)

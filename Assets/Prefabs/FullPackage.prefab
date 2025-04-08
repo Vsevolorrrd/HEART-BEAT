@@ -3778,6 +3778,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4840003636116990193, guid: c5427f9461745b64cbab921ee4c709df, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4088781131260800276}
+    - target: {fileID: 4840003636116990193, guid: c5427f9461745b64cbab921ee4c709df, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetRhythmDifficulty
+      objectReference: {fileID: 0}
+    - target: {fileID: 4840003636116990193, guid: c5427f9461745b64cbab921ee4c709df, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4922070380708071839, guid: c5427f9461745b64cbab921ee4c709df, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4088781131260800276}
+    - target: {fileID: 4922070380708071839, guid: c5427f9461745b64cbab921ee4c709df, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetRhythmDifficulty
+      objectReference: {fileID: 0}
+    - target: {fileID: 4922070380708071839, guid: c5427f9461745b64cbab921ee4c709df, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697908847992366444, guid: c5427f9461745b64cbab921ee4c709df, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4088781131260800276}
+    - target: {fileID: 6697908847992366444, guid: c5427f9461745b64cbab921ee4c709df, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetRhythmDifficulty
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697908847992366444, guid: c5427f9461745b64cbab921ee4c709df, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7120340702917431915, guid: c5427f9461745b64cbab921ee4c709df, type: 3}
       propertyPath: m_Name
       value: PauseMenuUI
@@ -3795,6 +3831,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5427f9461745b64cbab921ee4c709df, type: 3}
+--- !u!114 &4088781131260800276 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5538859004240632950, guid: c5427f9461745b64cbab921ee4c709df, type: 3}
+  m_PrefabInstance: {fileID: 8386756034221453666}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d99eae9e7e4820f47b1bfa878e6ca27e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5468960979958362229 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4577373715980992791, guid: c5427f9461745b64cbab921ee4c709df, type: 3}

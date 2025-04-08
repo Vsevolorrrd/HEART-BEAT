@@ -1,12 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class PauseMenu : MonoBehaviour
 {
+    [SerializeField] GameObject pauseMenuUI; // Assign pause menu UI in the Inspector
     [SerializeField] GameObject mainBlock;
     [SerializeField] GameObject settings;
     [SerializeField] Slider sensitivitySlider;
+    private bool isPaused = false;
+    public bool canOpenPauseMenu = false;
+    public bool lockCursor = false;
+
+    public static Action<bool> OnPause;
 
     private void Start()
     {
@@ -15,24 +22,61 @@ public class PauseMenu : MonoBehaviour
             sensitivitySlider.value = PlayerManager.Instance.controller.MouseSensitivity;
         }
     }
-    public void StartArena()
+    void Update()
     {
-        SceneLoader.Instance.LoadScene("InfiniteArena");
+        if (canOpenPauseMenu && Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
     }
-    public void StartGame()
-    {
-        SceneLoader.Instance.LoadScene("Tutorial_Old");
-    }
+
     public void OpenMainMenu()
     {
+        Time.timeScale = 1f;
+        isPaused = false;
         SceneLoader.Instance.LoadScene("MainMenu");
     }
+
     public void Restart()
     {
         SceneLoader.Instance.LoadScene(SceneManager.GetActiveScene().name);
+        SetPauseState(false);
+    }
+
+    public void TogglePause()
+    {
+        SetPauseState(!isPaused);
+    }
+
+    private void SetPauseState(bool state)
+    {
+        isPaused = state;
+        if (pauseMenuUI)
+            pauseMenuUI.SetActive(isPaused);
+
+        if (isPaused)
+        {
+            mainBlock.gameObject.SetActive(true);
+            settings.gameObject.SetActive(false);
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            if (lockCursor)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+        }
+
+        PlayerManager.Instance.SetPalyerInput(!isPaused);
     }
     public void QuitGame()
     {
+        SetPauseState(false);
         Debug.Log("Quitting Game...");
         Application.Quit();
     }

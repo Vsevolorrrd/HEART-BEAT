@@ -15199,9 +15199,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 20
   scaleDuration: 1
-  timeBeforeDamaging: 0.37
+  timeBeforeDamaging: 0.6
   targetScale: {x: 1, y: 1, z: 1}
   canDamage: 0
+  callOnce: 1
 --- !u!65 &4532651674082331170
 BoxCollider:
   m_ObjectHideFlags: 0

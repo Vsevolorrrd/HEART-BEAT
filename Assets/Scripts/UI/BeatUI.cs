@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using Unity.Burst.CompilerServices;
 
 public class BeatUI : MonoBehaviour
 {
@@ -110,9 +109,9 @@ public class BeatUI : MonoBehaviour
 
             // Move left dots to the right, right dots to the left
             if (dot.anchoredPosition.x < 0)
-            dot.anchoredPosition += Vector2.right * (dotSpeed * Time.deltaTime);
+            dot.anchoredPosition += Vector2.right * (dotSpeed * Time.unscaledDeltaTime);
             else
-            dot.anchoredPosition += Vector2.left * (dotSpeed * Time.deltaTime);
+            dot.anchoredPosition += Vector2.left * (dotSpeed * Time.unscaledDeltaTime);
 
             if (beatBar)
             {
@@ -147,7 +146,7 @@ public class BeatUI : MonoBehaviour
 
     private void OnBeat()
     {
-        if (activeDots.Count < 16)
+        if (activeDots.Count < 20)
         {
             SpawnBeatDot(-startOffset); // Left dot
             SpawnBeatDot(startOffset); // Right dot
@@ -156,6 +155,7 @@ public class BeatUI : MonoBehaviour
     private void SpawnBeatDot(float startX)
     {
         RectTransform newDot = Instantiate(beatDotPrefab, beatBarContainer);
+        newDot.SetAsFirstSibling();
         newDot.anchoredPosition = new Vector2(startX, 0);
 
         // Add a CanvasGroup for alpha control
@@ -194,7 +194,7 @@ public class BeatUI : MonoBehaviour
     }
     public void AddHintDots(Color hintColor)
     {
-        if (activeDots.Count < 16)
+        if (activeDots.Count < 20)
         {
             SpawnHintDot(-startOffset, hintColor); // Left dot
             SpawnHintDot(startOffset, hintColor); // Right dot

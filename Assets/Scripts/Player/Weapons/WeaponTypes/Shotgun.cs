@@ -22,10 +22,14 @@ public class Shotgun : DistantWeapon
             }
         }
 
-        if (isReloading) return;
-
         if (Input.GetKeyDown(actionKey))
         {
+            if (isReloading)
+            {
+                WeaponUI.Instance.HideReloadUI();
+                anim.SetBool("StartReload", false);
+                isReloading = false;
+            }
             if (currentAmmo > 0)
             HandleKeyPress();
             else

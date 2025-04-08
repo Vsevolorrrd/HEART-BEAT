@@ -145,6 +145,7 @@ public class LevelInteraction : RhythmInput
     {
         if (isTeleporting) return;
         AudioManager.Instance.PlaySound(echoJumpClip, 0.8f);
+        PlayerManager.Instance.playerHealth.SetVulnerability(false);
         StartCoroutine(SmoothTeleport(targetPosition));
     }
     private IEnumerator SmoothTeleport(Vector3 targetPosition)
@@ -174,5 +175,6 @@ public class LevelInteraction : RhythmInput
         controller.ResetVilocity(0);
         transform.position = targetPosition;
         isTeleporting = false;
+        PlayerManager.Instance.playerHealth.SetVulnerability(true);
     }
 }

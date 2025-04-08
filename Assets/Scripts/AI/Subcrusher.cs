@@ -13,6 +13,7 @@ public class Subcrusher : AI
     private int rechargeCounter = 0;
     private bool isRecharging = false;
     private bool hint = true;
+    private bool attack = false;
 
     protected override void OnBeat()
     {
@@ -28,6 +29,9 @@ public class Subcrusher : AI
         }
 
         if (currentState == AIState.Fight)
+        attack = true;
+
+        if (attack)
         {
             if (hint)
             {
@@ -42,18 +46,19 @@ public class Subcrusher : AI
 
             if (beatCounter >= attackDelayBeats)
             {
-                attack();
+                Attack();
                 beatCounter = 0;
-                hint = true;
             }
         }
     }
 
-    private void attack()
+    private void Attack()
     {
         soundWaveEffect.Play();
         attackCollider.SetActive(true);
         isRecharging = true;
+        hint = true;
+        attack = false;
         Invoke("DisableColider", attackDuration);
     }
     private void DisableColider()

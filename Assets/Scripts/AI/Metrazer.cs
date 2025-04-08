@@ -8,9 +8,9 @@ public class Metrazer : AI
     [SerializeField] float laserDamage = 50f;
     [SerializeField] float laserRange = 100f;
     [SerializeField] float rotationAngle = 45f;
-    [SerializeField] LineRenderer laserBeam;
     [SerializeField] Transform attackPoint;
     [SerializeField] Transform metronome;
+    [SerializeField] GameObject laserPrefab;
 
     private int beatCounter = 0;
     private int rechargeCounter = 0;
@@ -21,7 +21,14 @@ public class Metrazer : AI
     protected override void Initialize()
     {
         base.Initialize();
-        laserBeam.enabled = false;
+    }
+    protected override void ChangeState(AIState newState)
+    {
+        base.ChangeState(newState);
+        if (newState != AIState.Fight)
+        {
+            beatCounter = 0;
+        }
     }
     protected override void OnBeat()
     {
@@ -80,10 +87,10 @@ public class Metrazer : AI
     {
         if (target == null) return;
 
+        Instantiate(laserPrefab, attackPoint.position, Quaternion.Euler(attackPoint.position));
+
         Vector3 shootDirection = (target.position - attackPoint.position).normalized;
         RaycastHit hit;
-
-        Vector3 hitPosition;
 
         if (Physics.Raycast(attackPoint.position, shootDirection, out hit, laserRange))
         {
@@ -95,8 +102,6 @@ public class Metrazer : AI
             }
         }
         
-        hitPosition = attackPoint.position + shootDirection * laserRange;
-        StartCoroutine(ShowLaserEffect(hitPosition));
     }
     private IEnumerator DelayedDamage(Damageable targetHit, float delay)
     {
@@ -105,17 +110,5 @@ public class Metrazer : AI
         {
             targetHit.Damage(laserDamage);
         }
-    }
-
-    private IEnumerator ShowLaserEffect(Vector3 hitPoint)
-    {
-        laserBeam.enabled = true;
-
-        laserBeam.SetPosition(0, attackPoint.position);
-        laserBeam.SetPosition(1, hitPoint);
-
-        yield return new WaitForSeconds(0.5f); // Laser visible for a short time
-
-        laserBeam.enabled = false;
     }
 }
