@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class BeatUI : MonoBehaviour
+public class BeatUI : Singleton<BeatUI>
 {
     [SerializeField] TextMeshProUGUI hitFeedbackText;
     [SerializeField] Color perfectColor = Color.red;
@@ -35,47 +35,9 @@ public class BeatUI : MonoBehaviour
     private Coroutine fadeCoroutine;
     private bool beatBar = true;
     private bool isActive = false;
+    private bool paused = false;
 
     private Vector3 originalScale;
-    private static BeatUI _instance;
-
-    #region Singleton
-    public static BeatUI Instance
-    {
-        get
-        {
-            // Check if the instance is already created
-            if (_instance == null)
-            {
-                // Try to find an existing BeatUI in the scene
-                _instance = FindAnyObjectByType<BeatUI>();
-
-                // If no BeatUI exists, create a new one
-                if (_instance == null)
-                {
-                    GameObject singletonObject = new GameObject("BeatUI");
-                    _instance = singletonObject.AddComponent<BeatUI>();
-                }
-            }
-
-            return _instance;
-        }
-    }
-
-    void Awake()
-    {
-        // If the instance is already set, destroy this duplicate object
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            _instance = this;  // Assign this object as the instance
-        }
-    }
-    #endregion
-
     public void StartBeatUI()
     {
         if (isActive) return;
@@ -101,7 +63,7 @@ public class BeatUI : MonoBehaviour
     }
     void Update()
     {
-        if (!isActive) return;
+        if (!isActive || paused) return;
 
         for (int i = activeDots.Count - 1; i >= 0; i--)
         {
@@ -146,6 +108,8 @@ public class BeatUI : MonoBehaviour
 
     private void OnBeat()
     {
+        if (paused) return;
+
         if (activeDots.Count < 20)
         {
             SpawnBeatDot(-startOffset); // Left dot
@@ -295,13 +259,19 @@ public class BeatUI : MonoBehaviour
         }
         activeDots.Clear();
     }
-    private void OnEnable()
+    private void Pause(bool pause)
     {
+        paused = pause;
+    }
+    private void Start()
+    {
+        PauseMenu.OnPause += Pause;
         BEAT_Manager.BEAT += OnBeat;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
+        PauseMenu.OnPause -= Pause;
         BEAT_Manager.BEAT -= OnBeat;
     }
 }

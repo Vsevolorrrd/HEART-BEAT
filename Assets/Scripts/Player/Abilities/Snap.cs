@@ -9,6 +9,7 @@ public class Snap : RhythmInput
     private bool snapped = false;
     private float timer;
 
+    public bool IsBlocked() {  return isBlocked; }
     protected override void Update()
     {
         if (snapped)
@@ -26,6 +27,8 @@ public class Snap : RhythmInput
     }
     public void PerfomSnap()
     {
+        HandleKeyPress();
+
         snapped = true;
         timer = 0f;
 
@@ -36,7 +39,5 @@ public class Snap : RhythmInput
         }
 
         AudioManager.Instance.PlayPooledSound(snapClip, 0.8f);
-
-        HandleKeyPress();
     }
 }

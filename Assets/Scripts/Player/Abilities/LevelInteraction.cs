@@ -63,7 +63,7 @@ public class LevelInteraction : RhythmInput
     }
     protected override void Update()
     {
-        if (!PlayerManager.Instance.playerInput || isBlocked || isTeleporting)
+        if (!PlayerManager.Instance.playerInput || snap.IsBlocked() || isTeleporting)
         return;
 
         if (Input.GetKeyDown(actionKey))

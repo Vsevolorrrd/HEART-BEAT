@@ -72,6 +72,7 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
+        OnPause?.Invoke(isPaused);
         PlayerManager.Instance.SetPalyerInput(!isPaused);
     }
     public void QuitGame()
