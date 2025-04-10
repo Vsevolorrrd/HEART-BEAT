@@ -38,6 +38,7 @@ public class BeatUI : Singleton<BeatUI>
     private bool isActive = false;
     private bool paused = false;
     private bool removeHints = false;
+    private int hintDotsToRemove = 2;
 
     private Vector3 originalScale;
     public void StartBeatUI()
@@ -90,6 +91,8 @@ public class BeatUI : Singleton<BeatUI>
                 {
                     activeDots.RemoveAt(i);
                     Destroy(dot.gameObject);
+                    hintDotsToRemove--;
+                    if (0 >= hintDotsToRemove)
                     removeHints = false;
                 }
 
@@ -121,11 +124,8 @@ public class BeatUI : Singleton<BeatUI>
     {
         if (paused) return;
 
-        if (activeDots.Count < 20)
-        {
-            SpawnBeatDot(-startOffset); // Left dot
-            SpawnBeatDot(startOffset); // Right dot
-        }
+        SpawnBeatDot(-startOffset); // Left dot
+        SpawnBeatDot(startOffset); // Right dot
     }
     private void SpawnBeatDot(float startX)
     {
@@ -172,14 +172,12 @@ public class BeatUI : Singleton<BeatUI>
 
     public void AddHintDots(Color hintColor)
     {
-        if (activeDots.Count < 20)
-        {
-            SpawnHintDot(-startOffset, hintColor); // Left dot
-            SpawnHintDot(startOffset, hintColor); // Right dot
-        }
+        SpawnHintDot(-startOffset, hintColor); // Left dot
+        SpawnHintDot(startOffset, hintColor); // Right dot
     }
     public void RemoveHintDots()
     {
+        hintDotsToRemove = 2;
         removeHints = true;
     }
     private void SpawnHintDot(float startX, Color hintColor)

@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3486212474721311746
 Transform:
   m_ObjectHideFlags: 0
@@ -5394,7 +5394,7 @@ MonoBehaviour:
   streakGainGood: 1
   actionKey: 324
   maxPresses: 3
-  snapAnim: {fileID: 7688257873746799809}
+  snapAnim: {fileID: 0}
   snapClip: {fileID: 8300000, guid: d0e2a01a1cb53164abe9c630890bdd81, type: 3}
   snapShowDuration: 2
 --- !u!95 &7688257873746799809
@@ -5534,7 +5534,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8751168953408949593}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

@@ -3,11 +3,11 @@ public class ThingsToDo // Thanks Anna for the idea!
     /*
      * 1 Create regular difficulty settings
      * 2 Dodge ball with metrazers
-     * 3
-     * 4
-     * 5
-     * 6
-     * 7
+     * 3 make particles for enemy taking damage
+     * 4 make particles for enemy spawning
+     * 5 create diffrent hint dots, for each tyoe of heavy attack
+     * 6 pause the game when openning weapon menu
+     * 7 draw sprites for small objects
      * 8
      * 9
      * 10

@@ -15197,7 +15197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa2d3297867b79498c578fbf3207de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 25
   scaleDuration: 1
   timeBeforeDamaging: 0.6
   targetScale: {x: 1, y: 1, z: 1}

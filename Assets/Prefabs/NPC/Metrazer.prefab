@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20df107c2190b0844a7b73ab29fbb9d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 650
+  maxHealth: 500
   isVulnerable: 1
   isDead: 0
   blink: 1
@@ -145,7 +145,7 @@ MonoBehaviour:
   target: {fileID: 0}
   shootDelayBeats: 4
   rechargeBeats: 10
-  laserDamage: 50
+  laserDamage: 40
   laserRange: 100
   rotationAngle: 45
   attackPoint: {fileID: 5407366856038707562}

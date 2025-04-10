@@ -155,7 +155,7 @@ public class Shotgun : DistantWeapon
         BeatUI.Instance.ShowHitFeedback("Perfect");
 
         needsPump = false;
-        anim.SetTrigger("PumpShotgun");
+        anim.SetTrigger("Pump");
     }
 
     private void OnGoodPump()
@@ -166,7 +166,7 @@ public class Shotgun : DistantWeapon
         BeatUI.Instance.ShowHitFeedback("Good");
 
         needsPump = false;
-        anim.SetTrigger("PumpShotgun");
+        anim.SetTrigger("Pump");
     }
 
     private void OnMissPump()

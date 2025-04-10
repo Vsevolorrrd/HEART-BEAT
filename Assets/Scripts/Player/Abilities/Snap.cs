@@ -18,6 +18,7 @@ public class Snap : RhythmInput
 
             if (timer >= snapShowDuration)
             {
+                if (snapAnim)
                 snapAnim.SetBool("Show", false);
                 snapped = false;
                 timer = 0f;

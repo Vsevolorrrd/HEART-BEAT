@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2831655298279504020}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3, y: -0.17, z: 0.6}
+  m_LocalPosition: {x: 0.28, y: -0.1, z: 0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -109,12 +109,12 @@ SpriteRenderer:
   m_SortingLayerID: -1653517011
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1257009866, guid: 334f5dd526497bf458004c54f0eb3c6c, type: 3}
+  m_Sprite: {fileID: 1379327490, guid: 52fc41eb23b5f2349951c67927dbfd5d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.6023529, y: 0.6023529}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -130,7 +130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3971440833680448877}
   - component: {fileID: 6284009404807878152}
-  - component: {fileID: 498307623554117353}
+  - component: {fileID: 8478480691368584546}
   m_Layer: 7
   m_Name: Shotgun
   m_TagString: Untagged
@@ -192,12 +192,12 @@ MonoBehaviour:
   gunpoint: {fileID: 0}
   cameraShake: 1
   shakeDuration: 0.2
-  shakeAmplitude: 1
-  shakeFrequency: 1
+  shakeAmplitude: 3
+  shakeFrequency: 1.5
   reloadKey: 114
   nextShotMinTime: 0
   pumpSound: {fileID: 8300000, guid: d2ec9b612393bd949ba012c8ec4e7ad8, type: 3}
---- !u!95 &498307623554117353
+--- !u!95 &8478480691368584546
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
@@ -207,7 +207,7 @@ Animator:
   m_GameObject: {fileID: 6051778622175896961}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3b834928806a8ef46a605d47634dafb6, type: 2}
+  m_Controller: {fileID: 9100000, guid: cce31e4f4c7acd5439fead9ca7ebbf3e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

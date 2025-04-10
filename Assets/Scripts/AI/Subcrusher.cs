@@ -60,11 +60,11 @@ public class Subcrusher : AI
         attackCollider.SetActive(true);
         isRecharging = true;
         hint = true;
-        attack = false;
         Invoke("DisableColider", attackDuration);
     }
     private void DisableColider()
     {
+        attack = false;
         attackCollider.SetActive(false);
         EnemyManager.Instance.FinishedHeavyAttack();
     }

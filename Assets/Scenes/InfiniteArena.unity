@@ -1356,7 +1356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1155336136
 Transform:
   m_ObjectHideFlags: 0
@@ -1404,6 +1404,8 @@ MonoBehaviour:
   - {fileID: 679504803}
   - {fileID: 1682882544}
   infinite: 0
+  enemyCount: 0
+  heavyEnemyCount: 0
 --- !u!1 &1193383472
 GameObject:
   m_ObjectHideFlags: 0
@@ -2062,6 +2064,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1723381850}
+  - component: {fileID: 1723381851}
   m_Layer: 0
   m_Name: Arena
   m_TagString: Untagged
@@ -2090,6 +2093,21 @@ Transform:
   - {fileID: 204269533}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1723381851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723381849}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4b073994a74a2345ab368daf5f66272, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exposurePerBeat: 0.05
+  startExposure: 1
+  resetDuration: 0.2
 --- !u!1 &1736292665
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,5 +50,4 @@ public class ScaleToBeat : RespondToBeat
 
         transform.localScale = target;
     }
-
 }
