@@ -19,9 +19,6 @@ public class PlayerHealth : Damageable
 
     [SerializeField] bool showOverlay;
 
-    [Header("Death screen")]
-    [SerializeField] GameObject DeathScreen;
-
     protected override void Initialize()
     {
         base.Initialize();
@@ -56,9 +53,6 @@ public class PlayerHealth : Damageable
         }
 
         #endregion
-
-        if (DeathScreen != null)
-        DeathScreen.SetActive(false);
 
         showOverlay = false;
     }
@@ -126,14 +120,8 @@ public class PlayerHealth : Damageable
         if (isDead) return; // Prevent multiple death calls
 
         isDead = true;
-
-        Cursor.lockState = CursorLockMode.None;
-
-        if (DeathScreen)
-        DeathScreen.SetActive(true);
-
-        // Disable player object
-        gameObject.SetActive(false);
+        if (DeathScreen.Instance)
+        DeathScreen.Instance.Death();
     }
     public void SetVulnerability(bool vulnerable, float resetTime = 0)
     {

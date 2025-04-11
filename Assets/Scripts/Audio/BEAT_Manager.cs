@@ -44,7 +44,6 @@ public class BEAT_Manager : MonoBehaviour
             return;
         }
         _instance = this;
-        DontDestroyOnLoad(gameObject);
     }
     #endregion
 
@@ -143,6 +142,22 @@ public class BEAT_Manager : MonoBehaviour
         // Ensure exact final values
         musicLevel_2.volume = targetVolume2;
         musicLevel_3.volume = targetVolume3;
+    }
+    public void SetNewMusic(Music newSong)
+    {
+        if (musicStarted)
+        {
+            StopMusic();
+        }
+
+        song = newSong;
+    }
+    public void StopMusic()
+    {
+        mainMusicLevel.Stop();
+        musicLevel_2.Stop();
+        musicLevel_3.Stop();
+        musicStarted = false;
     }
 
     #region events

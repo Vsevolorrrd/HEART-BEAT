@@ -229,13 +229,13 @@ public class FPSController : MonoBehaviour
         switch (level)
         {
             case 3:
-                jumpPower = startJumpPower * 1.3f;
-                speed = startSpeed * 1.5f;
+                jumpPower = startJumpPower * 1.2f;
+                speed = startSpeed * 1.3f;
                 acceleration = startAcceleration * 1.5f;
                 break;
             case 2:
                 jumpPower = startJumpPower * 1.1f;
-                speed = startSpeed * 1.2f;
+                speed = startSpeed * 1.1f;
                 acceleration = startAcceleration * 1.2f;
                 break;
             case 1:

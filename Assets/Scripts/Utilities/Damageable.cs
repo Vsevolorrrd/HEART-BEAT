@@ -15,10 +15,10 @@ public class Damageable : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] ParticleSystem damageEffect;
     [SerializeField] GameObject Remains;
+    private bool damageEffects = true;
 
     [Header("Audio")]
-    //[SerializeField] AudioClip damageSound;
-    //[SerializeField] AudioClip deathSound;
+    [SerializeField] protected AudioClip[] damageSounds;
 
     [Header("Debug")]
     [SerializeField] protected float currentHealth;
@@ -60,8 +60,17 @@ public class Damageable : MonoBehaviour
             return;
         }
 
-        if (damageEffect)
-        damageEffect.Play();
+        if (damageEffects)
+        {
+            damageEffects = false;
+
+            if (damageEffect)
+            damageEffect.Play();
+            if (damageSounds.Length > 0)
+            AudioManager.Instance.PlayRandomSound(damageSounds, 0.6f, transform);
+
+            Invoke("DamageEfectsCooldown", 0.1f);
+        }
 
         if (blink && !isBlinking)
         {
@@ -71,12 +80,15 @@ public class Damageable : MonoBehaviour
             StartCoroutine(Blink2D());
         }
     }
+    private void DamageEfectsCooldown() { damageEffects = true; }
 
     public virtual void Die()
     {
         isDead = true;
         if (Remains)
         Instantiate(Remains, gameObject.transform.position, Quaternion.identity);
+        if (damageSounds.Length > 0)
+        AudioManager.Instance.PlayRandomSound(damageSounds, 0.6f, transform);
         gameObject.SetActive(false);
     }
 

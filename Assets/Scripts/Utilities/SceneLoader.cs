@@ -6,6 +6,7 @@ public class SceneLoader : MonoBehaviour
 {
     [SerializeField] Animator anim;
     [SerializeField] GameObject obj;
+    [SerializeField] Music heartOfTheGod;
 
     private static SceneLoader _instance;
 
@@ -43,7 +44,6 @@ public class SceneLoader : MonoBehaviour
         {
             _instance = this;  // Assign this object as the instance
         }
-        DontDestroyOnLoad(gameObject);
     }
     #endregion
 
@@ -52,14 +52,15 @@ public class SceneLoader : MonoBehaviour
         if (obj)
         obj.SetActive(true);
 
+        BEAT_Manager.Instance.StartTheMusic();
         if (SceneManager.GetActiveScene().name != "MainMenu")
-        {
-            BEAT_Manager.Instance.StartTheMusic();
-            BeatUI.Instance.StartBeatUI();
-        }
+        BeatUI.Instance.StartBeatUI();
     }
     public void LoadScene(string name)
     {
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+        BEAT_Manager.Instance.SetNewMusic(heartOfTheGod);
+
         StartCoroutine(TransitionToScene(name));
     }
     IEnumerator TransitionToScene(string name)

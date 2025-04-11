@@ -580,6 +580,9 @@ MonoBehaviour:
   spriteRenderer: {fileID: 3035697610383981534}
   damageEffect: {fileID: 0}
   Remains: {fileID: 0}
+  damageSounds:
+  - {fileID: 8300000, guid: f9e83b39b7d765845af1e36ffa656ae7, type: 3}
+  - {fileID: 8300000, guid: fe9ef3e9ae9200947b067b2624942e38, type: 3}
   currentHealth: 0
   currentState: 0
   ArenaSpawn: {fileID: 0}

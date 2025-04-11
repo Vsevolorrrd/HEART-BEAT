@@ -3,15 +3,15 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 
-public class PauseMenu : MonoBehaviour
+public class PauseMenu : Singleton<PauseMenu>
 {
     [SerializeField] GameObject pauseMenuUI; // Assign pause menu UI in the Inspector
     [SerializeField] GameObject mainBlock;
     [SerializeField] GameObject settings;
     [SerializeField] Slider sensitivitySlider;
+    [SerializeField] bool canOpenPauseMenu = true;
+    [SerializeField] bool lockCursor = true;
     private bool isPaused = false;
-    public bool canOpenPauseMenu = false;
-    public bool lockCursor = false;
 
     public static Action<bool> OnPause;
 
@@ -52,7 +52,7 @@ public class PauseMenu : MonoBehaviour
     {
         isPaused = state;
         if (pauseMenuUI)
-            pauseMenuUI.SetActive(isPaused);
+        pauseMenuUI.SetActive(isPaused);
 
         if (isPaused)
         {
@@ -80,6 +80,19 @@ public class PauseMenu : MonoBehaviour
         SetPauseState(false);
         Debug.Log("Quitting Game...");
         Application.Quit();
+    }
+    public void Stop(bool stop)
+    {
+        isPaused = stop;
+        canOpenPauseMenu = !isPaused;
+
+        if (isPaused)
+        Time.timeScale = 0f;
+        else
+        Time.timeScale = 1f;
+
+        OnPause?.Invoke(isPaused);
+        PlayerManager.Instance.SetPalyerInput(!isPaused);
     }
     public void SetRhythmDifficulty(int difficulty)
     {

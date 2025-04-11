@@ -12,7 +12,7 @@ public class UISound : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Play(AudioManager.Instance.hoverSound, 0.3f);
+        Play(AudioManager.Instance.hoverSound, 0.1f);
     }
 
     private void Play(AudioClip clip, float volume = 1f)

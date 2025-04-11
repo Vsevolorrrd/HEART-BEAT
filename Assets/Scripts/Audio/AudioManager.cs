@@ -33,9 +33,6 @@ public class AudioManager : MonoBehaviour
                     GameObject singletonObject = new GameObject("AudioManager");
                     _instance = singletonObject.AddComponent<AudioManager>();
                 }
-
-                // Make the AudioManager persist across scenes (optional)
-                DontDestroyOnLoad(_instance.gameObject);
             }
 
             return _instance;

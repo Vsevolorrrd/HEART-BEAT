@@ -986,6 +986,10 @@ PrefabInstance:
       propertyPath: snapShowDuration
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5092348850572482929, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
+      propertyPath: field of view
+      value: 60.000004
+      objectReference: {fileID: 0}
     - target: {fileID: 5365586743058227876, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: m_Name
       value: FullPackage
@@ -1041,7 +1045,7 @@ PrefabInstance:
     - target: {fileID: 6620452834879827126, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: song
       value: 
-      objectReference: {fileID: 11400000, guid: bc1cc3f1a0896e343b0bba52371a0bb7, type: 2}
+      objectReference: {fileID: 11400000, guid: 0d05b5ce3f9df2441b57ab0dca988ed4, type: 2}
     - target: {fileID: 7595564572771050147, guid: 06428eed19190c74b9ce388552ba5e0b, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1393,7 +1397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnWaves: {fileID: 11400000, guid: e270200abb33f254f8813b8a76f7a672, type: 2}
-  spawnEffect: {fileID: 0}
+  spawnEffect: {fileID: 3446391716355458512, guid: 54641dac79913044eb61b0a2d9fcc9aa, type: 3}
   spawPoints:
   - {fileID: 668152254}
   - {fileID: 1444252791}
@@ -2447,7 +2451,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.8392157, g: 1, b: 0.98669523, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
