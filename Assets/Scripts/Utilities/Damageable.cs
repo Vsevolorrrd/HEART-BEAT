@@ -14,7 +14,11 @@ public class Damageable : MonoBehaviour
     [SerializeField] MeshRenderer meshRenderer;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] ParticleSystem damageEffect;
-    [SerializeField] GameObject Remains;
+
+    [Header("Visual Effects")]
+    [SerializeField] GameObject remains;
+    [SerializeField] LayerMask floorLayer;
+    [SerializeField] float raycastDownDistance = 5f;
     private bool damageEffects = true;
 
     [Header("Audio")]
@@ -32,10 +36,7 @@ public class Damageable : MonoBehaviour
         Initialize();
     }
 
-    protected virtual void Initialize()
-    {
-
-    }
+    protected virtual void Initialize() { }
 
     public virtual void Heal(float amount)
     {
@@ -85,11 +86,32 @@ public class Damageable : MonoBehaviour
     public virtual void Die()
     {
         isDead = true;
-        if (Remains)
-        Instantiate(Remains, gameObject.transform.position, Quaternion.identity);
+        SpawnRemains();
         if (damageSounds.Length > 0)
         AudioManager.Instance.PlayRandomSound(damageSounds, 0.6f, transform);
-        gameObject.SetActive(false);
+        Destroy(gameObject);
+    }
+    protected void SpawnRemains()
+    {
+        if (remains == null) return;
+
+        Vector3 rayOrigin = transform.position;
+        RaycastHit hit;
+
+        Vector3 spawnPos;
+
+        if (Physics.Raycast(rayOrigin, Vector3.down, out hit, raycastDownDistance, floorLayer))
+        {
+            spawnPos = hit.point + Vector3.up * 0.1f;
+        }
+        else
+        {
+            // Default to current position if nothing is hit
+            spawnPos = transform.position + Vector3.down * 1f;
+        }
+
+        Quaternion spawnRot = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+        Instantiate(remains, spawnPos, spawnRot);
     }
 
     #region Blink

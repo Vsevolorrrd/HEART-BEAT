@@ -29,7 +29,7 @@ public class ArenaSpawn : MonoBehaviour
                 enemy.GetComponent<Actor>().faction = Actor.Faction.BadGuys;
                 AI ai = enemy.GetComponent<AI>();
                 ai.ArenaSpawn = this;
-                ai.Stun(1f);// Stuns the enemy to give player time to react
+                ai.Stun(2f);// Stuns the enemy to give player time to react
 
                 if (spawnEffect)
                 Instantiate(spawnEffect, enemy.transform.position, Quaternion.identity);

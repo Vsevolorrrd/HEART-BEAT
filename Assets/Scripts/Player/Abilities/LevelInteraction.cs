@@ -16,11 +16,10 @@ public class LevelInteraction : RhythmInput
 
     [Header("Interaction Settings")]
     [SerializeField] Camera playerCam;
-    [SerializeField] float maxRayDistance = 30f;
+    [SerializeField] float maxRayDistance = 35f;
     [SerializeField] LayerMask interactionLayer;
 
     [Header("Echo Jump")]
-    [SerializeField] float maxTeleportDistance = 30f;
     [SerializeField] float minTeleportDistance = 3f;
     [SerializeField] float teleportDuration = 0.2f;
     [SerializeField] AnimationCurve teleportCurve;
@@ -73,7 +72,7 @@ public class LevelInteraction : RhythmInput
     }
     private void FindEchoPoint()
     {
-        var hits = Physics.RaycastAll(playerCam.transform.position, playerCam.transform.forward, maxTeleportDistance, interactionLayer);
+        var hits = Physics.RaycastAll(playerCam.transform.position, playerCam.transform.forward, maxRayDistance, interactionLayer);
         float closestDistance = float.MaxValue;
         EchoPoint bestEchoPoint = null;
 

@@ -190,8 +190,8 @@ public class Shotgun : DistantWeapon
         WeaponUI.Instance.UpdateWeaponUI(maxAmmo, currentAmmo);
         WeaponUI.Instance.HideReloadUI();
 
+        anim.SetTrigger("EndReload");
         anim.SetBool("StartReload", false);
-        anim.SetTrigger("FinishReload");
     }
     protected override void GoodReload()
     {
@@ -206,8 +206,8 @@ public class Shotgun : DistantWeapon
         WeaponUI.Instance.UpdateWeaponUI(maxAmmo, currentAmmo);
         WeaponUI.Instance.HideReloadUI();
 
+        anim.SetTrigger("EndReload");
         anim.SetBool("StartReload", false);
-        anim.SetTrigger("FinishReload");
     }
 
     #endregion

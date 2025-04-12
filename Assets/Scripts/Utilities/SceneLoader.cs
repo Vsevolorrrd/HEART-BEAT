@@ -58,10 +58,11 @@ public class SceneLoader : MonoBehaviour
     }
     public void LoadScene(string name)
     {
-        if (SceneManager.GetActiveScene().name == "Tutorial")
-        BEAT_Manager.Instance.SetNewMusic(heartOfTheGod);
-
         StartCoroutine(TransitionToScene(name));
+    }
+    public void RestartScene()
+    {
+        StartCoroutine(TransitionToScene(SceneManager.GetActiveScene().name));
     }
     IEnumerator TransitionToScene(string name)
     {
@@ -77,6 +78,13 @@ public class SceneLoader : MonoBehaviour
         anim.SetTrigger("End");
 
         yield return new WaitForSeconds(1);
+
+        PlayerManager.Instance.gameObject.transform.position = 
+        CheckpointManager.Instance.GetLastCheckpoint();
+
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+        BEAT_Manager.Instance.SetNewMusic(heartOfTheGod);
+
         BEAT_Manager.Instance.StartTheMusic();
         BeatUI.Instance.StartBeatUI();
     }

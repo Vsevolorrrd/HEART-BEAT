@@ -980,6 +980,8 @@ MonoBehaviour:
   baseSpeed: 200
   startOffset: 400
   stopDistance: 100
+  hintDotJump: {fileID: 8877199832882939527, guid: 2852e9cbebf7cb64f95a9bca4ea648a2, type: 3}
+  hintDotLaser: {fileID: 8877199832882939527, guid: 7776b156aa50bd746a51a26806513979, type: 3}
 --- !u!223 &2447719653919274078
 Canvas:
   m_ObjectHideFlags: 0

@@ -5767,7 +5767,12 @@ MonoBehaviour:
   meshRenderer: {fileID: 0}
   spriteRenderer: {fileID: 0}
   damageEffect: {fileID: 0}
-  Remains: {fileID: 0}
+  remains: {fileID: 0}
+  floorLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  raycastDownDistance: 5
+  damageSounds: []
   currentHealth: 0
   damageCooldown: 0.1
   useHealthBar: 1
@@ -5777,7 +5782,6 @@ MonoBehaviour:
   DamageOverlayDuration: 0.6
   DamageOverlayCG: {fileID: 0}
   showOverlay: 0
-  DeathScreen: {fileID: 0}
 --- !u!114 &5010705142048132632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5845,11 +5849,10 @@ MonoBehaviour:
   maxPresses: 3
   snap: {fileID: 6882742666480753056}
   playerCam: {fileID: 6651157350833734218}
-  maxRayDistance: 30
+  maxRayDistance: 35
   interactionLayer:
     serializedVersion: 2
     m_Bits: 64
-  maxTeleportDistance: 30
   minTeleportDistance: 3
   teleportDuration: 0.2
   teleportCurve:

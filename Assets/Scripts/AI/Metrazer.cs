@@ -53,7 +53,7 @@ public class Metrazer : AI
         {
             if (hint)
             {
-                BeatUI.Instance.AddHintDots(Color.red);
+                BeatUI.Instance.AddHintDots("hintDotLaser");
                 hint = false;
             }
 

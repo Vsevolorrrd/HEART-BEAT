@@ -55,8 +55,8 @@ public class Beatling : AI
 
         while (elapsedTime < lungeDuration)
         {
-            if (target != null)
-                agent.SetDestination(target.position); // Update position during lunge
+            if (target != null || !isDead)
+            agent.SetDestination(target.position); // Update position during lunge
 
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -78,15 +78,19 @@ public class Beatling : AI
     public override void Die()
     {
         isDead = true;
-        agent.isStopped = true;
-        emoController.SetEmotion(EmotionType.DeadInside, false);
         weapon.gameObject.SetActive(false);
 
         for (int i = 0; i < scribbles.Length; i++)
         {
             scribbles[i].gameObject.SetActive(false);
         }
-        if(ArenaSpawn)
+        if (damageSounds.Length > 0)
+        AudioManager.Instance.PlayRandomSound(damageSounds, 0.6f, transform);
+
+        if (ArenaSpawn)
         ArenaSpawn.Died();
+        SpawnRemains();
+
+        Destroy(gameObject);
     }
 }

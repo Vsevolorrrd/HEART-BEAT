@@ -22,12 +22,15 @@ public class BeatUI : Singleton<BeatUI>
     [SerializeField] RectTransform beatBarRight;
     [SerializeField] Transform beatBarContainer; // Parent for beat dots
     [SerializeField] Color beatDotColor = Color.red;
-
-
     [SerializeField] float baseSpeed = 200f;
     [SerializeField] float startOffset = 400f;
     [SerializeField] float stopDistance = 100f;
     private float dotSpeed;
+
+    [Header("HintDots")]
+    [SerializeField] RectTransform hintDotJump;
+    [SerializeField] RectTransform hintDotLaser;
+
 
     private List<(RectTransform dot, CanvasGroup cg)> activeDots = 
     new List<(RectTransform, CanvasGroup)>();
@@ -170,29 +173,40 @@ public class BeatUI : Singleton<BeatUI>
 
     #region HintDots
 
-    public void AddHintDots(Color hintColor)
+    public void AddHintDots(string name)
     {
-        SpawnHintDot(-startOffset, hintColor); // Left dot
-        SpawnHintDot(startOffset, hintColor); // Right dot
+        if (paused || !beatBar) return;
+
+        SpawnHintDot(-startOffset, name); // Left dot
+        SpawnHintDot(startOffset, name); // Right dot
     }
     public void RemoveHintDots()
     {
         hintDotsToRemove = 2;
         removeHints = true;
     }
-    private void SpawnHintDot(float startX, Color hintColor)
+    private void SpawnHintDot(float startX, string name)
     {
-        RectTransform newDot = Instantiate(beatDotPrefab, beatBarContainer);
+        RectTransform newDot = null;
+
+        switch (name)
+        {
+            case "hintDotJump":
+                newDot = Instantiate(hintDotJump, beatBarContainer);
+                break;
+            case "hintDotLaser":
+                newDot = Instantiate(hintDotLaser, beatBarContainer);
+                break;
+            default:
+                Debug.LogWarning($"Unknown hint dot name: {name}");
+                return;
+        }
+
         newDot.anchoredPosition = new Vector2(startX, 0);
 
         CanvasGroup cg = newDot.gameObject.AddComponent<CanvasGroup>();
         cg.alpha = 1f;
 
-        Image img = newDot.GetComponent<Image>();
-        img.color = hintColor;
-
-        // Mark this dot as a hint
-        newDot.gameObject.AddComponent<HintDot>();
         activeDots.Add((newDot, cg));
     }
 

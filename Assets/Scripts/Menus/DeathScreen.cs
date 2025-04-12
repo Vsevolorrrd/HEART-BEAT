@@ -16,6 +16,6 @@ public class DeathScreen : Singleton<DeathScreen>
     }
     public void Retry()
     {
-
+        SceneLoader.Instance.RestartScene();
     }
 }

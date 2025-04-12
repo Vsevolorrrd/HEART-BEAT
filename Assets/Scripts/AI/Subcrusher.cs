@@ -37,7 +37,7 @@ public class Subcrusher : AI
         {
             if (hint)
             {
-                BeatUI.Instance.AddHintDots(Color.red);
+                BeatUI.Instance.AddHintDots("hintDotJump");
                 hint = false;
             }
             chargeEffect.Play();

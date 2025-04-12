@@ -4,51 +4,43 @@ using UnityEngine;
 public class Press : RespondToBeat
 {
     [Header("Press Settings")]
-    public float scaleMultiplier = 1.2f;
-    public float scaleSpeed = 0.1f;
-    private bool dangerous = false;
+    [SerializeField] Transform press;
+    [SerializeField] Vector3 pressOffset = new Vector3(0, -2, 0);
+    [SerializeField] float retractTime = 0.2f;
 
-    private Vector3 originalScale;
-    private Vector3 targetScale;
+    private Vector3 pressRetractedPos;
+    private Vector3 pressExtendedPos;
+
+    private Coroutine retractionCoroutine;
 
     private void Start()
     {
-        originalScale = transform.localScale;
-        targetScale = new Vector3(originalScale.x, originalScale.y * scaleMultiplier, originalScale.z);
+        pressRetractedPos = press.localPosition;
+        pressExtendedPos = pressRetractedPos + pressOffset;
     }
 
     protected override void OnBeat()
     {
-        transform.localScale = targetScale;
-        dangerous = true;
-        StartCoroutine(ScaleObject(originalScale, scaleSpeed));
+        press.localPosition = pressExtendedPos;
+
+        if (retractionCoroutine != null)
+        StopCoroutine(retractionCoroutine);
+
+        retractionCoroutine = StartCoroutine(Retract());
     }
 
-    private IEnumerator ScaleObject(Vector3 target, float duration)
+    private IEnumerator Retract()
     {
-        Vector3 startScale = transform.localScale;
+        Vector3 startPos = press.localPosition;
         float elapsedTime = 0f;
 
-        while (elapsedTime < duration)
+        while (elapsedTime < retractTime)
         {
-            transform.localScale = Vector3.Lerp(startScale, target, elapsedTime / duration);
+            press.localPosition = Vector3.Lerp(startPos, pressRetractedPos, elapsedTime / retractTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        dangerous = false;
 
-        transform.localScale = target;
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (dangerous)
-        {
-            FPSController player = other.GetComponent<FPSController>();
-            if (player)
-            {
-                player.transform.position = new Vector3(0, 2, 0);
-                player.ResetVilocity(0);
-            }
-        }
+        press.localPosition = pressRetractedPos;
     }
 }
