@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: OceanMaterial
+  m_Name: SewersWater
   m_Shader: {fileID: -6465566751694194690, guid: 439043c5a28e9aa49bdd43505c565479, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -119,26 +119,26 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RippleDensity: 200
-    - _RippleSlimness: 10
-    - _RippleSpeed: 2
+    - _RippleDensity: 7
+    - _RippleSlimness: 5
+    - _RippleSpeed: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _Transperency: 1
-    - _WaveHeight: 0.6
-    - _WaveScale: 10
-    - _WaveSpeed: 0.008
+    - _Transperency: 0.7
+    - _WaveHeight: 0.2
+    - _WaveScale: 2
+    - _WaveSpeed: 0.7
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.24177286, g: 0.5774146, b: 0.87169814, a: 1}
+    - _BaseColor: {r: 0.19433957, g: 0.6084457, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RippleColor: {r: 0, g: 4.419625, b: 7.129739, a: 1}
+    - _RippleColor: {r: 0.2830186, g: 1.465144, b: 2, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4caf3b3db8642042a35611f1e4a4ccd, type: 3}
+  m_Name: Level1_Arena1
+  m_EditorClassIdentifier: 
+  waves:
+  - Enemies:
+    - enemy: {fileID: 7335025655419331833, guid: 273776011fa06c14f822918fd62427d3, type: 3}
+      howManyToSpawn: 1
+  - Enemies:
+    - enemy: {fileID: 7335025655419331833, guid: 273776011fa06c14f822918fd62427d3, type: 3}
+      howManyToSpawn: 2
+  - Enemies:
+    - enemy: {fileID: 7335025655419331833, guid: 273776011fa06c14f822918fd62427d3, type: 3}
+      howManyToSpawn: 2
+  minimumEnemies: 0
+  KillheavyEnemiesToProgress: 0

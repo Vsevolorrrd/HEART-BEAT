@@ -1,11 +1,20 @@
 using UnityEngine;
 
-public class Peakwave : RespondToBeat, IInteractable
+public class PickUpTrigger : RespondToBeat
 {
-    [SerializeField] float streakGain = 50f;
+    [SerializeField] ArenaSpawn ArenaSpawn;
+    [SerializeField] GameObject shotgun;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Interact();
+        }
+    }
     public void Interact()
     {
-        RhythmStreakManager.Instance.RegisterHit(streakGain);
+        shotgun.SetActive(true);
+        ArenaSpawn.StartArena();
         Destroy(gameObject);
     }
     protected override void OnBeat()
