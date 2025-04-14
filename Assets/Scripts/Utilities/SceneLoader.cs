@@ -78,6 +78,8 @@ public class SceneLoader : MonoBehaviour
 
         // Wait until the new scene is fully loaded
         yield return null;
+
+        if (SceneManager.GetActiveScene().name != "MainMenu")
         yield return new WaitUntil(() => PlayerManager.Instance != null && BeatUI.Instance != null);
 
         if (anim)
@@ -85,13 +87,17 @@ public class SceneLoader : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        PlayerManager.Instance.gameObject.transform.position =
-        CheckpointManager.Instance.GetLastCheckpoint();
-
         if (SceneManager.GetActiveScene().name == "Tutorial")
         BEAT_Manager.Instance.SetNewMusic(heartOfTheGod);
 
         BEAT_Manager.Instance.StartTheMusic();
-        BeatUI.Instance.StartBeatUI();
+
+        if (SceneManager.GetActiveScene().name != "MainMenu")
+        {
+            PlayerManager.Instance.gameObject.transform.position =
+            CheckpointManager.Instance.GetLastCheckpoint();
+
+            BeatUI.Instance.StartBeatUI();
+        }
     }
 }

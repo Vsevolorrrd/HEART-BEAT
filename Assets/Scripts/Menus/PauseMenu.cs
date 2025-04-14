@@ -32,8 +32,7 @@ public class PauseMenu : Singleton<PauseMenu>
 
     public void OpenMainMenu()
     {
-        Time.timeScale = 1f;
-        isPaused = false;
+        SetPauseState(false);
         SceneLoader.Instance.LoadScene("MainMenu");
     }
 

@@ -5849,7 +5849,7 @@ MonoBehaviour:
   maxPresses: 3
   snap: {fileID: 6882742666480753056}
   playerCam: {fileID: 6651157350833734218}
-  maxRayDistance: 35
+  maxRayDistance: 40
   interactionLayer:
     serializedVersion: 2
     m_Bits: 64
