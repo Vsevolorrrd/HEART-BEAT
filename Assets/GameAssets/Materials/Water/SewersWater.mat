@@ -128,17 +128,17 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _Transperency: 0.7
+    - _Transperency: 0.5
     - _WaveHeight: 0.2
     - _WaveScale: 2
-    - _WaveSpeed: 0.7
+    - _WaveSpeed: 0.779
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.19433957, g: 0.6084457, b: 1, a: 1}
+    - _BaseColor: {r: 0.64740855, g: 0.9169811, b: 0.4135066, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RippleColor: {r: 0.2830186, g: 1.465144, b: 2, a: 1}
+    - _RippleColor: {r: 0.71017206, g: 2.4283314, b: 1.0167073, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

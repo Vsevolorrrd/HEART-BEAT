@@ -39,8 +39,8 @@ public class PauseMenu : Singleton<PauseMenu>
 
     public void Restart()
     {
-        SceneLoader.Instance.LoadScene(SceneManager.GetActiveScene().name);
         SetPauseState(false);
+        SceneLoader.Instance.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void TogglePause()

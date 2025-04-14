@@ -15,23 +15,29 @@ MonoBehaviour:
   waves:
   - Enemies:
     - enemy: {fileID: 7335025655419331833, guid: 273776011fa06c14f822918fd62427d3, type: 3}
-      howManyToSpawn: 3
+      howManyToSpawn: 2
     - enemy: {fileID: 7335025655419331833, guid: f1e28d994d45674468481170abe87861, type: 3}
       howManyToSpawn: 1
   - Enemies:
     - enemy: {fileID: 7335025655419331833, guid: 273776011fa06c14f822918fd62427d3, type: 3}
       howManyToSpawn: 0
     - enemy: {fileID: 7335025655419331833, guid: f1e28d994d45674468481170abe87861, type: 3}
-      howManyToSpawn: 3
+      howManyToSpawn: 1
+  - Enemies:
+    - enemy: {fileID: 7335025655419331833, guid: 273776011fa06c14f822918fd62427d3, type: 3}
+      howManyToSpawn: 2
+    - enemy: {fileID: 7335025655419331833, guid: f1e28d994d45674468481170abe87861, type: 3}
+      howManyToSpawn: 1
   - Enemies:
     - enemy: {fileID: 7335025655419331833, guid: 273776011fa06c14f822918fd62427d3, type: 3}
       howManyToSpawn: 3
     - enemy: {fileID: 7335025655419331833, guid: f1e28d994d45674468481170abe87861, type: 3}
+      howManyToSpawn: 1
+  - Enemies:
+    - enemy: {fileID: 7335025655419331833, guid: 273776011fa06c14f822918fd62427d3, type: 3}
       howManyToSpawn: 2
   - Enemies:
     - enemy: {fileID: 7335025655419331833, guid: 273776011fa06c14f822918fd62427d3, type: 3}
-      howManyToSpawn: 4
-    - enemy: {fileID: 7335025655419331833, guid: f1e28d994d45674468481170abe87861, type: 3}
       howManyToSpawn: 2
   minimumEnemies: 1
   KillheavyEnemiesToProgress: 0

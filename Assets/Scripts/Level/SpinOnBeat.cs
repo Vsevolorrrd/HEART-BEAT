@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SpinOnBeat : RespondToBeat
 {
-    [SerializeField] protected Vector3 rotationAmount = new Vector3(0, 90, 0); // How much to rotate per beat
+    [SerializeField] protected Vector3 rotationAmount = new Vector3(0, 5, 0); // How much to rotate per beat
     [SerializeField] protected float rotationTime = 0.2f;
     protected Coroutine rotateRoutine;
 

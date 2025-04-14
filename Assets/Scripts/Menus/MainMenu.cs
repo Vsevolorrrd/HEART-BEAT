@@ -21,15 +21,11 @@ public class MainMenu : MonoBehaviour
     }
     public void StartGame()
     {
-        SceneLoader.Instance.LoadScene("Tutorial_Old");
+        SceneLoader.Instance.LoadScene("Tutorial");
     }
     public void OpenMainMenu()
     {
         SceneLoader.Instance.LoadScene("MainMenu");
-    }
-    public void Restart()
-    {
-        SceneLoader.Instance.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void QuitGame()
     {

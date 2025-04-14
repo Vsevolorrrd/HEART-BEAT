@@ -8,7 +8,7 @@ public class ThingsToDo // Thanks Anna for the idea!
      * 5 create diffrent hint dots, for each tyoe of heavy attack
      * 6 pause the game when openning weapon menu
      * 7 draw sprites for small objects
-     * 8
+     * 8 make the camera spin smoother in main menu
      * 9
      * 10
      * 11

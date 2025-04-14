@@ -70,16 +70,22 @@ public class SceneLoader : MonoBehaviour
         anim.SetTrigger("Start");
 
         yield return new WaitForSeconds(1);
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
         SceneManager.LoadScene(name);
+
+        // Wait until the new scene is fully loaded
+        yield return null;
+        yield return new WaitUntil(() => PlayerManager.Instance != null && BeatUI.Instance != null);
 
         if (anim)
         anim.SetTrigger("End");
 
         yield return new WaitForSeconds(1);
 
-        PlayerManager.Instance.gameObject.transform.position = 
+        PlayerManager.Instance.gameObject.transform.position =
         CheckpointManager.Instance.GetLastCheckpoint();
 
         if (SceneManager.GetActiveScene().name == "Tutorial")

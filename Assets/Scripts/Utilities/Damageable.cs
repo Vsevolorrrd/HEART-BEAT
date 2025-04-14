@@ -88,7 +88,7 @@ public class Damageable : MonoBehaviour
         isDead = true;
         SpawnRemains();
         if (damageSounds.Length > 0)
-        AudioManager.Instance.PlayRandomSound(damageSounds, 0.6f, transform);
+        AudioManager.Instance.PlayRandomSound(damageSounds, 0.5f, transform);
         Destroy(gameObject);
     }
     protected void SpawnRemains()

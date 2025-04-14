@@ -85,7 +85,7 @@ public class Beatling : AI
             scribbles[i].gameObject.SetActive(false);
         }
         if (damageSounds.Length > 0)
-        AudioManager.Instance.PlayRandomSound(damageSounds, 0.6f, transform);
+        AudioManager.Instance.PlayRandomSound(damageSounds, 0.5f, transform);
 
         if (ArenaSpawn)
         ArenaSpawn.Died();

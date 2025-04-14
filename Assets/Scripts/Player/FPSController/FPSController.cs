@@ -252,7 +252,7 @@ public class FPSController : MonoBehaviour
     }
     private void OnDestroy()
     {
-        BEAT_Manager.MusicLevelIncreased += changePlayerStats;
+        BEAT_Manager.MusicLevelIncreased -= changePlayerStats;
     }
 
     #endregion
