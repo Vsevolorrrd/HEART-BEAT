@@ -57,9 +57,13 @@ public class Subcrusher : AI
     private void Attack()
     {
         soundWaveEffect.Play();
-        attackCollider.SetActive(true);
         isRecharging = true;
         hint = true;
+        Invoke("SlightAttackDelay", 0.13f);
+    }
+    private void SlightAttackDelay()
+    {
+        attackCollider.SetActive(true);
         Invoke("DisableColider", attackDuration);
     }
     private void DisableColider()

@@ -313,6 +313,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArenaTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 4337923192513505194, guid: f823696907ddbab48becbd89085556d2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4418497202503506108, guid: f823696907ddbab48becbd89085556d2, type: 3}
       propertyPath: arenaSpawn
       value: 

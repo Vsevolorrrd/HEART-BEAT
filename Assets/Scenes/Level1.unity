@@ -33991,6 +33991,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1337651519}
     m_Modifications:
+    - target: {fileID: 1037817326199921797, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -9.119025
+      objectReference: {fileID: 0}
+    - target: {fileID: 1037817326199921797, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.5899932
+      objectReference: {fileID: 0}
+    - target: {fileID: 1037817326199921797, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.1599622
+      objectReference: {fileID: 0}
+    - target: {fileID: 4166581541027497010, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.02
+      objectReference: {fileID: 0}
     - target: {fileID: 5801068705553486957, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
       propertyPath: m_Name
       value: SewersCorridorCorner
@@ -33998,6 +34014,30 @@ PrefabInstance:
     - target: {fileID: 5988128328096993030, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.036
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856321000292201371, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -9.119022
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856321000292201371, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.5899932
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856321000292201371, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.179962
+      objectReference: {fileID: 0}
+    - target: {fileID: 7315638246509939180, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -9.119023
+      objectReference: {fileID: 0}
+    - target: {fileID: 7315638246509939180, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.5899932
+      objectReference: {fileID: 0}
+    - target: {fileID: 7315638246509939180, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.8400383
       objectReference: {fileID: 0}
     - target: {fileID: 7957952176511570838, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -34038,6 +34078,18 @@ PrefabInstance:
     - target: {fileID: 7957952176511570838, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8510236443714502198, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -9.119022
+      objectReference: {fileID: 0}
+    - target: {fileID: 8510236443714502198, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.5899937
+      objectReference: {fileID: 0}
+    - target: {fileID: 8510236443714502198, guid: 3e66e5e5e3bd80348b70c99d3c42effb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.840038
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

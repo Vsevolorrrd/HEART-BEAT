@@ -12,6 +12,10 @@ public class Metrazer : AI
     [SerializeField] Transform metronome;
     [SerializeField] GameObject laserPrefab;
 
+    [Header("Metrazer Sounds")]
+    [SerializeField] AudioClip shot;
+    [SerializeField] AudioClip[] countdown;
+
     private int beatCounter = 0;
     private int rechargeCounter = 0;
     private bool isRecharging = false;
@@ -58,6 +62,7 @@ public class Metrazer : AI
             }
 
             beatCounter++;
+            AudioManager.Instance.PlaySound(countdown[beatCounter], 1f);
             RotateMetronome();
 
             if (beatCounter >= shootDelayBeats)
@@ -95,6 +100,7 @@ public class Metrazer : AI
     {
         if (target == null) return;
 
+        AudioManager.Instance.PlaySound(shot, 0.7f, transform);
         Instantiate(laserPrefab, attackPoint.position, Quaternion.Euler(attackPoint.rotation.eulerAngles));
 
         Vector3 shootDirection = (target.position - attackPoint.position).normalized;

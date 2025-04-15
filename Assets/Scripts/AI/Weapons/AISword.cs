@@ -3,6 +3,7 @@ using UnityEngine;
 public class AISword : AIWeapon
 {
     [SerializeField] float attackRadious = 2f;
+    [SerializeField] AudioClip attackClip;
 
     protected Animator anim;
 
@@ -14,6 +15,7 @@ public class AISword : AIWeapon
     {
         if (anim)
         {
+            AudioManager.Instance.PlaySound(attackClip, 1f, transform);
             anim.SetTrigger("Attack");
             return;
         }

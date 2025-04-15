@@ -47,7 +47,7 @@ public class RhythmStreakManager : Singleton<RhythmStreakManager>
     public void RegisterHit(float modifier)
     {
         streak += streakGain * modifier;
-        playerHealth.Heal(modifier);
+        playerHealth.Heal(modifier * 1.1f);
     }
 
     private void UpdateUI()

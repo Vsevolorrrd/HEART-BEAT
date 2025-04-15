@@ -158,6 +158,13 @@ MonoBehaviour:
   attackPoint: {fileID: 5407366856038707562}
   metronome: {fileID: 5641622245723681737}
   laserPrefab: {fileID: 412508633753328286, guid: fb68f5883c14a714d82f871a20d47e11, type: 3}
+  shot: {fileID: 8300000, guid: 2957114ff25b137469b1984c2cbd92f8, type: 3}
+  countdown:
+  - {fileID: 8300000, guid: 87f6a73e67a534541be67e6f33603468, type: 3}
+  - {fileID: 8300000, guid: 87f6a73e67a534541be67e6f33603468, type: 3}
+  - {fileID: 8300000, guid: 031df2f8581115445bb2522092c606d5, type: 3}
+  - {fileID: 8300000, guid: d63d279091c8a4e408cd7ae3ef1ac72d, type: 3}
+  - {fileID: 8300000, guid: d63d279091c8a4e408cd7ae3ef1ac72d, type: 3}
 --- !u!136 &1428556932483573017
 CapsuleCollider:
   m_ObjectHideFlags: 0

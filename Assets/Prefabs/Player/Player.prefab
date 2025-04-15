@@ -5534,8 +5534,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8751168953408949593}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 30, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5772,7 +5772,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   raycastDownDistance: 5
-  damageSounds: []
+  damageSounds:
+  - {fileID: 8300000, guid: f6de57b07ea9eed4593714cc21981b91, type: 3}
   currentHealth: 0
   damageCooldown: 0.1
   useHealthBar: 1

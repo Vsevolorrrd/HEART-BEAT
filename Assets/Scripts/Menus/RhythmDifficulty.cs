@@ -9,7 +9,7 @@ public class RhythmDifficulty : Singleton<RhythmDifficulty>
     [Header("Hard")]
     [SerializeField] float hardPerfectThreshold = 0.05f;
     [SerializeField] float hardGoodThreshold = 0.1f;
-    [SerializeField] float hardstreakDecayRate = 7f;
+    [SerializeField] float hardstreakDecayRate = 6f;
 
     [Header("Normal")]
     [SerializeField] float normalPerfectThreshold = 0.07f;

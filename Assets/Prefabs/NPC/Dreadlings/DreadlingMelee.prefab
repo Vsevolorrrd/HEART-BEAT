@@ -76,6 +76,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   attackRadious: 3.3
+  attackClip: {fileID: 8300000, guid: 17d939445ef328f41bd42ecd89af7dab, type: 3}
 --- !u!1 &1241193456725667519
 GameObject:
   m_ObjectHideFlags: 0

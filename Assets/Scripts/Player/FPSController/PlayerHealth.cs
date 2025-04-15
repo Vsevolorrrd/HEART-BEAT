@@ -75,6 +75,7 @@ public class PlayerHealth : Damageable
 
         currentHealth -= damage;
         recentlyDamaged = true;
+        AudioManager.Instance.PlaySound(damageSounds[0], 1f);
 
         if (currentHealth <= 0)
         {
