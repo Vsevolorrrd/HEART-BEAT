@@ -21,6 +21,6 @@ MonoBehaviour:
       howManyToSpawn: 2
   - Enemies:
     - enemy: {fileID: 7335025655419331833, guid: 273776011fa06c14f822918fd62427d3, type: 3}
-      howManyToSpawn: 2
+      howManyToSpawn: 1
   minimumEnemies: 0
   KillheavyEnemiesToProgress: 0

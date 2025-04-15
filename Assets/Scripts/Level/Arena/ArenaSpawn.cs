@@ -94,6 +94,7 @@ public class ArenaSpawn : MonoBehaviour
                 }
                 else
                 {
+                    if (enemyCount <= 0)
                     FinishArena();
                 }
             }
@@ -109,6 +110,7 @@ public class ArenaSpawn : MonoBehaviour
             }
             else
             {
+                if (enemyCount <= 0)
                 FinishArena();
             }
         }

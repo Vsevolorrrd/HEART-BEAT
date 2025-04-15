@@ -51,4 +51,12 @@ public class RhythmDifficulty : Singleton<RhythmDifficulty>
         goodThreshold = newGood;
         streakDecayRate = newDecaySpeed;
     }
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.F) && Input.GetKeyDown(KeyCode.O))
+        {
+            BEAT_Manager.Instance.StartTheMusic();
+            BeatUI.Instance.StartBeatUI();
+        }
+    }
 }

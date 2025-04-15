@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5516214701845001155
 Transform:
@@ -105,6 +105,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: bbc6e36d55039664bad45b8e6f0e2951, type: 3}
       propertyPath: m_Name
       value: wall_gated
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bbc6e36d55039664bad45b8e6f0e2951, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

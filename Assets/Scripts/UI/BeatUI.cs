@@ -56,7 +56,6 @@ public class BeatUI : Singleton<BeatUI>
         isActive = true;
         hitFeedbackText.text = "";
         hitFeedbackText.gameObject.SetActive(false);
-        originalScale = hitFeedbackText.transform.localScale;
 
         foreach (var (dot, _) in activeDots)
         {
@@ -305,6 +304,7 @@ public class BeatUI : Singleton<BeatUI>
     }
     private void Start()
     {
+        originalScale = hitFeedbackText.transform.localScale;
         PauseMenu.OnPause += Pause;
         BEAT_Manager.BEAT += OnBeat;
     }
