@@ -55,9 +55,6 @@ public class Beatling : AI
 
         while (elapsedTime < lungeDuration)
         {
-            if (target != null || !isDead)
-            agent.SetDestination(target.position); // Update position during lunge
-
             elapsedTime += Time.deltaTime;
             yield return null;
         }

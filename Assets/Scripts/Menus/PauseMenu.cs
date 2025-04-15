@@ -93,6 +93,10 @@ public class PauseMenu : Singleton<PauseMenu>
         OnPause?.Invoke(isPaused);
         PlayerManager.Instance.SetPalyerInput(!isPaused);
     }
+    public void BlockPauseMenu(bool block)
+    {
+        canOpenPauseMenu = !block;
+    }
     public void SetRhythmDifficulty(int difficulty)
     {
         RhythmDifficulty.Instance.SetDifficulty(difficulty);

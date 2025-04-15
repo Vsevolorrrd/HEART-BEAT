@@ -10,6 +10,7 @@ public class StartTutorial : MonoBehaviour
     {
         BEAT_Manager.MusicLevelIncreased += SetTutorialOff;
         PlayerManager.Instance.controller.SetInput(false);
+        PauseMenu.Instance.BlockPauseMenu(true);
         Snaphint.SetActive(true);
         Movehint.SetActive(false);
     }
@@ -34,6 +35,7 @@ public class StartTutorial : MonoBehaviour
     private void MoveHint()
     {
         PlayerManager.Instance.controller.SetInput(true);
+        PauseMenu.Instance.BlockPauseMenu(false);
         Snaphint.SetActive(false);
         Movehint.SetActive(true);
         nextStep = true;

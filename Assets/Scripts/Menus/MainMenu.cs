@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -17,10 +16,12 @@ public class MainMenu : MonoBehaviour
     }
     public void StartArena()
     {
+        mainBlock.SetActive(false);
         SceneLoader.Instance.LoadScene("InfiniteArena");
     }
     public void StartGame()
     {
+        mainBlock.SetActive(false);
         SceneLoader.Instance.LoadScene("Tutorial");
     }
     public void OpenMainMenu()
