@@ -56,7 +56,8 @@ public class DashModule : RhythmInput
         AudioManager.Instance.PlaySound(dashModuleClip, 0.7f);
         if (dashEffect) dashEffect.Play();
 
-        controller.ChangeSpeed(dashSpeed * modifier);
+        float dashSpeedAtStart = dashSpeed * modifier;
+        controller.ChangeSpeed(dashSpeedAtStart); // to awoid bugs when dash's speed changes mid dash
 
         float elapsedTime = 0f;
         controller.AdjustFOV(fovIncrease, dashDuration, dashDuration);
@@ -67,7 +68,7 @@ public class DashModule : RhythmInput
             yield return null;
         }
 
-        controller.ChangeSpeed(-dashSpeed * modifier);
+        controller.ChangeSpeed(-dashSpeedAtStart);
         isDashing = false;
     }
 

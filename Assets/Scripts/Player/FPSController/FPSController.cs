@@ -220,6 +220,10 @@ public class FPSController : MonoBehaviour
     public void ChangeSpeed(float modifier)
     {
         speed += modifier;
+        if (speed < 0)
+        {
+            speed = startSpeed;
+        }
     }
 
     #region events
