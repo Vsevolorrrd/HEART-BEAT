@@ -103,6 +103,7 @@ public class FPSController : MonoBehaviour
         transform.localEulerAngles = new Vector3(0, yaw, 0);
         playerCam.transform.localEulerAngles = new Vector3(pitch, 0, 0);
     }
+
     public void AdjustFOV(float fovIncrease, float duration, float returnToDefaultDuration)
     {
         StopAllCoroutines();
@@ -135,6 +136,7 @@ public class FPSController : MonoBehaviour
         }
         playerCam.Lens.FieldOfView = defaultFOV;
     }
+
     private void Jumping()
     {
         if (!isGrounded) coyoteTimer -= Time.deltaTime;
@@ -153,6 +155,7 @@ public class FPSController : MonoBehaviour
             jumpModule.CheckJump();
         }
     }
+
     private void Movement()
     {
         if (!playerCanMove) return;
@@ -195,6 +198,7 @@ public class FPSController : MonoBehaviour
             firstJumpUsed = false;
         }
     }
+
     public void Jump()
     {
         isJumping = true;
@@ -211,6 +215,7 @@ public class FPSController : MonoBehaviour
         isGrounded = false;
         coyoteTimer = 0f;
     }
+
     private void ResetJump() { isJumping = false; } // to prevent reseting the jump count
 
     public void ResetVilocity(float velocity)

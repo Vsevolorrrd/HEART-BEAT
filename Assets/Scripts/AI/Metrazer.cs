@@ -60,7 +60,7 @@ public class Metrazer : AI
                 BeatUI.Instance.AddHintDots("hintDotLaser");
                 hint = false;
             }
-
+            Debug.Log(beatCounter);
             beatCounter++;
             AudioManager.Instance.PlaySound(countdown[beatCounter], 1f);
             RotateMetronome();

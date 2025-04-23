@@ -194,6 +194,7 @@ public class AI : Damageable
         if (ArenaSpawn)
         ArenaSpawn.Died();
     }
+
     #region events
 
     public virtual void OnDestroy()

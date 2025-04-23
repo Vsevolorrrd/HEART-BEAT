@@ -30,9 +30,6 @@ public class RhythmDifficulty : Singleton<RhythmDifficulty>
     {
         switch (difficulty)
         {
-            case 4:
-                ApplyDifficulty(5f, 5f, 1f); // always perfect
-                break;
             case 3:
                 ApplyDifficulty(hardPerfectThreshold, hardGoodThreshold, hardstreakDecayRate);
                 break;
@@ -41,6 +38,9 @@ public class RhythmDifficulty : Singleton<RhythmDifficulty>
                 break;
             case 1:
                 ApplyDifficulty(easyPerfectThreshold, easyGoodThreshold, easystreakDecayRate);
+                break;
+            case 0:
+                ApplyDifficulty(5f, 5f, 1f); // always perfect
                 break;
         }
     }
