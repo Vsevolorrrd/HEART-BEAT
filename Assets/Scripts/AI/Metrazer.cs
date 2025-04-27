@@ -32,6 +32,7 @@ public class Metrazer : AI
         base.ChangeState(newState);
         if (newState != AIState.Fight)
         {
+            if (!attack)
             beatCounter = 0;
         }
     }
@@ -60,9 +61,16 @@ public class Metrazer : AI
                 BeatUI.Instance.AddHintDots("hintDotLaser");
                 hint = false;
             }
+
             Debug.Log(beatCounter);
+
+            // Play countdown sound if not exceeded
+            if (beatCounter < countdown.Length)
+            {
+                AudioManager.Instance.PlaySound(countdown[beatCounter], 1f);
+            }
+
             beatCounter++;
-            AudioManager.Instance.PlaySound(countdown[beatCounter], 1f);
             RotateMetronome();
 
             if (beatCounter >= shootDelayBeats)
@@ -70,11 +78,10 @@ public class Metrazer : AI
                 Shoot();
                 ResetMetronome();
                 beatCounter = 0;
-                isRecharging = true;  // Start recharge after shooting
+                isRecharging = true;
                 attack = false;
                 hint = true;
             }
-
         }
     }
     private void RotateMetronome()

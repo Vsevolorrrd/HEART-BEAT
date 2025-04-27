@@ -15,6 +15,15 @@ public class Subcrusher : AI
     private bool hint = true;
     private bool attack = false;
 
+    protected override void ChangeState(AIState newState)
+    {
+        base.ChangeState(newState);
+        if (newState != AIState.Fight)
+        {
+            if (!attack)
+            beatCounter = 0;
+        }
+    }
     protected override void OnBeat()
     {
         if (isDead) return;
