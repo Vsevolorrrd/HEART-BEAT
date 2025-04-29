@@ -1,16 +1,48 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CheckpointManager : Singleton<CheckpointManager>
 {
-    private Vector3 lastCheckpointPos;
+    [SerializeField] List<CheckPoint> checkpoints;
+    private int currentCheckpointIndex = -1;
 
-    public void SetCheckpoint(Vector3 position)
+    public void SetCheckpoint(CheckPoint point)
     {
-        lastCheckpointPos = position;
+        int index = checkpoints.IndexOf(point);
+        if (index >= 0)
+        {
+            currentCheckpointIndex = index;
+        }
     }
-    public Vector3 GetLastCheckpoint()
+    public int GetLastCheckpointIndex()
     {
-        return lastCheckpointPos;
+        if (currentCheckpointIndex >= 0 && currentCheckpointIndex < checkpoints.Count)
+        {
+            return currentCheckpointIndex;
+        }
+
+        return -1;
     }
 
+    public void GetPlayerToCheckpoint(int index)
+    {
+        foreach (var point in checkpoints)
+        point.loadLevelParts();
+
+        if (index >= 0 && index < checkpoints.Count)
+        {
+            currentCheckpointIndex = index;
+            Debug.Log($"checkpoint set: " + checkpoints[currentCheckpointIndex].name);
+        }
+        else
+        {
+            Debug.Log("no checkpoint found");
+            return;
+        }
+
+        PlayerManager.Instance.DisableCharacterController();
+        Transform player = PlayerManager.Instance.gameObject.transform;
+        player.position = checkpoints[currentCheckpointIndex].gameObject.transform.position;
+        player.rotation = checkpoints[currentCheckpointIndex].gameObject.transform.rotation;
+    }
 }

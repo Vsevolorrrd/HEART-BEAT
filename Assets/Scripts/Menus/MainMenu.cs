@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
     {
         if (sensitivitySlider)
         {
-            sensitivitySlider.value = PlayerManager.Instance.controller.MouseSensitivity;
+            sensitivitySlider.value = PlayerManager.Instance.fpsController.MouseSensitivity;
         }
     }
     public void StartArena()
@@ -39,6 +39,6 @@ public class MainMenu : MonoBehaviour
     }
     public void UpdateSensitivity(float newValue)
     {
-        PlayerManager.Instance.controller.MouseSensitivity = newValue;
+        PlayerManager.Instance.fpsController.MouseSensitivity = newValue;
     }
 }

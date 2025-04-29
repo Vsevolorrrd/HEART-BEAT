@@ -19,7 +19,7 @@ public class PauseMenu : Singleton<PauseMenu>
     {
         if (sensitivitySlider)
         {
-            sensitivitySlider.value = PlayerManager.Instance.controller.MouseSensitivity;
+            sensitivitySlider.value = PlayerManager.Instance.fpsController.MouseSensitivity;
         }
     }
     void Update()
@@ -103,6 +103,6 @@ public class PauseMenu : Singleton<PauseMenu>
     }
     public void UpdateSensitivity(float newValue)
     {
-        PlayerManager.Instance.controller.MouseSensitivity = newValue;
+        PlayerManager.Instance.fpsController.MouseSensitivity = newValue;
     }
 }

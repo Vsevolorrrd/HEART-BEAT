@@ -66,6 +66,13 @@ public class SceneLoader : MonoBehaviour
     }
     IEnumerator TransitionToScene(string name)
     {
+        int checpointIndex = -1;
+        if (SceneManager.GetActiveScene().name == name)
+        {
+            if (CheckpointManager.Instance)
+            checpointIndex = CheckpointManager.Instance.GetLastCheckpointIndex();
+        }
+
         if (anim)
         anim.SetTrigger("Start");
 
@@ -82,10 +89,10 @@ public class SceneLoader : MonoBehaviour
         if (SceneManager.GetActiveScene().name != "MainMenu")
         yield return new WaitUntil(() => PlayerManager.Instance != null && BeatUI.Instance != null);
 
+        yield return new WaitForSeconds(0.5f);
+
         if (anim)
         anim.SetTrigger("End");
-
-        yield return new WaitForSeconds(1);
 
         if (SceneManager.GetActiveScene().name == "Tutorial")
         BEAT_Manager.Instance.SetNewMusic(heartOfTheGod);
@@ -94,9 +101,7 @@ public class SceneLoader : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name != "MainMenu")
         {
-            PlayerManager.Instance.gameObject.transform.position =
-            CheckpointManager.Instance.GetLastCheckpoint();
-
+            CheckpointManager.Instance.GetPlayerToCheckpoint(checpointIndex);
             BeatUI.Instance.StartBeatUI();
         }
     }

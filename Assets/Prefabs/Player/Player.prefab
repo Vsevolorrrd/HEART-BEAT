@@ -5899,7 +5899,7 @@ MonoBehaviour:
   thresholdModifier: 0.03
   streakGainPerfect: 1
   streakGainGood: 0.5
-  actionKey: 308
+  actionKey: 304
   maxPresses: 3
   dashSpeed: 25
   dashDuration: 0.2

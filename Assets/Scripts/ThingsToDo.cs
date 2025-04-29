@@ -8,7 +8,7 @@ public class ThingsToDo // Thanks Anna for the idea!
      * 5 
      * 6 pause the game when openning weapon menu
      * 7 draw sprites for small objects
-     * 8 make the camera spin smoother in main menu
+     * 8 make the camera spin smoother in main menu +
      * 9
      * 10
      * 11

@@ -1,37 +1,32 @@
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : Singleton<PlayerManager>
 {
-    private static PlayerManager _instance;
-
-    #region Singleton
-    public static PlayerManager Instance => _instance;
-
-    void Awake()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Debug.LogWarning("PlayerManager already exists, destroying duplicate.");
-            Destroy(gameObject);
-            return;
-        }
-        _instance = this;
-        OnAwake();
-    }
-    #endregion
-
     [HideInInspector] public PlayerHealth playerHealth;
-    [HideInInspector] public FPSController controller;
+    [HideInInspector] public FPSController fpsController;
+    [HideInInspector] public CharacterController characterController;
     [HideInInspector] public bool playerInput = true;
 
-    private void OnAwake()
+    protected override void OnAwake()
     {
         playerHealth = GetComponent<PlayerHealth>();
-        controller = GetComponent<FPSController>();
+        fpsController = GetComponent<FPSController>();
+        characterController = GetComponent<CharacterController>();
     }
     public void SetPalyerInput(bool enable)
     {
-        controller.SetInput(enable);
+        fpsController.SetInput(enable);
         playerInput = enable;
+    }
+    public void DisableCharacterController(float time = 0.01f)
+    {
+        characterController.enabled = false;
+        SetPalyerInput(false);
+        Invoke("EnableCollider", time);
+    }
+    private void EnableCollider()
+    {
+        characterController.enabled = true;
+        SetPalyerInput(true);
     }
 }
