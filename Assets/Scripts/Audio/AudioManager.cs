@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Singleton<AudioManager>
 {
     [SerializeField] AudioSource soundFXPrefab;
     private List<AudioSource> loopSources;
@@ -14,45 +14,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip buttonSound;
     public AudioClip hoverSound;
 
-    private static AudioManager _instance;
-
-    #region Singleton
-    public static AudioManager Instance
+    protected override void OnAwake()
     {
-        get
-        {
-            // Check if the instance is already created
-            if (_instance == null)
-            {
-                // Try to find an existing AudioManager in the scene
-                _instance = FindAnyObjectByType<AudioManager>();
-
-                // If no AudioManager exists, create a new one
-                if (_instance == null)
-                {
-                    GameObject singletonObject = new GameObject("AudioManager");
-                    _instance = singletonObject.AddComponent<AudioManager>();
-                }
-            }
-
-            return _instance;
-        }
-    }
-
-    void Awake()
-    {
-        // If the instance is already set, destroy this duplicate object
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            _instance = this;  // Assign this object as the instance
-        }
         InitializeAudioPool();
     }
-    #endregion
 
     public void PlayPooledSound(AudioClip clip, float volume = 1f, float pitch = 1f) // for sounds that should be played instantly (basically player actions)
     {

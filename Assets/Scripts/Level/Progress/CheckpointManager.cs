@@ -44,5 +44,6 @@ public class CheckpointManager : Singleton<CheckpointManager>
         Transform player = PlayerManager.Instance.gameObject.transform;
         player.position = checkpoints[currentCheckpointIndex].gameObject.transform.position;
         player.rotation = checkpoints[currentCheckpointIndex].gameObject.transform.rotation;
+        RhythmStreakManager.Instance.RegisterHit(checkpoints[currentCheckpointIndex].StartingRhythmStreak);
     }
 }

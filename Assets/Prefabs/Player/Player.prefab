@@ -5746,7 +5746,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 0}
-  controller: {fileID: 0}
+  fpsController: {fileID: 0}
+  characterController: {fileID: 0}
   playerInput: 1
 --- !u!114 &7656141362023319138
 MonoBehaviour:
@@ -5899,7 +5900,7 @@ MonoBehaviour:
   thresholdModifier: 0.03
   streakGainPerfect: 1
   streakGainGood: 0.5
-  actionKey: 304
+  actionKey: 308
   maxPresses: 3
   dashSpeed: 25
   dashDuration: 0.2

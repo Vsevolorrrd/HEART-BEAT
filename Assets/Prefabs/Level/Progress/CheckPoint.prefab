@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelPartsToDeload: []
+  StartingRhythmStreak: 30
 --- !u!65 &3855330071056621521
 BoxCollider:
   m_ObjectHideFlags: 0
