@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitEffect: {fileID: 1165031457824458039}
-  effectDecaySpeed: 4.2
+  effectDecaySpeed: 4
 --- !u!114 &1165031457824458039
 MonoBehaviour:
   m_ObjectHideFlags: 0
