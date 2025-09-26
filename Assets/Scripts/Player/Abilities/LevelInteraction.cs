@@ -41,8 +41,10 @@ public class LevelInteraction : RhythmInput
     #region Singleton
     public static LevelInteraction Instance => _instance;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         if (_instance != null && _instance != this)
         {
             Debug.LogWarning("LevelInteraction already exists, destroying duplicate.");
@@ -65,7 +67,7 @@ public class LevelInteraction : RhythmInput
         if (!PlayerManager.Instance.playerInput || snap.IsBlocked() || isTeleporting)
         return;
 
-        if (Input.GetKeyDown(actionKey))
+        if (IsActionPressed())
         {
             FindEchoPoint();
         }

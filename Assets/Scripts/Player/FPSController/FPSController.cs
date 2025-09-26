@@ -1,3 +1,4 @@
+using UnityEngine.InputSystem;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -32,7 +33,6 @@ public class FPSController : MonoBehaviour
     [HideInInspector] public bool isMoving = false;
 
     [Header("Jumping")]
-    [SerializeField] KeyCode jumpKey = KeyCode.Space;
     [SerializeField] float jumpPower = 5f;
     [SerializeField] int maxJumps = 3;
 
@@ -53,10 +53,17 @@ public class FPSController : MonoBehaviour
     [Header("Sound Effects")]
     [SerializeField] AudioClip jumpSound;
 
+    // New Input System variables
+    private Vector2 lookInput;
+    private Vector2 moveInput;
+    private bool jumpPressed;
+    PlayerInput playerInput;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         jumpModule = GetComponent<JumpModule>();
+        playerInput = GetComponent<PlayerInput>();
         defaultFOV = playerCam.Lens.FieldOfView;
     }
 
@@ -72,32 +79,30 @@ public class FPSController : MonoBehaviour
         }
 
         BEAT_Manager.MusicLevelIncreased += changePlayerStats;
-
     }
+
     private void Update()
     {
         if (!playerCanMove) // Stop movement & camera when paused
         return;
 
+        UpdateMoveInput();
         CameraMovement();
         Jumping();
-
         CheckGround();
     }
 
     private void FixedUpdate()
     {
-        if (!playerCanMove) // Stop movement & camera when paused
-        return;
-
         Movement();
     }
+
     private void CameraMovement()
     {
         if (!cameraCanMove) return;
 
-        yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * MouseSensitivity;
-        pitch += (invertCamera ? 1 : -1) * MouseSensitivity * Input.GetAxis("Mouse Y");
+        yaw += lookInput.x;
+        pitch += lookInput.y;
         pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
 
         transform.localEulerAngles = new Vector3(0, yaw, 0);
@@ -140,35 +145,25 @@ public class FPSController : MonoBehaviour
     private void Jumping()
     {
         if (!isGrounded) coyoteTimer -= Time.deltaTime;
+        if (isJumping) return;
 
-        // First jump can be done anytime
-        if (!firstJumpUsed && Input.GetKeyDown(jumpKey) && (jumpCount > 0 || coyoteTimer > 0f))
+        if (!firstJumpUsed && jumpPressedThisFrame && (jumpCount > 0 || coyoteTimer > 0f))
         {
             Jump();
             firstJumpUsed = true;
+            jumpPressedThisFrame = false;
             return;
         }
 
-        // All other jumps must be on beat
-        if (firstJumpUsed && Input.GetKeyDown(jumpKey) && jumpCount > 0)
+        if (firstJumpUsed && jumpPressedThisFrame && jumpCount > 0)
         {
             jumpModule.CheckJump();
+            jumpPressedThisFrame = false;
         }
     }
 
     private void Movement()
     {
-        if (!playerCanMove) return;
-
-        // Input-based movement direction
-        Vector3 inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        isMoving = inputDirection.x != 0 || inputDirection.z != 0;
-
-        // Convert local input
-        Vector3 move = transform.TransformDirection(inputDirection) * speed;
-        // Apply movement acceleration
-        moveDirection = Vector3.Lerp(moveDirection, move, acceleration * Time.deltaTime);
-
         // Apply gravity
         if (isGrounded)
         {
@@ -176,12 +171,24 @@ public class FPSController : MonoBehaviour
         }
         else
         {
-            verticalVelocity -= gravity/1.2f * Time.deltaTime;
+            verticalVelocity -= gravity / 1.2f * Time.deltaTime;
         }
 
         moveDirection.y = verticalVelocity;
 
-        // Move the character
+        if (!playerCanMove)
+        {
+            controller.Move(moveDirection * Time.deltaTime);
+            return;
+        }
+
+        // Use moveInput from Input System
+        Vector3 inputDirection = new Vector3(moveInput.x, 0, moveInput.y);
+        isMoving = inputDirection.x != 0 || inputDirection.z != 0;
+
+        Vector3 move = transform.TransformDirection(inputDirection) * speed;
+        moveDirection = Vector3.Lerp(moveDirection, move, acceleration * Time.deltaTime);
+
         controller.Move(moveDirection * Time.deltaTime);
     }
 
@@ -205,7 +212,7 @@ public class FPSController : MonoBehaviour
         Invoke("ResetJump", 0.2f);
 
         AudioManager.Instance.PlayPooledSound(jumpSound, 0.8f);
-        verticalVelocity = jumpPower; // Apply jump force
+        verticalVelocity = jumpPower;
 
         if (isGrounded || coyoteTimer > 0f)
         jumpCount = maxJumps - 1;
@@ -216,7 +223,7 @@ public class FPSController : MonoBehaviour
         coyoteTimer = 0f;
     }
 
-    private void ResetJump() { isJumping = false; } // to prevent reseting the jump count
+    private void ResetJump() { isJumping = false; }
 
     public void ResetVilocity(float velocity)
     {
@@ -231,8 +238,27 @@ public class FPSController : MonoBehaviour
         }
     }
 
-    #region events
+    #region Input System callbacks
+    private void UpdateMoveInput()
+    {
+        moveInput = playerInput.actions["Move"].ReadValue<Vector2>();
+    }
 
+    public void OnLook()
+    {
+        Vector2 rawLook = playerInput.actions["Look"].ReadValue<Vector2>();
+        lookInput = new Vector2(rawLook.x / 20f * MouseSensitivity, rawLook.y / 20f * MouseSensitivity * (invertCamera ? 1 : -1));
+    }
+
+    private bool jumpPressedThisFrame;
+
+    public void OnJump()
+    {
+        jumpPressedThisFrame = playerInput.actions["Jump"].WasPressedThisFrame();
+    }
+    #endregion
+
+    #region events
     private void changePlayerStats(int level)
     {
         switch (level)
@@ -263,6 +289,5 @@ public class FPSController : MonoBehaviour
     {
         BEAT_Manager.MusicLevelIncreased -= changePlayerStats;
     }
-
     #endregion
 }

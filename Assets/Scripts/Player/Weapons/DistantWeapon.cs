@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 
 public class DistantWeapon : RhythmInput
 {
@@ -34,7 +36,8 @@ public class DistantWeapon : RhythmInput
     [SerializeField] private float shakeDuration = 0.2f, shakeAmplitude = 1f, shakeFrequency = 1f;
 
     [Header("Reload")]
-    [SerializeField] protected KeyCode reloadKey = KeyCode.R;
+    public Key reloadKey = Key.R;
+    public GamepadButton reloadButton = GamepadButton.North;
     protected bool isReloading = false;
 
     [Header("Debug")]
@@ -52,7 +55,7 @@ public class DistantWeapon : RhythmInput
     {
         if (!PlayerManager.Instance.playerInput || isBlocked) return;
 
-        if (Input.GetKeyDown(reloadKey))
+        if (IsReloadPressed())
         {
             if (currentAmmo < maxAmmo)
             {
@@ -61,7 +64,8 @@ public class DistantWeapon : RhythmInput
             }
         }
 
-        if (Input.GetKeyDown(actionKey))
+        // Shoot
+        if (IsActionPressed())
         {
             if (isReloading)
             {
@@ -69,6 +73,7 @@ public class DistantWeapon : RhythmInput
                 anim.SetBool("StartReload", false);
                 isReloading = false;
             }
+
             if (currentAmmo > 0) HandleKeyPress();
             else StartReload();
         }
@@ -175,6 +180,29 @@ public class DistantWeapon : RhythmInput
     }
 
     #region Reload
+    protected bool IsReloadPressed()
+    {
+        bool pressed = false;
+
+        // Keyboard
+        if (Keyboard.current != null)
+        {
+            var keyControl = Keyboard.current[reloadKey];
+            if (keyControl != null && keyControl.wasPressedThisFrame)
+                pressed = true;
+        }
+
+        // Gamepad
+        if (Gamepad.current != null)
+        {
+            var buttonControl = Gamepad.current[reloadButton];
+            if (buttonControl != null && buttonControl.wasPressedThisFrame)
+                pressed = true;
+        }
+
+        return pressed;
+    }
+
     protected virtual void StartReload()
     {
         isReloading = true;

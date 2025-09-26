@@ -11,7 +11,7 @@ public class Shotgun : DistantWeapon
         if (!PlayerManager.Instance.playerInput || isBlocked)
         return;
 
-        if (Input.GetKeyDown(reloadKey))
+        if (IsReloadPressed())
         {
             if (currentAmmo < maxAmmo)
             {
@@ -22,7 +22,8 @@ public class Shotgun : DistantWeapon
             }
         }
 
-        if (Input.GetKeyDown(actionKey))
+        // Shoot
+        if (IsActionPressed())
         {
             if (isReloading)
             {

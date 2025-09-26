@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class MeleeWeapon : RhythmInput
 {
+    /*
     [Header("Melee Weapon")]
     [SerializeField] float damage = 10f;
     [SerializeField] float comboTime = 1f;
@@ -81,4 +82,5 @@ public class MeleeWeapon : RhythmInput
     {
         NormalAttack(1f, 1f);
     }
+    */
 }

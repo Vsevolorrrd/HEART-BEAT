@@ -85,6 +85,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -106,6 +108,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1653517011
   m_SortingLayer: 3
   m_SortingOrder: 0
@@ -170,6 +173,9 @@ MonoBehaviour:
   streakGainPerfect: 2
   streakGainGood: 1
   actionKey: 323
+  actionButton: 33
+  UseMouseButton: 0
+  MouseButton: 0
   maxPresses: 3
   shotSound: {fileID: 8300000, guid: b33551cd9660d554da0c47d811066115, type: 3}
   perfectShot: {fileID: 8300000, guid: a6ab0871d6721634ea43972d83787dd6, type: 3}
@@ -194,7 +200,8 @@ MonoBehaviour:
   shakeDuration: 0.2
   shakeAmplitude: 1
   shakeFrequency: 1
-  reloadKey: 114
+  reloadKey: 32
+  reloadButton: 7
   nextShotMinTime: 0
   shotDelayTime: 0.1
 --- !u!95 &498307623554117353

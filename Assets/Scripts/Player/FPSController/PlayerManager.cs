@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerManager : Singleton<PlayerManager>
 {
     [HideInInspector] public PlayerHealth playerHealth;
+    [HideInInspector] public PlayerInput playerInputSystem;
     [HideInInspector] public FPSController fpsController;
     [HideInInspector] public CharacterController characterController;
     [HideInInspector] public bool playerInput = true;
@@ -11,6 +13,7 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         playerHealth = GetComponent<PlayerHealth>();
         fpsController = GetComponent<FPSController>();
+        playerInputSystem = GetComponent<PlayerInput>();
         characterController = GetComponent<CharacterController>();
     }
     public void SetPalyerInput(bool enable)

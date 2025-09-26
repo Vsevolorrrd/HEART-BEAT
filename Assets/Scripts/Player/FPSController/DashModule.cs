@@ -33,7 +33,7 @@ public class DashModule : RhythmInput
     {
         if (!PlayerManager.Instance.playerInput || !controller.isMoving || isDashing) return;
 
-        if (Input.GetKeyDown(actionKey))
+        if (IsActionPressed())
         {
             EvaluateTiming();
         }

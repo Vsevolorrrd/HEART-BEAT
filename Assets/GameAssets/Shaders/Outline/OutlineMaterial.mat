@@ -101,12 +101,15 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
+    - _BlendRange: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Color_Threshold: 1
+    - _Color_Threshold: 0.8
+    - _CoolEffect: 0
     - _Cull: 2
     - _Cutoff: 0.5
+    - _DepthThreshold: 13.2
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -119,6 +122,7 @@ Material:
     - _Normal_Threshold: 0.5
     - _OVERLAY: 1
     - _OcclusionStrength: 1
+    - _OutlineWidth: 0.08
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class Revolver : DistantWeapon
-{
+{/*
 
     protected override void Update()
     {
@@ -107,4 +107,5 @@ public class Revolver : DistantWeapon
     }
 
     #endregion
+    */
 }
